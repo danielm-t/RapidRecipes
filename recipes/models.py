@@ -56,6 +56,6 @@ class Instruction(models.Model):
     media = models.CharField(max_length=MEDIA_PATH_MAX_LENGTH, blank=True)
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE) # Instruction belongs to a recipe
     def __str__(self):
-        return self.step
+        return str(self.step)
 
 
