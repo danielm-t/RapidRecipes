@@ -1,7 +1,6 @@
 from django.db import models
 from django.template.defaultfilters import slugify
-from django.contrib.auth.models import User
-from food import RawFood
+from food.models import RawFood
 
 class Category(models.Model):
     CATEGORY_MAX_LENGTH = 255
@@ -30,7 +29,6 @@ class Recipe(models.Model):
     imagePath = models.CharField(max_length=IMAGE_PATH_MAX_LENGTH, blank=True)
     difficulty = models.FloatField(max_length=DIFFICULTY_MAX_SIZE)
     slug = models.SlugField(unique=True)
-    user = models.ForeignKey(User, blank=True)
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)

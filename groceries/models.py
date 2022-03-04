@@ -1,12 +1,12 @@
 from django.db import models
 from django.contrib.auth.models import User
-from food import RawFood
+from food.models import RawFood
 
 class GroceryItem(models.Model):
 
     AMOUNT_MAX_LENGTH = 50
 
-    rawFood = models.ForeignKey(RawFood)
+    rawFood = models.ForeignKey(RawFood, on_delete=models.CASCADE)
     amount = models.CharField(max_length=AMOUNT_MAX_LENGTH)
     available = models.BooleanField(default=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
