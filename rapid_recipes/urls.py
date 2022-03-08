@@ -15,7 +15,23 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.conf.urls import url
+from recipes import views
+from groceries import views
+from food import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-]
+    path('', views.index, name='index'),
+    path('about/', views.about, name='about'),
+     path('category/<slug:category_name_slug>/', views.show_category, name='show_category'),
+    path('add_category/', views.add_category, name='add_category'),
+    path('recipes/<slug:recipe_name_slug>/', views.show_recipes, name='show_recipes'),
+    path('add_recipe/', views.add_recipe, name='add_recipe'),
+    path('register/', views.register, name='register'), 
+    path('login/', views.user_login, name='login'),
+    path('restricted/', views.restricted, name='restricted'),
+    path('logout/', views.user_logout, name='logout'),
+
+
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
