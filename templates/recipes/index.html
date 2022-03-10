@@ -7,14 +7,17 @@
         <div class="carousel-item active">
             <div class="container">
                 <div class="row">
+
+                    {% if recipes %}
+                    {% for r in recipes %}
                     <div class="col-lg-3 d-lg-block">
                         <div class="card">
-                            <img src="{% static 'images/duck.jpg' %}" class="card-img-top" alt="Waterfall" />
+                            <img src="{{ MEDIA_URL }}recipes/{{ r.imagePath }}" class="card-img-top" alt="Waterfall" />
                             <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
+                                <h5 class="card-title">{{ r.name }}</h5>
                                 <p class="card-text">
-                                    Description 1
-                                <div class="ID1">
+                                    Description
+                                <div id="{{ r.slug }}">
                                     <div class="stars-outer">
                                         <div class="stars-inner"></div>
                                     </div>
@@ -25,23 +28,24 @@
                         </div>
                         <div class="col-xs-12" style="height:20px;"></div>
                     </div>
-                    
-                    
+              
                     <script>
-                        const ratings = {
-                            ID1: 1.75, ID2: 4, ID3: 2, ID4: 5, ID5: 4
-                        }
-                        document.addEventListener("DOMContentLoaded", getRatings)
-                        const stars = 5;
                         function getRatings() {
                             const starTotal = 5;
-                            for (const rating in ratings) {
-                                const starPercentage = (ratings[rating] / starTotal) * 100;
-                                const starPercentageRounded = `${(Math.round(starPercentage / 10) * 10)}%`;
-                                document.querySelector(`.${rating} .stars-inner`).style.width = starPercentageRounded;
-                            }
+                            var my_rating = "{{ r.rating }}";
+                            var my_slug = "{{ r.slug }} "
+                            const starPercentage = ( my_rating / starTotal) * 100;
+                            const starPercentageRounded = `${(Math.round(starPercentage / 10) * 10)}%`;
+                            document.querySelector(`#${my_slug} .stars-inner`).style.width = starPercentageRounded;
                         }
+                        getRatings();
                     </script>
+
+                    {% endfor %}
+                    {% else %}
+                    <li><strong>There are no recipes present.</strong></li>
+                    {% endif %}
+
                 </div>
             </div>
         </div>
