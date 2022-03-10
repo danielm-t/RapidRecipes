@@ -27,6 +27,9 @@ class Measurement(models.Model):
     # Alternative notation (KG.)
     alternative = models.CharField(max_length=ALTERNATIVE_MAX_LENGTH, blank=True)
 
+    def __str__(self):
+        return self.shorthand
+
     
 class RawFood(models.Model):
     

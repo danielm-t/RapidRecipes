@@ -11,6 +11,8 @@ class GroceryItem(models.Model):
     available = models.BooleanField(default=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
+    def __str__(self):
+        return self.rawFood.name
 
 class UserProfile(models.Model):
 
