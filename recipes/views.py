@@ -9,10 +9,8 @@ from recipes.forms import RecipeForm
 
 def index(request):
     context_dict = {}
-    recipe_list = Recipe.objects.order_by('-views')[:5]
-    category_list = Category.objects.order_by('-likes')[:5]
+    recipe_list = Recipe.objects.order_by('-rating')[:5]
     context_dict = {'recipes': recipe_list}
-    context_dict['categories'] = category_list
     #visitor_cookie_handler(request)
     response = render(request, 'recipes/index.html', context_dict)
     return response

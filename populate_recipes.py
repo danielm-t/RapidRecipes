@@ -33,21 +33,29 @@ def populate():
 
     # Ingredient list
     ingredients = [
-                   {'rawFood': 'plain flour', 'amount' : '260', 'recipe': 'dutch butter cake'},
-                   {'rawFood': 'caster sugar', 'amount' : '250', 'recipe': 'dutch butter cake'},
-                   {'rawFood': 'butter', 'amount' : '250', 'recipe': 'dutch butter cake'},
-                   {'rawFood': 'vanilla extract', 'amount' : 'a few', 'recipe': 'dutch butter cake'}]
+                   {'rawFood': 'plain flour', 'amount' : '260'},
+                   {'rawFood': 'caster sugar', 'amount' : '250'},
+                   {'rawFood': 'butter', 'amount' : '250'},
+                   {'rawFood': 'vanilla extract', 'amount' : 'a few'}]
     
     # Recipe list
+   # recipes = [
+   #           {'name': 'dutch butter cake', 'categories': ['snack','easy'], 'rating': 4.0, 'difficulty': 0.5, 'imagePath': 'dutch_butter_cake.png'
+
     recipes = [
-               {'name': 'dutch butter cake', 'categories': ['snack','easy'], 'rating': 4.0, 'difficulty': 0.5, 'imagePath': 
-               
+              {'name': 'dutch butter cake', 'categories': ['snack','easy'], 'rating': 4.0, 'difficulty': 0.5, 'imagePath': 'dutch_butter_cake.png'},
+              {'name': 'Burger', 'categories': ['dessert','medium'], 'rating': 0.0, 'difficulty': 2.0, 'imagePath': 'borgor.png'},
+              {'name': 'Curry', 'categories': ['lunch','hard'], 'rating': 5.0, 'difficulty': 5.0, 'imagePath': 'mix.jpg'},
+    ]
     # Populate database
     for type in categories:
         c = Category.objects.get_or_create(category=type['category'],
                                            description=type['description'])[0]
         c.save()
     
+    for recipe in recipes:
+        r = Recipe.objects.get_or_create()
+
     for food in ingredients:
         raw_food = RawFood.objects.get(name=food['rawFood'])
         plan = Recipe.objects.get(name=food['recipe'])
