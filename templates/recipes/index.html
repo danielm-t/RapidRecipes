@@ -7,14 +7,17 @@
         <div class="carousel-item active">
             <div class="container">
                 <div class="row">
+
+                    {% if recipes %}
+                    {% for r in recipes %}
                     <div class="col-lg-3 d-lg-block">
                         <div class="card">
-                            <img src="{% static 'images/duck.jpg' %}" class="card-img-top" alt="Waterfall" />
+                            <img src="{{ MEDIA_URL }}{{ r.imagePath }}" class="card-img-top" alt="Waterfall" />
                             <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
+                                <h5 class="card-title">{{ r.name }}</h5>
                                 <p class="card-text">
-                                    Description 1
-                                <div class="ID1">
+                                    Description
+                                <div>
                                     <div class="stars-outer">
                                         <div class="stars-inner"></div>
                                     </div>
@@ -24,6 +27,11 @@
                             </div>
                         </div>
                     </div>
+                    {% endfor %}
+                    {% else %}
+                    <li><strong>There are no recipes present.</strong></li>
+                    {% endif %}
+
                     <script>
                         const ratings = {
                             ID1: 1.75, ID2: 4, ID3: 2, ID4: 5, ID5: 4
