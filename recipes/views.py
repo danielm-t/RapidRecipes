@@ -19,13 +19,16 @@ def index(request):
 
 def about(request):
     context_dict = {}
-    print(request.method)
-    print(request.user)
+    #print(request.method)
+    #print(request.user)
 
     context_dict['visits'] = request.session['visits']
 
     response = render(request, 'recipes/about.html', context_dict)
     return response
+
+def contact(request):
+    return render(request, 'recipes/contact.html')  
 
 # def show_category(request, category_name_slug):
 #     context_dict = {}

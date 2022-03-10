@@ -3,7 +3,10 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
 from django.urls import reverse
+from django.http import HttpResponse
 from groceries.models import UserProfile
+
+
 def register(request):
     registered = False
     if request.method == 'POST':
@@ -30,14 +33,14 @@ def user_login(request):
         if user:
             if user.is_active:
                 login(request, user)
-                return HttpResponseRedirect(reverse('index'))
+                return redirect(reverse('index'))
             else:
                 return HttpResponse("Your account is currently disabled")
         else:
             print("Invalid login details: {0}, {1}".format(username, password))
             return HttpResponse("Invalid login details supplied.")
     else:
-        return render(request, '/login.html')
+        return render(request, 'groceries/login.html')
 
 @login_required
 def user_logout(request):
@@ -45,3 +48,8 @@ def user_logout(request):
     logout(request)
 
     return redirect(reverse('index'))
+
+@login_required
+def shopping_list(request):
+    # TODO
+    return render(request, 'groceries/shoppinglist')
