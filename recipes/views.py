@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.urls import reverse
-from recipes.forms import UserForm, UserProfileForm
+#from recipes.forms import UserForm, UserProfileForm
 from recipes.models import Category, Recipe, Ingredient, Instruction
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -17,7 +17,7 @@ def index(request):
     context_dict = {'recipes': recipe_list}
     context_dict['categories'] = category_list
     visitor_cookie_handler(request)
-    response = render(request, '/index.html', context_dict)
+    response = render(request, 'recipes/index.html', context_dict)
     return response
 
 def about(request):
@@ -43,84 +43,84 @@ def show_category(request, category_name_slug):
     return render(request, '/category.html', context=context_dict)
     
     
-def show_recipes(request, recipe_name_slug):
-    context_dict = {}
-    try:
-        recipe = Recipe.objects.get(slug=recipe_name_slug)
-        ingredient = Ingredient.objects.get(slug=ingredient_name_slug)
-        instruction = Instruction.objects.get(slug=recipe_instruction_slug)
+# def show_recipes(request, recipe_name_slug):
+#     context_dict = {}
+#     try:
+#         recipe = Recipe.objects.get(slug=recipe_name_slug)
+#         ingredient = Ingredient.objects.get(slug=ingredient_name_slug)
+#         instruction = Instruction.objects.get(slug=recipe_instruction_slug)
         
-        context_dict['recipe'] = recipe
-        context_dict['ingredient'] = ingredient
-        context_dict['instruction'] = instruction
+#         context_dict['recipe'] = recipe
+#         context_dict['ingredient'] = ingredient
+#         context_dict['instruction'] = instruction
         
 
-    except Recipe.DoesNotExist:
-        context_dict['recipe'] = None
+#     except Recipe.DoesNotExist:
+#         context_dict['recipe'] = None
 
-    return render(request, '/recipe.html', context_dict)
+#     return render(request, '/recipe.html', context_dict)
 
-@login_required
-def add_recipe(request):
-    form = RecipeForm()
+# @login_required
+# def add_recipe(request):
+#     form = RecipeForm()
 
-    if request.method == 'POST':
-        form = RecipeForm(request.POST)
-        if form.is_valid():
-            recipe = form.save(commit=True)
-            print(recipe, recipe.slug)
-            return index(request)
-        else:
-            print(form.errors)
+#     if request.method == 'POST':
+#         form = RecipeForm(request.POST)
+#         if form.is_valid():
+#             recipe = form.save(commit=True)
+#             print(recipe, recipe.slug)
+#             return index(request)
+#         else:
+#             print(form.errors)
 
-    return render(request, '/add_recipe.html', {'form': form})
+#     return render(request, '/add_recipe.html', {'form': form})
 
-def register(request):
-    registered = False
-    if request.method == 'POST':
-        user_form = UserForm(request.POST)
-        profile_form = UserProfileForm(request.POST)
+# def register(request):
+#     registered = False
+#     if request.method == 'POST':
+#         user_form = UserForm(request.POST)
+#         profile_form = UserProfileForm(request.POST)
 
-        if user_form.is_valid() and profile_form.is_valid():
-            user = user_form.save()
-            user.set_password(user.password)
-            user.save()
+#         if user_form.is_valid() and profile_form.is_valid():
+#             user = user_form.save()
+#             user.set_password(user.password)
+#             user.save()
 
-            profile = profile_form.save(commit=False)
-            profile.user = user
-            if 'picture' in request.FILES:
-                profile.picture = request.FILES['picture']
-                profile.save()
-                registered = True
-            else:
-                print(user_form.errors, profile_form.errors)
-    else:
-        user_form = UserForm()
-        profile_form = UserProfileForm()
+#             profile = profile_form.save(commit=False)
+#             profile.user = user
+#             if 'picture' in request.FILES:
+#                 profile.picture = request.FILES['picture']
+#                 profile.save()
+#                 registered = True
+#             else:
+#                 print(user_form.errors, profile_form.errors)
+#     else:
+#         user_form = UserForm()
+#         profile_form = UserProfileForm()
 
-    return render(request,
-                  '/register.html',
-                  {'user_form': user_form,
-                   'profile_form': profile_form,
-                   'registered': registered
-                   })
+#     return render(request,
+#                   '/register.html',
+#                   {'user_form': user_form,
+#                    'profile_form': profile_form,
+#                    'registered': registered
+#                    })
                    
-def user_login(request):
-    if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        user = authenticate(username=username, password=password)
-        if user:
-            if user.is_active:
-                login(request, user)
-                return HttpResponseRedirect(reverse('index'))
-            else:
-                return HttpResponse("Your account is currently disabled")
-        else:
-            print("Invalid login details: {0}, {1}".format(username, password))
-            return HttpResponse("Invalid login details supplied.")
-    else:
-        return render(request, '/login.html')
+# def user_login(request):
+#     if request.method == 'POST':
+#         username = request.POST.get('username')
+#         password = request.POST.get('password')
+#         user = authenticate(username=username, password=password)
+#         if user:
+#             if user.is_active:
+#                 login(request, user)
+#                 return HttpResponseRedirect(reverse('index'))
+#             else:
+#                 return HttpResponse("Your account is currently disabled")
+#         else:
+#             print("Invalid login details: {0}, {1}".format(username, password))
+#             return HttpResponse("Invalid login details supplied.")
+#     else:
+#         return render(request, '/login.html')
 
 
 def some_view(request):
