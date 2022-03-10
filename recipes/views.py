@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.urls import reverse
-from recipes.forms import UserForm, UserProfileForm
+from groceries.models import UserProfile
 from recipes.models import Category, Recipe, Ingredient, Instruction
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -78,33 +78,22 @@ def add_recipe(request):
 def register(request):
     registered = False
     if request.method == 'POST':
-        user_form = UserForm(request.POST)
-        profile_form = UserProfileForm(request.POST)
+        user_form = UserProfile(request.POST)
 
-        if user_form.is_valid() and profile_form.is_valid():
+        if user_form.is_valid():
             user = user_form.save()
             user.set_password(user.password)
             user.save()
-
-            profile = profile_form.save(commit=False)
-            profile.user = user
-            if 'picture' in request.FILES:
-                profile.picture = request.FILES['picture']
-                profile.save()
-                registered = True
-            else:
-                print(user_form.errors, profile_form.errors)
+            registered = True
     else:
-        user_form = UserForm()
-        profile_form = UserProfileForm()
+        user_form = UserProfile()
 
     return render(request,
                   '/register.html',
                   {'user_form': user_form,
-                   'profile_form': profile_form,
                    'registered': registered
                    })
-                   
+                    
 def user_login(request):
     if request.method == 'POST':
         username = request.POST.get('username')
