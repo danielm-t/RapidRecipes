@@ -2,7 +2,11 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.urls import reverse
+<<<<<<< HEAD
 #from recipes.forms import UserForm, UserProfileForm
+=======
+from groceries.models import UserProfile
+>>>>>>> 3dcf489f4fef04a13483fb5784b5c85f276b84e9
 from recipes.models import Category, Recipe, Ingredient, Instruction
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -55,6 +59,7 @@ def show_category(request, category_name_slug):
 #         context_dict['instruction'] = instruction
         
 
+<<<<<<< HEAD
 #     except Recipe.DoesNotExist:
 #         context_dict['recipe'] = None
 
@@ -121,6 +126,63 @@ def show_category(request, category_name_slug):
 #             return HttpResponse("Invalid login details supplied.")
 #     else:
 #         return render(request, '/login.html')
+=======
+    except Recipe.DoesNotExist:
+        context_dict['recipe'] = None
+
+    return render(request, '/recipe.html', context_dict)
+
+@login_required
+def add_recipe(request):
+    form = RecipeForm()
+
+    if request.method == 'POST':
+        form = RecipeForm(request.POST)
+        if form.is_valid():
+            recipe = form.save(commit=True)
+            print(recipe, recipe.slug)
+            return index(request)
+        else:
+            print(form.errors)
+
+    return render(request, '/add_recipe.html', {'form': form})
+
+def register(request):
+    registered = False
+    if request.method == 'POST':
+        user_form = UserProfile(request.POST)
+
+        if user_form.is_valid():
+            user = user_form.save()
+            user.set_password(user.password)
+            user.save()
+            registered = True
+    else:
+        user_form = UserProfile()
+
+    return render(request,
+                  '/register.html',
+                  {'user_form': user_form,
+                   'registered': registered
+                   })
+                    
+def user_login(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(username=username, password=password)
+        if user:
+            if user.is_active:
+                login(request, user)
+                return HttpResponseRedirect(reverse('index'))
+            else:
+                return HttpResponse("Your account is currently disabled")
+        else:
+            print("Invalid login details: {0}, {1}".format(username, password))
+            return HttpResponse("Invalid login details supplied.")
+    else:
+        return render(request, '/login.html')
+>>>>>>> 3dcf489f4fef04a13483fb5784b5c85f276b84e9
 
 
 def some_view(request):
