@@ -12,12 +12,12 @@
                     {% for r in recipes %}
                     <div class="col-lg-3 d-lg-block">
                         <div class="card">
-                            <img src="{{ MEDIA_URL }}{{ r.imagePath }}" class="card-img-top" alt="Waterfall" />
+                            <img src="{{ MEDIA_URL }}recipes/{{ r.imagePath }}" class="card-img-top" alt="Waterfall" />
                             <div class="card-body">
                                 <h5 class="card-title">{{ r.name }}</h5>
                                 <p class="card-text">
                                     Description
-                                <div>
+                                <div id="{{ r.slug }}">
                                     <div class="stars-outer">
                                         <div class="stars-inner"></div>
                                     </div>
@@ -27,26 +27,24 @@
                             </div>
                         </div>
                     </div>
+
+                    <script>
+                        function getRatings() {
+                            const starTotal = 5;
+                            var my_rating = "{{ r.rating }}";
+                            var my_slug = "{{ r.slug }} "
+                            const starPercentage = ( my_rating / starTotal) * 100;
+                            const starPercentageRounded = `${(Math.round(starPercentage / 10) * 10)}%`;
+                            document.querySelector(`#${my_slug} .stars-inner`).style.width = starPercentageRounded;
+                        }
+                        getRatings();
+                    </script>
+
                     {% endfor %}
                     {% else %}
                     <li><strong>There are no recipes present.</strong></li>
                     {% endif %}
 
-                    <script>
-                        const ratings = {
-                            ID1: 1.75, ID2: 4, ID3: 2, ID4: 5, ID5: 4
-                        }
-                        document.addEventListener("DOMContentLoaded", getRatings)
-                        const stars = 5;
-                        function getRatings() {
-                            const starTotal = 5;
-                            for (const rating in ratings) {
-                                const starPercentage = (ratings[rating] / starTotal) * 100;
-                                const starPercentageRounded = `${(Math.round(starPercentage / 10) * 10)}%`;
-                                document.querySelector(`.${rating} .stars-inner`).style.width = starPercentageRounded;
-                            }
-                        }
-                    </script>
                 </div>
             </div>
         </div>
