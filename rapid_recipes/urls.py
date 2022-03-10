@@ -19,6 +19,8 @@ from django.conf.urls import url
 from recipes import views
 from groceries import views
 from food import views
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),

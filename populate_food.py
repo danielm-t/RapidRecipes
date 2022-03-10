@@ -69,7 +69,7 @@ def populate():
 def add_measurement(type, unit, shorthand, alternative):
     Measurement.objects.get_or_create(type=type,unit=unit,shorthand=shorthand, alternative=alternative)
 
-# Start execution here!
+# Start execution here
 if __name__ == '__main__':
     print('Starting food population script...')
     populate()
