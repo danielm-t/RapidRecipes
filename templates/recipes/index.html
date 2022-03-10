@@ -1,3 +1,47 @@
 <!DOCTYPE html>
 {% extends 'rapidrecipes/base.html' %}
 {% load staticfiles %}
+{% block content_block %}
+<div id="carouselMultiItemExample" class="carousel slide carousel-dark text-center" data-mdb-ride="carousel">
+    <div class="carousel-inner py-4">
+        <div class="carousel-item active">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-3 d-lg-block">
+                        <div class="card">
+                            <img src="{% static 'images/duck.jpg' %}" class="card-img-top" alt="Waterfall" />
+                            <div class="card-body">
+                                <h5 class="card-title">Card title</h5>
+                                <p class="card-text">
+                                    Description 1
+                                <div class="ID1">
+                                    <div class="stars-outer">
+                                        <div class="stars-inner"></div>
+                                    </div>
+                                    </p>
+                                    <a href="#!" class="btn btn-primary">View</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <script>
+                        const ratings = {
+                            ID1: 1.75, ID2: 4, ID3: 2, ID4: 5, ID5: 4
+                        }
+                        document.addEventListener("DOMContentLoaded", getRatings)
+                        const stars = 5;
+                        function getRatings() {
+                            const starTotal = 5;
+                            for (const rating in ratings) {
+                                const starPercentage = (ratings[rating] / starTotal) * 100;
+                                const starPercentageRounded = `${(Math.round(starPercentage / 10) * 10)}%`;
+                                document.querySelector(`.${rating} .stars-inner`).style.width = starPercentageRounded;
+                            }
+                        }
+                    </script>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
