@@ -27,7 +27,7 @@ urlpatterns = [
 #     path('admin/', admin.site.urls),
     path('', views.index, name='index'),
     path('recipes/', include('recipes.urls')),
-#     path('about/', views.about, name='about'),
+    path('about/', views.about, name='about'),
 #     path('category/<slug:category_name_slug>/', views.show_category, name='show_category'),
 #     path('add_category/', views.add_category, name='add_category'),
 #     path('recipes/<slug:recipe_name_slug>/', views.show_recipes, name='show_recipes'),
