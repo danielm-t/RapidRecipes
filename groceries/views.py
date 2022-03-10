@@ -1,4 +1,8 @@
 from django.shortcuts import render
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import redirect
+from django.urls import reverse
 from groceries.models import UserProfile
 def register(request):
     registered = False
@@ -18,4 +22,26 @@ def register(request):
 context = {'user_form': user_form,
 'registered': registered})
                 
-# Create your views here.
+def user_login(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(username=username, password=password)
+        if user:
+            if user.is_active:
+                login(request, user)
+                return HttpResponseRedirect(reverse('index'))
+            else:
+                return HttpResponse("Your account is currently disabled")
+        else:
+            print("Invalid login details: {0}, {1}".format(username, password))
+            return HttpResponse("Invalid login details supplied.")
+    else:
+        return render(request, '/login.html')
+
+@login_required
+def user_logout(request):
+
+    logout(request)
+
+    return redirect(reverse('index'))
