@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+{% extends 'rapidrecipes/base.html' %}
+
+{% block content_block %}
+    {% load crispy_forms_tags %}
+
+    <div class="container-fluid">
+        <div class="container-fluid mt-3">
+            <p class="h1">Contacts</p>
+            <p>
+                <strong>Email:</strong> 2538359C@student.gla.ac.uk <br />
+                <strong>Phone Number:</strong> (+44) 123123412345
+            </p>
+            <p class="h3">Glasgow Office</p>
+            <p>
+                Boyd Orr Building<br />
+                University Avenue<br />
+                Glasgow, G12 8QW<br />
+                United Kingdom
+            </p>
+        </div>
+        <div class="container-fluid mt-5">
+            <p class="h2">Message Us</p>
+            <form method="post">
+                {% csrf_token %}
+                {{ form.non_field_errors}}
+                <div class="row align-items-start mb-3">
+                    <div class="col">
+                        {{ form.firstname.errors }}
+                        {{ form.firstname | as_crispy_field }}
+                    </div>
+                    <div class="col">
+                        {{ form.lastname.errors}}
+                        {{ form.lastname | as_crispy_field }}
+                    </div>
+                </div>
+                <div class="row align-items-start mb-3">
+                    <div class="col">
+                        {{ form.email.errors }}
+                        {{ form.email | as_crispy_field }}
+                    </div>
+                    <div class="col">
+                        {{ form.phonenumber.errors }}
+                        {{ form.phonenumber | as_crispy_field }}
+                    </div>
+                </div>
+                <div class="mb-3">
+                    {{ form.message.errors }}
+                    {{ form.message | as_crispy_field }}
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Send</button>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

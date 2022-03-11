@@ -1,9 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from datetime import datetime
 from recipes.models import Category, Recipe, Ingredient, Instruction
-from recipes.forms import RecipeForm
+from recipes.forms import RecipeForm, ContactForm
+from django.core.mail import send_mail, BadHeaderError
+from rapid_recipes.settings import DEFAULT_FROM_EMAIL
 
 # Create your views here.
 
@@ -26,7 +28,32 @@ def about(request):
     return response
 
 def contact(request):
-    return render(request, 'recipes/contact.html')  
+    if request.method == 'GET':
+        form = ContactForm()
+    else:
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            firstname = form.cleaned_data['firstname']
+            lastname = form.cleaned_data['lastname']
+            email = form.cleaned_data['email']
+            phonenumber = form.cleaned_data['phonenumber']
+            message = form.cleaned_data['message']
+
+            message_with_user_info = "Name: " + lastname + ", " + firstname + "\n" + "Email: " + email + "\n"
+            if phonenumber:
+                message_with_user_info += "Phonenumber: " + phonenumber + "\n"
+            
+            message_with_user_info += message
+
+            try:
+                send_mail("Inquiry from User", message_with_user_info, DEFAULT_FROM_EMAIL, [DEFAULT_FROM_EMAIL])
+            except BadHeaderError:
+                return HttpResponse('Invalid header found.')
+            return redirect('success')
+    return render(request, "recipes/contact.html", {'form': form})
+
+def success(request):
+    return HttpResponse("The email was successfully sent!")
 
 # def show_category(request, category_name_slug):
 #     context_dict = {}

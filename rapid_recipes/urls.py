@@ -30,7 +30,8 @@ urlpatterns = [
     path('food/', include('food.urls')),
     path('groceries/', include('groceries.urls')),
     path('about/', views.about, name='about'), 
-    path('contact/', views.contact, name='contact'), 
+    path('contact/', views.contact, name='contact'),
+    path('contact/success', views.success, name='success'), 
 
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
