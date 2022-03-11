@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from datetime import datetime
 from recipes.models import Category, Recipe, Ingredient, Instruction
-from recipes.forms import RecipeForm, ContactForm
+from .forms import InstructionFormSet, RecipeForm, IngredientFormSet, ContactForm
 from django.core.mail import send_mail, BadHeaderError
 from rapid_recipes.settings import DEFAULT_FROM_EMAIL
 
@@ -82,22 +82,20 @@ def show_recipe(request, recipe_name_slug):
     except Recipe.DoesNotExist:
         context_dict['recipe'] = None
 
-    return render(request, 'recipes/recipe.html', context_dict)
+    return render(request, 'recipes/add_recipe.html', context_dict)
 
-@login_required
 def add_recipe(request):
-    form = RecipeForm()
+    if request.method == "GET":
+        form = RecipeForm()
+        ingredientformset = IngredientFormSet()
+        instructionformset = InstructionFormSet()
 
-    if request.method == 'POST':
-        form = RecipeForm(request.POST)
-        if form.is_valid():
-            recipe = form.save(commit=True)
-            print(recipe, recipe.slug)
-            return index(request)
-        else:
-            print(form.errors)
-
-    return render(request, 'recipes/add_recipe.html', {'form': form})
+        context_dict = {
+            "form" : form, 
+            "ingredientformset": ingredientformset,
+            "instructionformset": instructionformset
+            }
+        return render(request, 'recipes/add_recipe.html', context_dict)
 
 
 # def some_view(request):

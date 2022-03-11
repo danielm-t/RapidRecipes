@@ -1,0 +1,48 @@
+{% extends 'rapidrecipes/base.html' %}
+
+{% block content_block %}
+{% load crispy_forms_tags %}
+
+<div class="container-fluid">
+    <h2>Add A Recipe</h1>
+    <div class="container-fluid">
+        {% csrf_token %}
+        <div>
+            {{ form.name.errors }}
+            {{ form.name | as_crispy_field}}
+        </div>
+        <div>
+            {{ form.imagePath.errors }}
+            {{ form.imagePath | as_crispy_field }}
+        </div>
+        <div>
+            {{ form.category.errors }}
+            {{ form.category | as_crispy_field }}
+        </div>
+        <div>
+            {{ form.rating.errors }}
+            {{ form.rating | as_crispy_field }}
+        </div>
+        <div>
+            {{ form.difficulty.errors }}
+            {{ form.difficulty | as_crispy_field }}
+        </div>
+        
+    </div>
+    <div class="col">
+        <h3>Add Ingredients</h3>
+        {{ ingredientformset.management_form }}
+        {% for form in ingredientformset %}
+        {{ form | crispy }}
+        {% endfor %}
+    </div>
+    <div class="col">
+        <h3>Add Instructions</h3>
+        {{ instructionformset.management_form }}
+        {% for form in instructionformset %}
+        {{ form | crispy }}
+        {% endfor %}
+    </div>
+    <button type="submit">Submit</button>
+</div>
+{% endblock %}
