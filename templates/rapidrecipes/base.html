@@ -24,7 +24,6 @@
 
 <body>
   <header>
-    <!-- Sidebar 
     <nav id="sidebarMenu" class="collapse d-lg-block sidebar collapse bg-white">
       <div class="position-sticky">
         <div class="list-group list-group-flush mx-3 mt-4">
@@ -49,8 +48,6 @@
         </div>
       </div>
     </nav>
-    -->
-    <!-- Sidebar -->
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark p-0ms-auto">
       <a class="navbar-brand p-2" href="{% url 'recipes:index' %}">Rapid Recipes</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
@@ -81,9 +78,11 @@
   </header>
 
   <div class="col-xs-12" style="height:50px;"></div>
+  <main role="main" class="col-md-9  ml-sm-auto col-lg-10 px-4">
+    {% block content_block %}
+    {% endblock %}
+  </main>
 
-  {% block content_block %}
-  {% endblock %}
   <!-- Bootstrap core JavaScript -->
   <!-- Placed at the end of the document so the pages load faster -->
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
