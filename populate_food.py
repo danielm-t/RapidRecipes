@@ -20,6 +20,7 @@ def populate():
                     {'type': 'Volume', 'unit': 'bag', 'shorthand': 'bag', 'alternative': None},
                     {'type': 'Volume', 'unit': 'bar', 'shorthand': 'bar', 'alternative': None},
                     {'type': 'Volume', 'unit': 'bulb', 'shorthand': 'bulb', 'alternative': None},
+                    {'type': 'Volume', 'unit': 'bun', 'shorthand': 'bun', 'alternative': None},
                     {'type': 'Volume', 'unit': 'capsule', 'shorthand': 'capsule', 'alternative': None},
                     {'type': 'Volume', 'unit': 'clove', 'shorthand': 'clove', 'alternative': None},
                     {'type': 'Volume', 'unit': 'cob', 'shorthand': 'cob', 'alternative': None},
@@ -43,7 +44,12 @@ def populate():
                 {'name': 'plain flour', 'measuredIn': 'gram'},
                 {'name': 'caster sugar', 'measuredIn': 'gram'},
                 {'name': 'butter', 'measuredIn': 'gram'},
-                {'name': 'vanilla extract', 'measuredIn': 'drop'} ]
+                {'name': 'vanilla extract', 'measuredIn': 'drop'},
+                {'name': 'bread', 'measuredIn': 'bun'},
+                {'name': 'beef burger', 'measuredIn': 'gram'},
+                {'name': 'lettuce', 'measuredIn': 'leaf'},
+                {'name': 'tomato', 'measuredIn': 'slice'}]
+
     
     # Populate database
     for measurement in measurements:

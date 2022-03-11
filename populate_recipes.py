@@ -29,7 +29,7 @@ def populate():
                   {'category': 'fish', 'description': 'Fresh, flaky and flavourful, fish is not only healthy but exceedingly tasty.'},
                   {'category': 'easy', 'description': 'Perfect for beginners, these dishes are simple to complete.'},
                   {'category': 'medium', 'description': 'While maybe challenging for beginners, these dishes are achievable for all.'},
-                  {'category': 'hard', 'description': 'Free from meat, these recipes are perfect for vegans.'},
+                  {'category': 'hard', 'description': 'A challenge for all, these dishes will realy test your metal.'},
                   {'category': 'quick', 'description': "Great when you're in a rush, these recipes can be completed pronto."} ]
 
     # Ingredient list
@@ -37,7 +37,10 @@ def populate():
                    {'rawFood': 'plain flour', 'amount' : '260', 'recipe': 'dutch butter cake'},
                    {'rawFood': 'caster sugar', 'amount' : '250', 'recipe': 'dutch butter cake'},
                    {'rawFood': 'butter', 'amount' : '250', 'recipe': 'dutch butter cake'},
-                   {'rawFood': 'vanilla extract', 'amount' : 'a few', 'recipe': 'dutch butter cake'}]
+                   {'rawFood': 'vanilla extract', 'amount' : 'a few', 'recipe': 'dutch butter cake'},
+                   {'rawFood': 'butter', 'amount' : '50', 'recipe': 'Burger'},
+                   {'rawFood': 'lettuce', 'amount' : 'a couple', 'recipe': 'Burger'},
+                   {'rawFood': 'tomato', 'amount' : 'a couple', 'recipe': 'Burger'},]
 
     # Recipe list
     recipes = [
@@ -55,7 +58,11 @@ def populate():
                     {'step': 2, 'recipe': 'dutch butter cake', 'media': None, 'description': 'Mix the flour, sugar, butter and vanilla essence and knead into a supple ball of dough in a large mixing bowl. It may help to cut the butter into small pieces with two knives first, before mixing with your hands. '},
                     {'step': 3, 'recipe': 'dutch butter cake', 'media': None, 'description': 'Press the dough into the form, making sure there is slightly more dough peripherally, to avoid the edge from overcooking.'},
                     {'step': 4, 'recipe': 'dutch butter cake', 'media': None, 'description': 'Place on a high shelf and check after about 35 minutes. Only check by eye, it should look slightly underdone, if it is browning then it is probably too far gone as the edge will set rock-hard when it cools. It should look like raw dough in the middle but nowhere should be darker than golden buttery yellow.'},
-                    {'step': 5, 'recipe': 'dutch butter cake', 'media': None, 'description': 'Take the tin from the oven- it is okay if it looks very fluid as this will set when cooling. Cut into diamonds of about 3 x 3 cms, as the pieces are very calorific. Cut the cake when it is lukewarm, that is easier than when it is completely cold.'}]
+                    {'step': 5, 'recipe': 'dutch butter cake', 'media': None, 'description': 'Take the tin from the oven- it is okay if it looks very fluid as this will set when cooling. Cut into diamonds of about 3 x 3 cms, as the pieces are very calorific. Cut the cake when it is lukewarm, that is easier than when it is completely cold.'},
+                    {'step': 0, 'recipe': 'Burger', 'media': None, 'description': 'Preheat the oven to what is needed for you beef burgers.'},
+                    {'step': 1, 'recipe': 'Burger', 'media': None, 'description': 'When the oven is at the appropriate temperature, put the burger buns in for the time specified for them.'},
+                    {'step': 2, 'recipe': 'Burger', 'media': None, 'description': 'Slice your tomato and lettuce leaves to what you want and butter your buns.'},
+                    {'step': 0, 'recipe': 'Burger', 'media': None, 'description': 'Build your burger in the manner that you want.'}]
 
 
     # Populate database
