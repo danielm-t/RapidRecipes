@@ -10,14 +10,16 @@ class RecipeForm(forms.ModelForm):
     class Meta:
         model = Recipe
         exclude = ('slug', )
-
-        widgets = {
+    try:
+            widgets = {
             'category' : forms.CheckboxSelectMultiple(
                 choices=Category.objects.all()),
-            'rating' : forms.NumberInput(attrs={'step': 0.1, 'min': 0.0, 'max': 5.0, "class": "col"}),
-            'imagePath' : forms.FileInput(),
-            'difficulty' : forms.NumberInput(attrs={'step': 0.1, 'min': 0.0, 'max': 5.0})
-        }
+                    'rating' : forms.NumberInput(attrs={'step': 0.1, 'min': 0.0, 'max': 5.0, "class": "col"}),
+                    'imagePath' : forms.FileInput(),
+                    'difficulty' : forms.NumberInput(attrs={'step': 0.1, 'min': 0.0, 'max': 5.0})
+            }
+    except:
+        pass
 
 class IngredientForm(forms.ModelForm):
     class Meta:

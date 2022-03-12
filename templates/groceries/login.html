@@ -1,0 +1,18 @@
+{% extends 'rapidrecipes/base.html' %}
+{% block content_block %}
+<div class="container-fluid">
+    <h2>Login</h2>
+    <form class="form-signin" role="form" method="post" action=".">
+        {% csrf_token %}
+        <p>Username*:</p>
+        <input type="text" name="username" id="id_username" class="form-control w-25"
+        placeholder="Username" required autofocus>
+        <p>Password*:</p>
+        <input type="password" name="password" id="id_password" class="form-control w-25"
+        placeholder="Password" required>
+        <p></p>
+        <button class="btn btn-lg btn-primary btn-block w-25" type="submit"
+        value="Submit">Sign in</button>
+    </form>    
+</div>
+{% endblock %}

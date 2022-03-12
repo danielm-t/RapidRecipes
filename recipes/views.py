@@ -22,7 +22,7 @@ def about(request):
     #print(request.method)
     #print(request.user)
 
-    context_dict['visits'] = request.session['visits']
+    #context_dict['visits'] = request.session['visits']
 
     response = render(request, 'recipes/about.html', context_dict)
     return response
