@@ -40,7 +40,9 @@ def populate():
                    {'rawFood': 'vanilla extract', 'amount' : 'a few', 'recipe': 'dutch butter cake'},
                    {'rawFood': 'butter', 'amount' : '50', 'recipe': 'Burger'},
                    {'rawFood': 'lettuce', 'amount' : 'a couple', 'recipe': 'Burger'},
-                   {'rawFood': 'tomato', 'amount' : 'a couple', 'recipe': 'Burger'},]
+                   {'rawFood': 'tomato', 'amount' : 'a couple', 'recipe': 'Burger'},
+                   {'rawFood': 'beef burger', 'amount' : '200', 'recipe': 'Burger'},
+                   {'rawFood': 'bread', 'amount' : '1', 'recipe': 'Burger'},]
 
     # Recipe list
     recipes = [
