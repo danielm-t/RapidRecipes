@@ -26,23 +26,29 @@
   <header>
     <nav id="sidebarMenu" class="collapse d-lg-block sidebar collapse bg-white">
       <div class="position-sticky">
-        <div class="list-group list-group-flush mx-3 mt-4">
+        <div class="list-group list-group-flush mx-4 mt-4">
           <a class="list-group-item list-group-item-action py-2 ripple" aria-current="true" data-mdb-toggle="collapse"
             href="#collapseExample1" aria-expanded="true" aria-controls="collapseExample1">
-            <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>Expanded menu</span>
+            <i class="fa-solid fa-filter fa-fw me-3"></i><span>Filters</span>
           </a>
           <ul id="collapseExample1" class="collapse show list-group list-group-flush">
             <li class="list-group-item py-1">
-              <a href="" class="text-reset">Link</a>
+              <input class="form-check-input" type="checkbox" value="" id="checkbox1">
+            <label class="form-check-label" for="checkbox1">
+              Checkbox1
+            </label>
             </li>
             <li class="list-group-item py-1">
-              <a href="" class="text-reset">Link</a>
+              <input class="form-check-input" type="checkbox" value="" id="checkbox2">
+            <label class="form-check-label" for="checkbox2">
+              Checkbox2
+            </label>
             </li>
             <li class="list-group-item py-1">
-              <a href="" class="text-reset">Link</a>
-            </li>
-            <li class="list-group-item py-1">
-              <a href="" class="text-reset">Link</a>
+              <input class="form-check-input" type="checkbox" value="" id="checkbox3">
+            <label class="form-check-label" for="checkbox3">
+              Checkbox3
+            </label>
             </li>
           </ul>
         </div>
@@ -79,7 +85,6 @@
     </nav>
   </header>
 
-  <div class="col-xs-12" style="height:50px;"></div>
   <main role="main" class="col-md-9  ml-sm-auto col-lg-10 px-4">
     {% block content_block %}
     {% endblock %}

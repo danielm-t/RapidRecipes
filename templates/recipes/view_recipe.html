@@ -1,0 +1,75 @@
+{% extends 'rapidrecipes/base.html' %}
+{% block content_block %}
+
+<div class="container-fluid">
+    <h2>Recipe name</h2>
+    <div class="container-fluid">
+        <!--stars-->
+        <div id="{{ r.slug }}">
+            <div class="stars-outer">
+                <div class="stars-inner"></div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4 ">
+                <img src="{{ MEDIA_URL }}recipes/borgor.jpg" class="card-img-top" alt="Image" width="30%" />
+                <div class="col-xs-12" style="height: 15px"></div>
+                <h4>Instructions:</h4>
+                <p class="fs-1">
+                    <strong>1.</strong>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                    incididunt ut labore et dolore magna aliqua.<br>
+                    <strong>2.</strong>Mattis enim ut tellus elementum sagittis. Id cursus
+                    metus aliquam eleifend mi. Magna ac placerat vestibulum lectus mauris ultrices eros in cursus.
+                    Lobortis scelerisque fermentum dui faucibus in ornare quam. Viverra aliquet eget sit amet tellus
+                    cras adipiscing. Semper auctor neque vitae tempus.<br>
+                    <strong>3.</strong>Dignissim cras tincidunt lobortis feugiat vivamus
+                    at augue eget. Urna molestie at elementum eu facilisis sed odio morbi quis. Tellus in metus
+                    vulputate eu. Metus vulputate eu scelerisque felis imperdiet proin fermentum leo. Aliquet sagittis
+                    id consectetur purus ut faucibus pulvinar. Proin sagittis nisl rhoncus mattis rhoncus urna neque
+                    viverra. Diam in arcu cursus euismod quis viverra nibh cras. Semper risus in hendrerit gravida
+                    rutrum quisque non tellus.  
+                </p>
+            </div>
+
+            <div class="col-md-2">
+                <strong>Preparation time: <br></strong>
+                30 min <br>
+                <br>
+                <strong>Difficulty: <br></strong>
+                Medium <br>
+                <br>
+                <strong>Ingredients: <br></strong>
+                <div class="list-group">
+                    <p>
+                        &#9642;Item1 <br>
+                        &#9642;Item2 <br>
+                        &#9642;Item3 <br>
+                        &#9642;Item4 <br>
+                        &#9642;Item5 <br>
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-2 text-center"></div>
+            <div class="col-md-4 text-center">
+                <h4>Recommended recipes</h4>
+                <p class="text-center">Burger</p>
+                <img src="{{ MEDIA_URL }}recipes/borgor.jpg" class="card-img-top w-50" alt="Image" />
+                <p>Burger</p>
+                <img src="{{ MEDIA_URL }}recipes/borgor.jpg" class="card-img-top w-50" alt="Image" />
+            </div>
+        </div>
+    </div>
+    <script>
+        function getRatings() {
+            const starTotal = 5;
+            var my_rating = "{{ r.rating }}";
+            var my_slug = "{{ r.slug }} "
+            const starPercentage = (my_rating / starTotal) * 100;
+            const starPercentageRounded = `${(Math.round(starPercentage / 10) * 10)}%`;
+            document.querySelector(`#${my_slug} .stars-inner`).style.width = starPercentageRounded;
+        }
+        getRatings();
+    </script>
+</div>
+{% endblock %}
