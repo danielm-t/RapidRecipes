@@ -1,48 +1,190 @@
 {% extends 'rapidrecipes/base.html' %}
-
+{% load staticfiles %}
 {% block content_block %}
 {% load crispy_forms_tags %}
 
 <div class="container-fluid">
     <h2>Add A Recipe</h2>
-    <div class="container-fluid">
+    <form method="post">
         {% csrf_token %}
         <div>
-            {{ form.name.errors }}
-            {{ form.name | as_crispy_field}}
+            <div class="mb-3">
+                <label for="recipename" class="form-label">Recipe Name</label>
+                <input type="text" class="form-control" id="recipename" name="recipename" placeholder="Untitled"
+                    required>
+            </div>
+            <div class="container border border-dark rounded mb-3" id="recipeImageContainer" style="display: none;">
+                <img id="recipeimageoutput" class="rounded mx-auto d-block" style="max-width: 100%;" />
+            </div>
+            <div class="custom-file mb-3">
+                <label for="recipeimage" class="custom-file-label">Add Recipe Image</label>
+                <input type="file" class="custom-file-input" name="recipeimage" onchange="addRecipeImage(event)">
+            </div>
+            <div class="mb-3">
+                <label for="rating" class="form-label">Rating (between 0 to 5)</label>
+                <input type="number" class="form-control" id="rating" name="rating" min="0" max="5" step="0.1"
+                    value="0">
+            </div>
+            <div class="mb-3">
+                <label for="difficulty" class="form-label">Difficulty (between 0 to 5)</label>
+                <input type="number" class="form-control" id="difficulty" name="difficulty" min="0" max="5" step="0.1"
+                    value="0">
+            </div>
+            <div class="row row-cols-4 mb-3 mx-1">
+                {% for category in categories %}
+                <div class="form-check col-md-3 my-1">
+                    <input class="form-check-input" type="checkbox" value="{{ category }}" id="{{ category }}"
+                        name="categories">
+                    <label class="form-check-label" for="{{ category }}">
+                        {{ category }}
+                    </label>
+                </div>
+                {% endfor %}
+            </div>
         </div>
         <div>
-            {{ form.imagePath.errors }}
-            {{ form.imagePath | as_crispy_field }}
+            <h3>Add Ingredients to Your Recipe</h3>
+            <div id="ingredientforms">
+                <div id="ingredientform">
+                    <div class="form-row mb-3">
+                        <div class="col">
+                            <label for="ingredient" class="form-label">Choose Ingredient</label>
+                            <select class="form-control" name="ingredient" id="ingredient" onchange="getMeasurements()">
+                                {% for rawFood in rawFoods.all %}
+                                <option>{{ rawFood }}</option>
+                                {% endfor%}
+                            </select>
+                        </div>
+                        <div class="col">
+                            <label for="ingredientamount" class="form-label">Ingredient Amount</label>
+                            <input type="number" class="form-control" name="ingredientamount" id="ingredientamount"
+                                value="0" min="0">
+                        </div>
+                        <div class="col-auto">
+                            <label for="ingredientmeasurement" class="form-label">Ingredient Measurement</label>
+                            <select class="form-control" name="ingredientmeasurement" id="ingredientmeasurement">
+                            </select>
+                        </div>
+                        <div class="col-auto align-self-end">
+                            <button class="btn btn-danger" type="button" onclick="deleteIngredient()">Delete</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button class="btn btn-success btn-block mb-3" onclick="addIngredient()" type="button">Add Another
+                Ingredient</button>
         </div>
         <div>
-            {{ form.category.errors }}
-            {{ form.category | as_crispy_field }}
+            <h3>Add Instructions to Your Recipe</h3>
+            <div id="instructionforms">
+                <div id="instructionform">
+                    <div class="row mb-3" style="height: 300px;">
+                        <div class="col-3 align-self-end">
+                            <div class="container border border-dark rounded mb-3" id="instructionImageContainer" style="height: 24vh;">
+                                <img id="instructionimageoutput" class="rounded mx-auto d-block" style="max-height: 100%;"/>
+                            </div>
+                            <div class="custom-file align-self-end">
+                                <label for="instructionimage" class="custom-file-label">Add Recipe Image</label>
+                                <input type="file" class="custom-file-input" name="instructionimage" onchange="addInstructionImage(event)">
+                            </div>
+                        </div>
+                        <div class="col">
+                            <textarea class="form-control" rows="10" placeholder="Add Description Here" style="height: 30vh;"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div>
-            {{ form.rating.errors }}
-            {{ form.rating | as_crispy_field }}
-        </div>
-        <div>
-            {{ form.difficulty.errors }}
-            {{ form.difficulty | as_crispy_field }}
-        </div>
-        
-    </div>
-    <div class="col">
-        <h3>Add Ingredients</h3>
-        {{ ingredientformset.management_form }}
-        {% for form in ingredientformset %}
-        {{ form | crispy }}
-        {% endfor %}
-    </div>
-    <div class="col">
-        <h3>Add Instructions</h3>
-        {{ instructionformset.management_form }}
-        {% for form in instructionformset %}
-        {{ form | crispy }}
-        {% endfor %}
-    </div>
-    <button type="submit">Submit</button>
+        <button class="btn btn-primary mb-5" type="submit">Submit</button>
+    </form>
 </div>
+<script>
+    var addRecipeImage = function (event) {
+        var imageContainer = document.getElementById('recipeImageContainer');
+        imageContainer.style.display = 'block';
+        var image = document.getElementById('recipeimageoutput');
+        image.src = URL.createObjectURL(event.target.files[0]);
+    };
+
+    var addInstructionImage = function (event) {
+        var image = document.getElementById("instructionimageoutput");
+        image.src = URL.createObjectURL(event.target.files[0]);
+    };
+
+    var getMeasurements = function () {
+        var ingredient = document.getElementById('ingredient');
+        var ingredientname = ingredient.value;
+
+
+        var ingredientmeasurement = document.getElementById('ingredientmeasurement');
+        var option = document.createElement('option');
+        option.value = ingredientname;
+        option.innerHTML = ingredientname;
+        ingredientmeasurement.appendChild(option);
+
+        var rawFoods = "{{ rawFoods.all | safe }}";
+        alert(JSON.parse(rawFoods))
+    };
+
+    var addIngredient = function () {
+        var ingredientform = document.getElementById('ingredientform');
+        var clone = ingredientform.cloneNode(true);
+
+        document.getElementById('ingredientforms').appendChild(clone);
+    };
+
+    var deleteIngredient = function () {
+        var ingredientforms = document.getElementById('ingredientforms');
+        var ingredientformtodelete = event.target.parentNode.parentNode.parentNode;
+
+        if (ingredientforms.children.length == 1) {
+            alert("You have to have at least one ingredient in your recipe.");
+        } else {
+            ingredientformtodelete.remove();
+        }
+    };
+
+
+</script>
 {% endblock %}
+
+<!--
+    <div>
+                {{ form.name.errors }}
+                {{ form.name | as_crispy_field}}
+            </div>
+            <div>
+                {{ form.imagePath.errors }}
+                {{ form.imagePath | as_crispy_field }}
+            </div>
+            <div class="row">
+                <div class="col">
+                    {{ form.category.errors }}
+                    {{ form.category | as_crispy_field }}
+                </div>
+                <div class="col">
+                    <div>
+                        {{ form.rating.errors }}
+                        {{ form.rating | as_crispy_field }}
+                    </div>
+                    <div>
+                        {{ form.difficulty.errors }}
+                        {{ form.difficulty | as_crispy_field }}
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <h3>Add Ingredients</h3>
+                {{ ingredientformset.management_form }}
+                {% for form in ingredientformset %}
+                {{ form | crispy }}
+                {% endfor %}
+            </div>
+            <div class="col">
+                <h3>Add Instructions</h3>
+                {{ instructionformset.management_form }}
+                {% for form in instructionformset %}
+                {{ form | crispy }}
+                {% endfor %}
+            </div>
+-->

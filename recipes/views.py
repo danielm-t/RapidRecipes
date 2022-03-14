@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from datetime import datetime
 from recipes.models import Category, Recipe, Ingredient, Instruction
+from food.models import RawFood
 from .forms import InstructionFormSet, RecipeForm, IngredientFormSet, ContactForm
 from django.core.mail import send_mail, BadHeaderError
 from rapid_recipes.settings import DEFAULT_FROM_EMAIL
@@ -89,13 +90,23 @@ def add_recipe(request):
         form = RecipeForm()
         ingredientformset = IngredientFormSet()
         instructionformset = InstructionFormSet()
+        categories = Category.objects.all()
+        rawFoods = RawFood.objects
 
         context_dict = {
             "form" : form, 
             "ingredientformset": ingredientformset,
-            "instructionformset": instructionformset
+            "instructionformset": instructionformset,
+            "categories" : categories,
+            "rawFoods" : rawFoods
             }
         return render(request, 'recipes/add_recipe.html', context_dict)
+    else:
+        post = request.POST
+        print(post.getlist("categories"))
+
+        return HttpResponse("Hello")
+    
 
 
 # def some_view(request):
