@@ -83,7 +83,7 @@ def show_recipe(request, recipe_name_slug):
     except Recipe.DoesNotExist:
         context_dict['recipe'] = None
 
-    return render(request, 'recipes/add_recipe.html', context_dict)
+    return render(request, 'recipes/view_recipe.html', context_dict)
 
 def add_recipe(request):
     if request.method == "GET":
@@ -103,7 +103,9 @@ def add_recipe(request):
         return render(request, 'recipes/add_recipe.html', context_dict)
     else:
         post = request.POST
+        print(post.getlist("ingredient"))
         print(post.getlist("categories"))
+        print(post.getlist("instruction"))
 
         return HttpResponse("Hello")
     

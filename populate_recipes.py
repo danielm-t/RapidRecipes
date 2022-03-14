@@ -49,7 +49,7 @@ def populate():
                {'name': 'dutch butter cake', 'categories': ['snack','easy'], 'rating': 4.0,
                 'difficulty': 0.5, 'imagePath': 'dutch_butter_cake.png'},
                {'name': 'Burger', 'categories': ['dessert','medium'], 'rating': 0.0,
-                'difficulty': 2.0, 'imagePath': 'borgor.png'},
+                'difficulty': 2.0, 'imagePath': 'borgor.jpg'},
                {'name': 'Curry', 'categories': ['lunch','hard'], 'rating': 5.0,
                 'difficulty': 5.0, 'imagePath': 'mix.jpg'}]
 

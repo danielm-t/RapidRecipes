@@ -3,7 +3,7 @@
 {% block content_block %}
 {% load crispy_forms_tags %}
 
-<div class="container-fluid">
+<div class="container-fluid my-5">
     <h2>Add A Recipe</h2>
     <form method="post">
         {% csrf_token %}
@@ -49,7 +49,8 @@
                     <div class="form-row mb-3">
                         <div class="col">
                             <label for="ingredient" class="form-label">Choose Ingredient</label>
-                            <select class="form-control" name="ingredient" id="ingredient" onchange="getMeasurements()">
+                            <select class="form-control" name="ingredient" id="ingredient" required>
+                                <option disabled selected value>Select An Ingredient</option>
                                 {% for rawFood in rawFoods.all %}
                                 <option>{{ rawFood }}</option>
                                 {% endfor%}
@@ -57,12 +58,12 @@
                         </div>
                         <div class="col">
                             <label for="ingredientamount" class="form-label">Ingredient Amount</label>
-                            <input type="number" class="form-control" name="ingredientamount" id="ingredientamount"
-                                value="0" min="0">
+                            <input type="number" class="form-control" name="ingredientamount" id="ingredientamount" value="0" min="0">
                         </div>
-                        <div class="col-auto">
-                            <label for="ingredientmeasurement" class="form-label">Ingredient Measurement</label>
-                            <select class="form-control" name="ingredientmeasurement" id="ingredientmeasurement">
+                        <div class="col">
+                            <label for="ingredientmeasurement" class="form-label">Measurement</label>
+                            <select class="form-control" name="ingredientmeasurement" id="ingredientmeasurement" required>
+                                <option disabled selected value>Select</option>
                             </select>
                         </div>
                         <div class="col-auto align-self-end">
@@ -71,29 +72,33 @@
                     </div>
                 </div>
             </div>
-            <button class="btn btn-success btn-block mb-3" onclick="addIngredient()" type="button">Add Another
-                Ingredient</button>
+            <button class="btn btn-success btn-block mb-3" onclick="addIngredient()" type="button">
+                Add Another Ingredient
+            </button>
         </div>
         <div>
             <h3>Add Instructions to Your Recipe</h3>
             <div id="instructionforms">
                 <div id="instructionform">
-                    <div class="row mb-3" style="height: 300px;">
-                        <div class="col-3 align-self-end">
-                            <div class="container border border-dark rounded mb-3" id="instructionImageContainer" style="height: 24vh;">
-                                <img id="instructionimageoutput" class="rounded mx-auto d-block" style="max-height: 100%;"/>
-                            </div>
-                            <div class="custom-file align-self-end">
-                                <label for="instructionimage" class="custom-file-label">Add Recipe Image</label>
-                                <input type="file" class="custom-file-input" name="instructionimage" onchange="addInstructionImage(event)">
-                            </div>
+                    <div class="mb-3">
+                        <textarea class="form-control" rows="10" placeholder="Add Description Here"
+                            name="instruction"></textarea>
+                    </div>
+                    <div class="form-row mb-3 mx-0">
+                        <div class="col custom-file">
+                            <label for="instructionimage" class="custom-file-label">Add Instruction Image</label>
+                            <input type="file" class="custom-file-input" name="instructionimage"
+                                onchange="instructionImageAdded(event)">
                         </div>
-                        <div class="col">
-                            <textarea class="form-control" rows="10" placeholder="Add Description Here" style="height: 30vh;"></textarea>
+                        <div class="col-auto">
+                            <button class="btn btn-danger" type="button" onclick="deleteInstruction()">Delete</button>
                         </div>
                     </div>
                 </div>
             </div>
+            <button class="btn btn-success btn-block mb-3" onclick="addInstruction()" type="button">
+                Add Another Instruction
+            </button>
         </div>
         <button class="btn btn-primary mb-5" type="submit">Submit</button>
     </form>
@@ -106,31 +111,14 @@
         image.src = URL.createObjectURL(event.target.files[0]);
     };
 
-    var addInstructionImage = function (event) {
-        var image = document.getElementById("instructionimageoutput");
-        image.src = URL.createObjectURL(event.target.files[0]);
-    };
-
-    var getMeasurements = function () {
-        var ingredient = document.getElementById('ingredient');
-        var ingredientname = ingredient.value;
-
-
-        var ingredientmeasurement = document.getElementById('ingredientmeasurement');
-        var option = document.createElement('option');
-        option.value = ingredientname;
-        option.innerHTML = ingredientname;
-        ingredientmeasurement.appendChild(option);
-
-        var rawFoods = "{{ rawFoods.all | safe }}";
-        alert(JSON.parse(rawFoods))
-    };
-
     var addIngredient = function () {
         var ingredientform = document.getElementById('ingredientform');
         var clone = ingredientform.cloneNode(true);
 
+    
         document.getElementById('ingredientforms').appendChild(clone);
+        $(clone).find('#ingredient').val("");
+        $(clone).find('#ingredientamount').val(0);
     };
 
     var deleteIngredient = function () {
@@ -144,6 +132,30 @@
         }
     };
 
+    var instructionImageAdded = function (event) {
+        alert("You successfully added an instruction image!")
+        var label = event.target.parentNode.children[0];
+        label.innerHTML = "Change Instruction Image";
+        label.style.backgroundColor = "lightgreen";
+    };
+
+    var addInstruction = function () {
+        var instructionform = document.getElementById('instructionform');
+        var clone = instructionform.cloneNode(true);
+
+        document.getElementById('instructionforms').appendChild(clone);
+    };
+
+    var deleteInstruction = function () {
+            var instructionforms = document.getElementById('instructionforms');
+            var instructionformtodelete = event.target.parentNode.parentNode.parentNode;
+
+            if (instructionforms.children.length == 1) {
+                alert("You have to have at least one instruction in your recipe.");
+            } else {
+                instructionformtodelete.remove();
+            }
+    };
 
 </script>
 {% endblock %}
@@ -187,4 +199,22 @@
                 {{ form | crispy }}
                 {% endfor %}
             </div>
+-->
+
+
+<!--
+<div class="row mb-3" style="height: 300px;">
+    <div class="col-3 align-self-end">
+        <div class="container border border-dark rounded mb-3" id="instructionImageContainer" style="height: 24vh;">
+            <img id="instructionimageoutput" class="rounded mx-auto d-block" style="max-height: 100%;" />
+        </div>
+        <div class="custom-file align-self-end">
+            <label for="instructionimage" class="custom-file-label">Add Recipe Image</label>
+            <input type="file" class="custom-file-input" name="instructionimage" onchange="addInstructionImage(event)">
+        </div>
+    </div>
+    <div class="col">
+        <textarea class="form-control" rows="10" placeholder="Add Description Here" style="height: 30vh;"></textarea>
+    </div>
+</div>
 -->
