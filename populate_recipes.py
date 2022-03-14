@@ -5,7 +5,7 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE',
 import django
 django.setup()
 from recipes.models import Category, Recipe, Ingredient, Instruction
-from food.models import RawFood
+from food.models import RawFood, Measurement
 from rapid_recipes.settings import MEDIA_ROOT
 
 def populate():
@@ -34,20 +34,20 @@ def populate():
 
     # Ingredient list
     ingredients = [
-                   {'rawFood': 'plain flour', 'amount' : '260', 'recipe': 'dutch butter cake'},
-                   {'rawFood': 'caster sugar', 'amount' : '250', 'recipe': 'dutch butter cake'},
-                   {'rawFood': 'butter', 'amount' : '250', 'recipe': 'dutch butter cake'},
-                   {'rawFood': 'vanilla extract', 'amount' : 'a few', 'recipe': 'dutch butter cake'},
-                   {'rawFood': 'butter', 'amount' : '50', 'recipe': 'Burger'},
-                   {'rawFood': 'lettuce', 'amount' : 'a couple', 'recipe': 'Burger'},
-                   {'rawFood': 'tomato', 'amount' : 'a couple', 'recipe': 'Burger'},
-                   {'rawFood': 'beef burger', 'amount' : '200', 'recipe': 'Burger'},
-                   {'rawFood': 'bread', 'amount' : '1', 'recipe': 'Burger'},]
+                   {'rawFood': 'plain flour', 'amount' : '260', 'recipe': 'Dutch butter cake', 'unit':'gram'},
+                   {'rawFood': 'caster sugar', 'amount' : '250', 'recipe': 'Dutch butter cake', 'unit':'gram'},
+                   {'rawFood': 'butter', 'amount' : '250', 'recipe': 'Dutch butter cake', 'unit':'gram'},
+                   {'rawFood': 'vanilla extract', 'amount' : 'a few', 'recipe': 'Dutch butter cake', 'unit':'drop'},
+                   {'rawFood': 'butter', 'amount' : '50', 'recipe': 'Burger', 'unit':'gram'},
+                   {'rawFood': 'lettuce', 'amount' : 'a couple', 'recipe': 'Burger', 'unit':'leaf'},
+                   {'rawFood': 'tomato', 'amount' : 'a couple', 'recipe': 'Burger', 'unit':'slice'},
+                   {'rawFood': 'beef burger', 'amount' : '200', 'recipe': 'Burger', 'unit':'gram'},
+                   {'rawFood': 'bread', 'amount' : '1', 'recipe': 'Burger', 'unit':'bun'},]
 
     # Recipe list
     recipes = [
-               {'name': 'dutch butter cake', 'categories': ['snack','easy'], 'rating': 4.0,
-                'difficulty': 0.5, 'imagePath': 'dutch_butter_cake.png'},
+               {'name': 'Dutch butter cake', 'categories': ['snack','easy'], 'rating': 4.0,
+                'difficulty': 0.5, 'imagePath': 'Dutch_butter_cake.png', },
                {'name': 'Burger', 'categories': ['dessert','medium'], 'rating': 0.0,
                 'difficulty': 2.0, 'imagePath': 'borgor.jpg'},
                {'name': 'Curry', 'categories': ['lunch','hard'], 'rating': 5.0,
@@ -55,16 +55,16 @@ def populate():
 
     # Instruction list
     instructions = [
-                    {'step': 0, 'recipe': 'dutch butter cake', 'media': None, 'description': 'Preheat oven to gas 3 (140 degrees Celsius).'},
-                    {'step': 1, 'recipe': 'dutch butter cake', 'media': None, 'description': 'Grease a shallow cake tin of about 20-22 cm diameter with a little butter. It is very helpful if your tin has slanted edges.'},
-                    {'step': 2, 'recipe': 'dutch butter cake', 'media': None, 'description': 'Mix the flour, sugar, butter and vanilla essence and knead into a supple ball of dough in a large mixing bowl. It may help to cut the butter into small pieces with two knives first, before mixing with your hands. '},
-                    {'step': 3, 'recipe': 'dutch butter cake', 'media': None, 'description': 'Press the dough into the form, making sure there is slightly more dough peripherally, to avoid the edge from overcooking.'},
-                    {'step': 4, 'recipe': 'dutch butter cake', 'media': None, 'description': 'Place on a high shelf and check after about 35 minutes. Only check by eye, it should look slightly underdone, if it is browning then it is probably too far gone as the edge will set rock-hard when it cools. It should look like raw dough in the middle but nowhere should be darker than golden buttery yellow.'},
-                    {'step': 5, 'recipe': 'dutch butter cake', 'media': None, 'description': 'Take the tin from the oven- it is okay if it looks very fluid as this will set when cooling. Cut into diamonds of about 3 x 3 cms, as the pieces are very calorific. Cut the cake when it is lukewarm, that is easier than when it is completely cold.'},
-                    {'step': 0, 'recipe': 'Burger', 'media': None, 'description': 'Preheat the oven to what is needed for you beef burgers.'},
-                    {'step': 1, 'recipe': 'Burger', 'media': None, 'description': 'When the oven is at the appropriate temperature, put the burger buns in for the time specified for them.'},
-                    {'step': 2, 'recipe': 'Burger', 'media': None, 'description': 'Slice your tomato and lettuce leaves to what you want and butter your buns.'},
-                    {'step': 0, 'recipe': 'Burger', 'media': None, 'description': 'Build your burger in the manner that you want.'}]
+                    {'step': 1, 'recipe': 'Dutch butter cake', 'media': None, 'description': 'Preheat oven to gas 3 (140 degrees Celsius).'},
+                    {'step': 2, 'recipe': 'Dutch butter cake', 'media': None, 'description': 'Grease a shallow cake tin of about 20-22 cm diameter with a little butter. It is very helpful if your tin has slanted edges.'},
+                    {'step': 3, 'recipe': 'Dutch butter cake', 'media': None, 'description': 'Mix the flour, sugar, butter and vanilla essence and knead into a supple ball of dough in a large mixing bowl. It may help to cut the butter into small pieces with two knives first, before mixing with your hands. '},
+                    {'step': 4, 'recipe': 'Dutch butter cake', 'media': None, 'description': 'Press the dough into the form, making sure there is slightly more dough peripherally, to avoid the edge from overcooking.'},
+                    {'step': 5, 'recipe': 'Dutch butter cake', 'media': None, 'description': 'Place on a high shelf and check after about 35 minutes. Only check by eye, it should look slightly underdone, if it is browning then it is probably too far gone as the edge will set rock-hard when it cools. It should look like raw dough in the middle but nowhere should be darker than golden buttery yellow.'},
+                    {'step': 6, 'recipe': 'Dutch butter cake', 'media': None, 'description': 'Take the tin from the oven- it is okay if it looks very fluid as this will set when cooling. Cut into diamonds of about 3 x 3 cms, as the pieces are very calorific. Cut the cake when it is lukewarm, that is easier than when it is completely cold.'},
+                    {'step': 1, 'recipe': 'Burger', 'media': None, 'description': 'Preheat the oven to what is needed for you beef burgers.'},
+                    {'step': 2, 'recipe': 'Burger', 'media': None, 'description': 'When the oven is at the appropriate temperature, put the burger buns in for the time specified for them.'},
+                    {'step': 3, 'recipe': 'Burger', 'media': None, 'description': 'Slice your tomato and lettuce leaves to what you want and butter your buns.'},
+                    {'step': 1, 'recipe': 'Burger', 'media': None, 'description': 'Build your burger in the manner that you want.'}]
 
 
     # Populate database
@@ -84,9 +84,10 @@ def populate():
             r.category.add(category)
 
     for food in ingredients:
+        measurement = Measurement.objects.get(unit=food['unit'])
         raw_food = RawFood.objects.get(name=food['rawFood'])
         plan = Recipe.objects.get(name=food['recipe'])
-        i = Ingredient.objects.get_or_create(amount=food['amount'], rawFood=raw_food, recipe=plan)[0]
+        i = Ingredient.objects.get_or_create(amount=food['amount'], rawFood=raw_food, recipe=plan, measuredIn=measurement)[0]
         i.save()
 
     for instruction in instructions:

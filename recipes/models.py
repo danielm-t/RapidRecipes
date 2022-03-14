@@ -1,6 +1,6 @@
 from django.db import models
 from django.template.defaultfilters import slugify
-from food.models import RawFood
+from food.models import RawFood, Measurement
 
 class Category(models.Model):
     CATEGORY_MAX_LENGTH = 255
@@ -44,6 +44,7 @@ class Ingredient(models.Model):
     rawFood = models.ForeignKey(RawFood, on_delete=models.CASCADE) # If a raw food is deleted, delete ingredient
     amount = models.CharField(max_length=AMOUNT_MAX_LENGTH)
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE) # Ingredient belongs to a recipe
+    measuredIn = models.ForeignKey(Measurement, on_delete=models.CASCADE)
     def __str__(self):
         return self.rawFood.name
 

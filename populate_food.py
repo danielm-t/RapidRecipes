@@ -41,14 +41,14 @@ def populate():
     
     # Raw food list
     raw_foods = [
-                {'name': 'plain flour', 'measuredIn': 'gram'},
-                {'name': 'caster sugar', 'measuredIn': 'gram'},
-                {'name': 'butter', 'measuredIn': 'gram'},
-                {'name': 'vanilla extract', 'measuredIn': 'drop'},
-                {'name': 'bread', 'measuredIn': 'bun'},
-                {'name': 'beef burger', 'measuredIn': 'gram'},
-                {'name': 'lettuce', 'measuredIn': 'leaf'},
-                {'name': 'tomato', 'measuredIn': 'slice'}]
+                {'name': 'plain flour', 'measuredIn': ['gram']},
+                {'name': 'caster sugar', 'measuredIn': ['gram']},
+                {'name': 'butter', 'measuredIn': ['gram']},
+                {'name': 'vanilla extract', 'measuredIn': ['drop']},
+                {'name': 'bread', 'measuredIn': ['bun']},
+                {'name': 'beef burger', 'measuredIn': ['gram']},
+                {'name': 'lettuce', 'measuredIn': ['leaf']},
+                {'name': 'tomato', 'measuredIn': ['slice']}]
 
     
     # Populate database
@@ -64,10 +64,11 @@ def populate():
     
     
     for raw_food in raw_foods:
-        measurement = Measurement.objects.get(unit=raw_food['measuredIn'])
         r = RawFood.objects.get_or_create(name=raw_food['name'])[0]
         r.save()
-        r.measuredIn.add(measurement)
+        for measurementType in raw_food['measuredIn']:
+            measurement = Measurement.objects.get(unit=measurementType)
+            r.measuredIn.add(measurement)
     
 
 

@@ -77,8 +77,8 @@ def show_recipe(request, recipe_name_slug):
         instructions = recipe.instruction_set.all()
         
         context_dict['recipe'] = recipe
-        context_dict['ingredient'] = ingredients
-        context_dict['instruction'] = instructions
+        context_dict['ingredients'] = ingredients
+        context_dict['instructions'] = instructions
         
     except Recipe.DoesNotExist:
         context_dict['recipe'] = None

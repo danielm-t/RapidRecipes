@@ -2,7 +2,8 @@
 {% block content_block %}
 
 <div class="container-fluid">
-    <h2>Recipe name</h2>
+    {% if recipe %}
+    <h2>{{ recipe.name }}</h2>
     <div class="container-fluid">
         <!--stars-->
         <div id="{{ r.slug }}">
@@ -13,22 +14,13 @@
 
         <div class="row">
             <div class="col-md-4 ">
-                <img src="{{ MEDIA_URL }}recipes/borgor.jpg" class="card-img-top" alt="Image" width="30%" />
+                <img src="{{ MEDIA_URL }}recipes/{{ recipe.imagePath }}" class="card-img-top" alt="Image" width="30%" />
                 <div class="col-xs-12" style="height: 15px"></div>
                 <h4>Instructions:</h4>
                 <p class="fs-1">
-                    <strong>1.</strong>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                    incididunt ut labore et dolore magna aliqua.<br>
-                    <strong>2.</strong>Mattis enim ut tellus elementum sagittis. Id cursus
-                    metus aliquam eleifend mi. Magna ac placerat vestibulum lectus mauris ultrices eros in cursus.
-                    Lobortis scelerisque fermentum dui faucibus in ornare quam. Viverra aliquet eget sit amet tellus
-                    cras adipiscing. Semper auctor neque vitae tempus.<br>
-                    <strong>3.</strong>Dignissim cras tincidunt lobortis feugiat vivamus
-                    at augue eget. Urna molestie at elementum eu facilisis sed odio morbi quis. Tellus in metus
-                    vulputate eu. Metus vulputate eu scelerisque felis imperdiet proin fermentum leo. Aliquet sagittis
-                    id consectetur purus ut faucibus pulvinar. Proin sagittis nisl rhoncus mattis rhoncus urna neque
-                    viverra. Diam in arcu cursus euismod quis viverra nibh cras. Semper risus in hendrerit gravida
-                    rutrum quisque non tellus.  
+                    {% for instruction in instructions %}
+                    <strong>{{ instruction.step }}. </strong>{{ instruction.description }}<br>
+                    {% endfor %}
                 </p>
             </div>
 
@@ -42,11 +34,9 @@
                 <strong>Ingredients: <br></strong>
                 <div class="list-group">
                     <p>
-                        &#9642;Item1 <br>
-                        &#9642;Item2 <br>
-                        &#9642;Item3 <br>
-                        &#9642;Item4 <br>
-                        &#9642;Item5 <br>
+                        {% for ingredient in ingredients %}
+                        &#9642;{{ ingredient.rawFood.name }} - {{ ingredient.amount }} {{ ingredient.measuredIn }}.<br>
+                        {% endfor %}
                     </p>
                 </div>
             </div>
@@ -71,5 +61,6 @@
         }
         getRatings();
     </script>
+    {% endif %}
 </div>
 {% endblock %}
