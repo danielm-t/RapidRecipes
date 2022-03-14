@@ -5,12 +5,6 @@
     {% if recipe %}
     <h2>{{ recipe.name }}</h2>
     <div class="container-fluid">
-        <!--stars-->
-        <div id="{{ r.slug }}">
-            <div class="stars-outer">
-                <div class="stars-inner"></div>
-            </div>
-        </div>
 
         <div class="row">
             <div class="col-md-4 ">
@@ -28,8 +22,21 @@
                 <strong>Preparation time: <br></strong>
                 30 min <br>
                 <br>
+                <strong>Rating: <br></strong>
+                    <!--stars-->
+                    <div id="{{ recipe.slug }}-rating">
+                        <div class="stars-outer">
+                            <div class="stars-inner"></div>
+                        </div>
+                    </div> <br>
+                <br>
                 <strong>Difficulty: <br></strong>
-                Medium <br>
+                    <!--stars-->
+                    <div id="{{ recipe.slug }}-difficulty">
+                        <div class="stars-outer">
+                            <div class="stars-inner"></div>
+                        </div>
+                    </div> <br>
                 <br>
                 <strong>Ingredients: <br></strong>
                 <div class="list-group">
@@ -51,13 +58,17 @@
         </div>
     </div>
     <script>
-        function getRatings() {
+        function starPercentage(value_){
             const starTotal = 5;
-            var my_rating = "{{ r.rating }}";
-            var my_slug = "{{ r.slug }} "
-            const starPercentage = (my_rating / starTotal) * 100;
-            const starPercentageRounded = `${(Math.round(starPercentage / 10) * 10)}%`;
-            document.querySelector(`#${my_slug} .stars-inner`).style.width = starPercentageRounded;
+            const starPercentage = (value_ / starTotal) * 100;
+            return `${(Math.round(starPercentage / 10) * 10)}%`;
+        }
+
+        function getRatings() {
+            var my_slug = "{{ recipe.slug }}"
+            
+            document.querySelector(`#${my_slug}-rating .stars-inner`).style.width = starPercentage("{{ recipe.rating }}");
+            document.querySelector(`#${my_slug}-difficulty .stars-inner`).style.width = starPercentage("{{ recipe.difficulty }}");
         }
         getRatings();
     </script>
