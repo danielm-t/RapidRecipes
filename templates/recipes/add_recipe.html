@@ -5,6 +5,25 @@
 
 <div class="container-fluid my-5">
     <h2>Add A Recipe</h2>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        function hideOptions(selectElement, excluded) {
+            var i, L = selectElement.options.length - 1;
+            for(i = L; i >= 0; i--) {
+                if(selectElement.options[i].getAttribute('value') == excluded){
+                    selectElement.options[i].removeAttribute('hidden');
+                }else{
+                selectElement.options[i].setAttribute('hidden', 'true');
+                }
+            }
+        }
+        $(document).ready(function(){
+
+            $('#ingredient').on('change',function(){
+            hideOptions(document.getElementById('ingredientmeasurement'), this.value); // Hide all options from: https://stackoverflow.com/questions/3364493/how-do-i-clear-all-options-in-a-dropdown-box
+        });
+        });
+    </script>
     <form method="post">
         {% csrf_token %}
         <div>
@@ -52,7 +71,7 @@
                             <select class="form-control" name="ingredient" id="ingredient" required>
                                 <option disabled selected value>Select An Ingredient</option>
                                 {% for rawFood in rawFoods.all %}
-                                <option>{{ rawFood }}</option>
+                                <option value="{{ rawFood }}">{{ rawFood }}</option>
                                 {% endfor%}
                             </select>
                         </div>
@@ -63,7 +82,12 @@
                         <div class="col">
                             <label for="ingredientmeasurement" class="form-label">Measurement</label>
                             <select class="form-control" name="ingredientmeasurement" id="ingredientmeasurement" required>
-                                <option disabled selected value>Select</option>
+                                <option disabled selected value>Select A Measurement</option>
+                                {% for rawFood in rawFoods.all %}
+                                {% for measurement in rawFood.measuredIn.all %}
+                                <option value="{{ rawFood }}" hidden="true">{{ measurement }}</option>
+                                {% endfor%}
+                                {% endfor%}
                             </select>
                         </div>
                         <div class="col-auto align-self-end">
