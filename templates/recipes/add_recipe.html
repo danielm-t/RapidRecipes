@@ -5,25 +5,6 @@
 
 <div class="container-fluid my-5">
     <h2>Add A Recipe</h2>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script>
-        function hideOptions(selectElement, excluded) {
-            var i, L = selectElement.options.length - 1;
-            for(i = L; i >= 0; i--) {
-                if(selectElement.options[i].getAttribute('value') == excluded){
-                    selectElement.options[i].removeAttribute('hidden');
-                }else{
-                selectElement.options[i].setAttribute('hidden', 'true');
-                }
-            }
-        }
-        $(document).ready(function(){
-
-            $('#ingredient').on('change',function(){
-            hideOptions(document.getElementById('ingredientmeasurement'), this.value); // Hide all options from: https://stackoverflow.com/questions/3364493/how-do-i-clear-all-options-in-a-dropdown-box
-        });
-        });
-    </script>
     <form method="post">
         {% csrf_token %}
         <div>
@@ -64,7 +45,7 @@
         <div>
             <h3>Add Ingredients to Your Recipe</h3>
             <div id="ingredientforms">
-                <div id="ingredientform">
+                <div class="ingredientform" id = "ingredientform">
                     <div class="form-row mb-3">
                         <div class="col">
                             <label for="ingredient" class="form-label">Choose Ingredient</label>
@@ -128,6 +109,34 @@
     </form>
 </div>
 <script>
+
+    function getRawFoodMeasurementTypes(caller){
+            var $ingredientInstance = caller;
+            //console.log('text: '+$(this).find(":selected").not(':disabled').text());
+            var $ingredient = $ingredientInstance.find('#ingredient');
+            var $measurement = $ingredientInstance.find('#ingredientmeasurement');
+            //console.log($measurement.text()); // Print out html
+            $.ajax({
+                type: 'GET',
+                url: "{% url 'food:getRawFoodMeasurementTypes' %}",
+                data: {"raw-food": $ingredient.find(":selected").not(':disabled').text()},
+                success: function (response){
+
+                    $measurement.find('option').not(':disabled').remove();
+                    $.each(response, function(key,value){
+                        $measurement.append(`<option value="${value}">${value}</option>`);
+                    });
+                },
+                error: function (response){
+                    console.log(response);
+                }
+            });
+    };
+
+    $(document).ready(function(){
+        $('.ingredientform').on('change',function (){getRawFoodMeasurementTypes($(this));});
+    });
+
     var addRecipeImage = function (event) {
         var imageContainer = document.getElementById('recipeImageContainer');
         imageContainer.style.display = 'block';
@@ -138,7 +147,7 @@
     var addIngredient = function () {
         var ingredientform = document.getElementById('ingredientform');
         var clone = ingredientform.cloneNode(true);
-
+        $(clone).on('change',function (){getRawFoodMeasurementTypes($(this));});
     
         document.getElementById('ingredientforms').appendChild(clone);
         $(clone).find('#ingredient').val("");
