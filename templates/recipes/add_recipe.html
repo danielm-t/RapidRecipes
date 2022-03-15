@@ -49,7 +49,7 @@
                     <div class="form-row mb-3">
                         <div class="col">
                             <label for="ingredient" class="form-label">Choose Ingredient</label>
-                            <select class="form-control" name="ingredient" id="ingredient" required>
+                            <select class="form-control" name="ingredient" id="ingredient" onchange="getRawFoodMeasurementTypes(event)" required>
                                 <option disabled selected value>Select An Ingredient</option>
                                 {% for rawFood in rawFoods.all %}
                                 <option value="{{ rawFood }}">{{ rawFood }}</option>
@@ -106,10 +106,10 @@
 <script>
 
     function getRawFoodMeasurementTypes(caller){
-            var $ingredientInstance = caller;
+            var ingredientInstance = caller.target.parentNode.parentNode.parentNode;
             //console.log('text: '+$(this).find(":selected").not(':disabled').text());
-            var $ingredient = $ingredientInstance.find('#ingredient');
-            var $measurement = $ingredientInstance.find('#ingredientmeasurement');
+            var $ingredient = $(ingredientInstance).find('#ingredient');
+            var $measurement = $(ingredientInstance).find('#ingredientmeasurement');
             //console.log($measurement.text()); // Print out html
             $.ajax({
                 type: 'GET',
@@ -121,6 +121,7 @@
                     $.each(response, function(key,value){
                         $measurement.append(`<option value="${value}">${value}</option>`);
                     });
+                    $measurement.show();
                 },
                 error: function (response){
                     console.log(response);
@@ -128,9 +129,6 @@
             });
     };
 
-    $(document).ready(function(){
-        $('.ingredientform').on('change',function (){getRawFoodMeasurementTypes($(this));});
-    });
 
     var addRecipeImage = function (event) {
         var imageContainer = document.getElementById('recipeImageContainer');
@@ -142,11 +140,11 @@
     var addIngredient = function () {
         var ingredientform = document.getElementById('ingredientform');
         var clone = ingredientform.cloneNode(true);
-        $(clone).on('change',function (){getRawFoodMeasurementTypes($(this));});
     
         document.getElementById('ingredientforms').appendChild(clone);
         $(clone).find('#ingredient').val("");
         $(clone).find('#ingredientamount').val(0);
+        $(clone).find('#ingredientmeasurement').find('option').not(":disabled").remove();
     };
 
     var deleteIngredient = function () {
