@@ -37,7 +37,6 @@
           <li class="nav-item"><a class="nav-link" href="{% url 'recipes:index' %}">Home</a></li>
           <li class="nav-item "><a class="nav-link" href="{% url 'about' %}">About</a></li>
           <li class="nav-item "><a class="nav-link" href="{% url 'contact' %}">Contact</a></li>
-          <li class="nav-item"><a class="nav-link" href="{% url 'recipes:add_recipe' %}">Add Recipe</a></li>
           {% if user.is_authenticated %}
           <li class="nav-item"><a class="nav-link" href="{% url 'groceries:logout' %}?next=/rango/">Logout</a></li>
           <li class="nav-item"><a class="nav-link" href="{% url 'recipes:add_recipe' %}">Add Recipe</a></li>
