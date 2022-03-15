@@ -4,19 +4,29 @@ from django.contrib.auth.decorators import login_required
 from datetime import datetime
 from recipes.models import Category, Recipe, Ingredient, Instruction
 from food.models import RawFood
-from .forms import InstructionFormSet, RecipeForm, IngredientFormSet, ContactForm
+from .forms import InstructionFormSet, RecipeForm, IngredientFormSet, ContactForm, FilterForm
 from django.core.mail import send_mail, BadHeaderError
 from rapid_recipes.settings import DEFAULT_FROM_EMAIL
 
 # Create your views here.
 
 def index(request):
-    context_dict = {}
-    recipe_list = Recipe.objects.order_by('-rating')[:5]
-    context_dict = {'recipes': recipe_list}
-    #visitor_cookie_handler(request)
-    response = render(request, 'recipes/index.html', context_dict)
-    return response
+    if request.method == 'GET':
+        form = FilterForm()
+        context_dict = {}
+        recipe_list = Recipe.objects.order_by('-rating')[:5]
+        context_dict = {'recipes': recipe_list, 'form':form}
+        #visitor_cookie_handler(request)
+    else:
+        context_dict = {}
+        form = FilterForm(request.POST)
+        if form.is_valid():
+            lunch = form.cleaned_data['lunch']
+            recipe_list = Recipe.objects.order_by('-rating')[:5]
+            context_dict = {'recipes': recipe_list, 'form':form}
+            print(lunch)
+            
+    return render(request, "recipes/index.html", context_dict)
 
 def about(request):
     context_dict = {}
@@ -55,6 +65,7 @@ def contact(request):
 
 def success(request):
     return HttpResponse("The email was successfully sent!")
+
 
 # def show_category(request, category_name_slug):
 #     context_dict = {}

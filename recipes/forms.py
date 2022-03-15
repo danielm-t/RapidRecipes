@@ -41,3 +41,7 @@ class ContactForm(forms.Form):
     phonenumber = forms.CharField(required=False)
     email = forms.EmailField(required=True)
     message = forms.CharField(widget=forms.Textarea, required=True)
+
+class FilterForm(forms.Form):
+    lunch = forms.BooleanField(label='lunch')
+    
