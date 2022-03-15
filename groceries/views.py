@@ -5,12 +5,13 @@ from django.shortcuts import redirect
 from django.urls import reverse
 from django.http import HttpResponse
 from groceries.models import UserProfile
+from groceries.forms import UserForm
 
 
 def register(request):
     registered = False
     if request.method == 'POST':
-        user_form = UserProfile(request.POST)
+        user_form = UserForm(request.POST)
 
         if user_form.is_valid():
             user = user_form.save()
@@ -20,7 +21,7 @@ def register(request):
         else:
             print(user_form.errors)
     else:
-        user_form = UserProfile()
+        user_form = UserForm()
     return render(request,'groceries/register.html',
 context = {'user_form': user_form,
 'registered': registered})

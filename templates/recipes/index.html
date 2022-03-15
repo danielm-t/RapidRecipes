@@ -22,7 +22,7 @@
                                         <div class="stars-inner"></div>
                                     </div>
                                     </p>
-                                    <a href="./{{ r.slug }}/"class="btn btn-primary" ">View</a>
+                                    <a href="{% url 'recipes:show_recipe' r.slug %}"class="btn btn-primary">View</a>
                                 </div>
                             </div>
                         </div>

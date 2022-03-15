@@ -64,11 +64,6 @@
                             <label for="ingredientmeasurement" class="form-label">Measurement</label>
                             <select class="form-control" name="ingredientmeasurement" id="ingredientmeasurement" required>
                                 <option disabled selected value>Select A Measurement</option>
-                                {% for rawFood in rawFoods.all %}
-                                {% for measurement in rawFood.measuredIn.all %}
-                                <option value="{{ rawFood }}" hidden="true">{{ measurement }}</option>
-                                {% endfor%}
-                                {% endfor%}
                             </select>
                         </div>
                         <div class="col-auto align-self-end">
