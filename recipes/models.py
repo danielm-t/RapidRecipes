@@ -28,6 +28,7 @@ class Recipe(models.Model):
     rating = models.FloatField(max_length=RATING_MAX_SIZE, default=0)
     imagePath = models.CharField(max_length=IMAGE_PATH_MAX_LENGTH, blank=True)
     difficulty = models.FloatField(max_length=DIFFICULTY_MAX_SIZE, default=0)
+    time = models.FloatField(default = 0)
     slug = models.SlugField(unique=True)
 
     def save(self, *args, **kwargs):
