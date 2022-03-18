@@ -47,11 +47,11 @@ def populate():
     # Recipe list
     recipes = [
                {'name': 'Dutch butter cake', 'categories': ['snack','easy'], 'rating': 4.0,
-                'difficulty': 0.5, 'imagePath': 'Dutch_butter_cake.png', },
+                'difficulty': 0.5, 'imagePath': 'DutchButterCake/Dutch_butter_cake.png', },
                {'name': 'Burger', 'categories': ['dessert','medium'], 'rating': 0.0,
-                'difficulty': 2.0, 'imagePath': 'borgor.jpg'},
+                'difficulty': 2.0, 'imagePath': 'Burger/borgor.jpg'},
                {'name': 'Curry', 'categories': ['lunch','hard'], 'rating': 5.0,
-                'difficulty': 5.0, 'imagePath': 'mix.jpg'}]
+                'difficulty': 5.0, 'imagePath': 'Mix/mix.jpg'}]
 
     # Instruction list
     instructions = [
