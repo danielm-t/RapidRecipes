@@ -20,9 +20,14 @@ def index(request):
     else:
         context_dict = {}
         form = FilterForm(request.POST)
-        if form.is_valid():
-            lunch = form.cleaned_data['lunch']
+        if 'lunch' in request.POST:
             recipe_list = Recipe.objects.filter(category=6).order_by('-rating')[:5]
+            context_dict = {'recipes': recipe_list, 'form':form}
+        if 'dinner' in request.POST:
+            recipe_list = Recipe.objects.filter(category=7).order_by('-rating')[:5]
+            context_dict = {'recipes': recipe_list, 'form':form}
+        if 'breakfast' in request.POST:
+            recipe_list = Recipe.objects.filter(category=5).order_by('-rating')[:5]
             context_dict = {'recipes': recipe_list, 'form':form}
             
     return render(request, "recipes/index.html", context_dict)

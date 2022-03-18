@@ -43,5 +43,9 @@ class ContactForm(forms.Form):
     message = forms.CharField(widget=forms.Textarea, required=True)
 
 class FilterForm(forms.Form):
-    lunch = forms.BooleanField(label='lunch')
+    lunch = forms.BooleanField(label='lunch', required=False)
+    dinner = forms.BooleanField(label='dinner', required=False)
+    breakfast = forms.BooleanField(label='breakfast', required=False)
+
+    
     

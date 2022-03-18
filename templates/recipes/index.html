@@ -13,27 +13,32 @@
 		  <form method="post">
 			{% csrf_token %}
             <li class="list-group-item py-1">
-              <input class="form-check-input" type="checkbox" value="breakfast" id="breakfast">
-            <label class="form-check-label" for="breakfast">
+            <div class="form-check-input">
+			{{ form.breakfast }}
+			</div>
+			<label class="form-check-label" for="dinner">
               breakfast
             </label>
             </li>
-            <li class="list-group-item py-1">
 			
+            <li class="list-group-item py-1">
 			<div class="form-check-input">
 			{{ form.lunch }}
 			</div>
 			<label class="form-check-label" for="lunch">
               lunch
             </label>
-			
             </li>
+			
             <li class="list-group-item py-1">
-             <input class="form-check-input" type="checkbox" value="breakfast" id="breakfast">
-            <label class="form-check-label" for="breakfast">
+            <div class="form-check-input">
+			{{ form.dinner }}
+			</div>
+			<label class="form-check-label" for="dinner">
               dinner
             </label>
             </li>
+			
 			<div>
 				<button class="" type="submit">Submit</button>
 			</div>
