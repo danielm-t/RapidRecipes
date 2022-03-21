@@ -1,12 +1,15 @@
+from email.mime import image
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from datetime import datetime
 from recipes.models import Category, Recipe, Ingredient, Instruction
-from food.models import RawFood
-from .forms import InstructionFormSet, RecipeForm, IngredientFormSet, ContactForm
+from food.models import RawFood, Measurement
+from recipes.forms import ContactForm
 from django.core.mail import send_mail, BadHeaderError
 from rapid_recipes.settings import DEFAULT_FROM_EMAIL
+from django.core.files.storage import default_storage
+
 
 # Create your views here.
 
@@ -87,27 +90,103 @@ def show_recipe(request, recipe_name_slug):
 
 def add_recipe(request):
     if request.method == "GET":
-        form = RecipeForm()
-        ingredientformset = IngredientFormSet()
-        instructionformset = InstructionFormSet()
         categories = Category.objects.all()
-        rawFoods = RawFood.objects
+        rawFoods = RawFood.objects.all()
 
         context_dict = {
-            "form" : form, 
-            "ingredientformset": ingredientformset,
-            "instructionformset": instructionformset,
             "categories" : categories,
-            "rawFoods" : rawFoods
+            "rawFoods" : rawFoods,
             }
         return render(request, 'recipes/add_recipe.html', context_dict)
     else:
+    
+        # Handle Post
         post = request.POST
-        print(post.getlist("ingredient"))
-        print(post.getlist("categories"))
-        print(post.getlist("instruction"))
+        name = post['recipename']
+        time = post['time']
+        rating = post['rating']
+        difficulty = post['difficulty']
 
-        return HttpResponse("Hello")
+        # Get categories as list
+        categories = post.getlist("categories")
+
+        # Get ingredients, their amounts and measurements as a list
+        ingredients = post.getlist("ingredient")
+        ingredientamounts = post.getlist("ingredientamount")
+        ingredientmeasurements = post.getlist("ingredientmeasurement")
+
+        # Get instructions as a list
+        instructions = post.getlist("instruction")
+        
+        files = request.FILES
+
+        instructionimages = []
+        for i in range(len(instructions)):
+            try:
+                imagename = f"instructionimage{i+1}"
+                image = files[imagename]
+                instructionimages.append(image)
+            except:
+                instructionimages.append(None)
+        
+
+        recipeimage = files['recipeimage']
+        suffix = recipeimage.name.rsplit(".", 1)[-1]
+
+        recipeimagepath = f"{name}/{name}.{suffix}"
+        default_storage.save(f"recipes/{recipeimagepath}", recipeimage)
+
+
+        instructionimagepaths = []
+        for (i, ii) in enumerate(instructionimages):
+            if ii != None:
+                suffix = ii.name.rsplit(".", 1)[-1]
+
+                instructionimagepath = f"{name}/instructions/instruction{i}.{suffix}"
+                default_storage.save(f"recipes/{instructionimagepath}", ii)
+                instructionimagepaths.append(instructionimagepath)
+            else:
+                instructionimagepaths.append(None)
+                
+
+
+        categories
+        recipe = Recipe.objects.get_or_create(name=name,
+                        rating=rating,
+                        difficulty=difficulty,
+                        time=time,
+                        imagePath=recipeimagepath)[0]
+        recipe.save()
+
+        for category in categories:
+            c = Category.objects.get(category=category)
+            recipe.category.add(c)
+        
+        
+        
+        for (i, ia, im) in zip(ingredients, ingredientamounts, ingredientmeasurements):
+            m = Measurement.objects.get(unit=im)
+            f = RawFood.objects.get(name=i)
+            ingredient = Ingredient.objects.get_or_create(amount=ia,
+                                                            rawFood=f, 
+                                                            recipe=recipe,
+                                                            measuredIn=m)[0]
+            ingredient.save()
+
+
+        for i in range(len(instructions)):
+            if instructionimages[i] != None:
+                instruction = Instruction.objects.get_or_create(step=i+1,
+                                                                description=instructions[i],
+                                                                media=instructionimagepaths[i],
+                                                                recipe=recipe)[0]
+            else:
+                instruction = Instruction.objects.get_or_create(step=i+1,
+                                                                description=instructions[i],
+                                                                recipe=recipe)[0]
+            instruction.save()
+
+        return redirect('index')
     
 
 
