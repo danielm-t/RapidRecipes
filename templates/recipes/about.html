@@ -1,107 +1,11 @@
 {% extends 'rapidrecipes/base.html' %}
 {% block content_block %}
-<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
-<!------ Include the above in your HEAD tag ---------->
-<div class="col-xs-12" style="height:20px;"></div>
 
 <div class="container-fluid">
-    <h2>Add an ingredient</h2>
-    <div class="row">
-        <form class="col-md-4">
-            <label>Select Item</label>
-            <select class="form-control select2">
-                <option>Item1</option>
-                <option>Item2</option>
-                <option>Item3</option>
-            </select>
-        </form>
-    </div>
-    <div class="row w-25 p-3">
-        <label for="quantity" class="form-label">Quantity</label>
-        <input type="text" class="form-control" id="quantity" name="quantity" placeholder="Quantity" required>
-        <label>Select measurement</label>
-        <select class="form-control select2">
-            <option>gr</option>
-            <option>ml</option>
-            <option>kg</option>
-        </select>
-        <div class="mt-2 ">
-            <button type="button btn-sm" class="btn btn-dark">+</button>
-            <button type="button btn-sm" class="btn btn-dark">-</button>
-        </div>
-
-    </div>
-    <div class="custom-control custom-radio">
-        <input type="radio" id="owned" name="customRadio" class="custom-control-input">
-        <label class="custom-control-label" for="owned">Owned</label>
-      </div>
-      <div class="custom-control custom-radio">
-        <input type="radio" id="notowned" name="customRadio" class="custom-control-input">
-        <label class="custom-control-label" for="notowned">Not owned</label>
-      </div>
-    
-      <div class="col-xs-12" style="height:20px;"></div>
-    <div class="form-actions">
-        <button type="submit" class="btn btn-primary">Add ingredient</button>
-    </div>
-    <div class="col-xs-12" style="height:10px;"></div>
-    <h2>List of ingredients</h2>
-    <div class="table-responsive-lg">
-    <table class="table">
-        <thead class="thead-dark">
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">Item</th>
-                <th scope="col">Quantity</th>
-                <th scope="col">Owned/Not Owned</th>
-                <th scope="col">Delete?</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <th scope="row">1</th>
-                <td>Eggs</td>
-                <td>10
-                    <button type="button btn-sm" class="btn btn-dark">+</button>
-                    <button type="button btn-sm" class="btn btn-dark">-</button>
-                </td>
-                <td>✔️</td>
-                <td><button type="button" class="btn btn-danger">Delete</button></td>
-            </tr>
-            <tr>
-                <th scope="row">2</th>
-                <td>Flour</td>
-                <td>500gr
-                    <button type="button btn-sm" class="btn btn-dark">+</button>
-                    <button type="button btn-sm" class="btn btn-dark">-</button>
-                </td>
-                <td>✔️</td>
-                <td><button type="button" class="btn btn-danger">Delete</button></td>
-            </tr>
-            <tr>
-                <th scope="row">3</th>
-                <td>Butter</td>
-                <td>100gr
-                    <button type="button btn-sm" class="btn btn-dark">+</button>
-                    <button type="button btn-sm" class="btn btn-dark">-</button>
-                </td>
-                <td>❌</td>
-                <td><button type="button" class="btn btn-danger">Delete</button></td>
-            </tr>
-        </tbody>
-    </table>
-</div>
-</div>
-
-<script>
-    $('.select2').select2();
-</script>
-<!---<div class="container-fluid">
     <h2>About</h2>
     <p>We are a team of young and talented programmers that will not sell their souls to corporate.*</p>
     <div class="hidden-text">
         <p><small>Yet*</small></p>
     </div>
-</div>---->
+</div>
 {% endblock %}
