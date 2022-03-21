@@ -52,5 +52,4 @@ def user_logout(request):
 
 @login_required
 def shopping_list(request):
-    # TODO
-    return render(request, 'groceries/shoppinglist')
+    return render(request, 'groceries/shoppinglist.html')

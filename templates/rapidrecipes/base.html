@@ -69,6 +69,7 @@
           {% if user.is_authenticated %}
           <li class="nav-item"><a class="nav-link" href="{% url 'groceries:logout' %}?next=/rango/">Logout</a></li>
           <li class="nav-item"><a class="nav-link" href="{% url 'recipes:add_recipe' %}">Add Recipe</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'groceries:shoppinglist' %}">Your Groceries</a></li>
           </li>
           {% else %}
           <li class="nav-item"><a class="nav-link" href="{% url 'groceries:register' %}">Register Here</a>
