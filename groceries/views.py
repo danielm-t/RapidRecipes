@@ -4,8 +4,10 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
 from django.urls import reverse
 from django.http import HttpResponse
-from groceries.models import UserProfile
+from groceries.models import UserProfile, GroceryItem
+from django.contrib.auth.models import User
 from groceries.forms import UserForm
+from food.models import RawFood
 
 
 def register(request):
@@ -52,4 +54,6 @@ def user_logout(request):
 
 @login_required
 def shopping_list(request):
-    return render(request, 'groceries/shoppinglist.html')
+    context = {'rawFoods' : RawFood.objects.all()}
+    context['groceries'] = GroceryItem.objects.filter(user=request.user)
+    return render(request, 'groceries/shoppinglist.html', context)

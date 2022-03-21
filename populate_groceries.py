@@ -29,9 +29,12 @@ def populate():
     
     # populate database
     for person in users:
-        u = User.objects.get_or_create(email=person['email'],
+        try:
+            u = User.objects.create_user(email=person['email'],
                                        password=person['password'],
-                                       username=person['user'])[0]
+                                       username=person['user'])
+        except:
+            pass
         
         name = User.objects.get(username=person['user'])
         p = UserProfile.objects.get_or_create(email=person['email'],
