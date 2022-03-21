@@ -10,6 +10,7 @@ from groceries.forms import UserForm
 
 def register(request):
     registered = False
+    context = {'registered': registered}
     if request.method == 'POST':
         user_form = UserForm(request.POST)
 
@@ -18,13 +19,12 @@ def register(request):
             user.set_password(user.password)
             user.save()
             registered = True
+            login(request, user)
+            return redirect(reverse('index'))
         else:
             print(user_form.errors)
-    else:
-        user_form = UserForm()
-    return render(request,'groceries/register.html',
-context = {'user_form': user_form,
-'registered': registered})
+            context['form'] = user_form
+    return render(request,'groceries/register.html', context)
                 
 def user_login(request):
     if request.method == 'POST':
