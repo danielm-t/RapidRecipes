@@ -10,26 +10,21 @@
     <div class="row">
         <form class="col-md-4">
             <label>Select Item</label>
-            <select class="form-control select2">
-                <option>Item1</option>
-                <option>Item2</option>
-                <option>Item3</option>
+            <select class="form-control select2" name="ingredient" id="ingredient" onchange="getRawFoodMeasurementTypes(event)" required>
+                <option disabled selected value>Select An Ingredient</option>
+                                {% for rawFood in rawFoods.all %}
+                                <option value="{{ rawFood }}">{{ rawFood }}</option>
+                                {% endfor%}
             </select>
         </form>
     </div>
     <div class="row w-25 p-3">
         <label for="quantity" class="form-label">Quantity</label>
-        <input type="text" class="form-control" id="quantity" name="quantity" placeholder="Quantity" required>
-        <label>Select measurement</label>
-        <select class="form-control select2">
-            <option>gr</option>
-            <option>ml</option>
-            <option>kg</option>
-        </select>
-        <div class="mt-2 ">
-            <button type="button btn-sm" class="btn btn-dark">+</button>
-            <button type="button btn-sm" class="btn btn-dark">-</button>
-        </div>
+        <input type="number" class="form-control" name="ingredientamount" id="ingredientamount" value="0" min="0">
+        <label for="ingredientmeasurement" class="form-label">Measurement</label>
+                            <select class="form-control" name="ingredientmeasurement" id="ingredientmeasurement" required>
+                                <option disabled selected value>Select A Measurement</option>
+                            </select>
 
     </div>
     <div class="custom-control custom-radio">
@@ -51,44 +46,27 @@
     <table class="table">
         <thead class="thead-dark">
             <tr>
-                <th scope="col">#</th>
                 <th scope="col">Item</th>
                 <th scope="col">Quantity</th>
+                <th scope="col"></th>
                 <th scope="col">Owned/Not Owned</th>
                 <th scope="col">Delete?</th>
             </tr>
         </thead>
         <tbody>
+
+            {% for item in groceries %}
             <tr>
-                <th scope="row">1</th>
-                <td>Eggs</td>
-                <td>10
+                <td>{{ item.rawFood.name }}</td>
+                <td>{{ item.amount }} {{ item.measuredIn.unit }}</td>
+                <td>
                     <button type="button btn-sm" class="btn btn-dark">+</button>
                     <button type="button btn-sm" class="btn btn-dark">-</button>
                 </td>
-                <td>✔️</td>
+                <td>{{ item.available }}  ✔️❌</td>
                 <td><button type="button" class="btn btn-danger">Delete</button></td>
             </tr>
-            <tr>
-                <th scope="row">2</th>
-                <td>Flour</td>
-                <td>500gr
-                    <button type="button btn-sm" class="btn btn-dark">+</button>
-                    <button type="button btn-sm" class="btn btn-dark">-</button>
-                </td>
-                <td>✔️</td>
-                <td><button type="button" class="btn btn-danger">Delete</button></td>
-            </tr>
-            <tr>
-                <th scope="row">3</th>
-                <td>Butter</td>
-                <td>100gr
-                    <button type="button btn-sm" class="btn btn-dark">+</button>
-                    <button type="button btn-sm" class="btn btn-dark">-</button>
-                </td>
-                <td>❌</td>
-                <td><button type="button" class="btn btn-danger">Delete</button></td>
-            </tr>
+            {% endfor%}
         </tbody>
     </table>
 </div>
@@ -96,5 +74,31 @@
 
 <script>
     $('.select2').select2();
+
+    function getRawFoodMeasurementTypes(caller){
+            var ingredientInstance = caller.target.parentNode.parentNode.parentNode;
+            //console.log('text: '+$(this).find(":selected").not(':disabled').text());
+            var $ingredient = $(ingredientInstance).find('#ingredient');
+            var $measurement = $(ingredientInstance).find('#ingredientmeasurement');
+            //console.log($measurement.text()); // Print out html
+            $.ajax({
+                type: 'GET',
+                url: "{% url 'food:getRawFoodMeasurementTypes' %}",
+                data: {"raw-food": $ingredient.find(":selected").not(':disabled').text()},
+                success: function (response){
+
+                    $measurement.find('option').not(':disabled').remove();
+                    $.each(response, function(key,value){
+                        $measurement.append(`<option value="${value}">${value}</option>`);
+                    });
+                    $measurement.show();
+                },
+                error: function (response){
+                    console.log(response);
+                }
+            });
+    };
+
+
 </script>
 {% endblock %}
