@@ -92,22 +92,28 @@ def delete_grocery(request):
     if request.method == "GET":
         get = request.GET
         user = request.user
-        ingredient = get.get("i", None)
-        measurement = get.get("m", None)
-        amount = get.get("a", None)
-        owned = get.get("o", None)
-        if owned:
-            owned = not (owned == "false")
-        else:
-            owned = False
+        id = get.get("id", None)
         context = {}
         try:
-            rawFood = RawFood.objects.get(name=ingredient)
-            measuredIn = Measurement.objects.get(unit=measurement)
-            GroceryItem.objects.filter(rawFood=rawFood, amount=amount, available=owned, user=user, measuredIn=measuredIn).delete()
+            GroceryItem.objects.get(id=id, user=user).delete()
             context['groceries'] = GroceryItem.objects.filter(user=request.user)
-            print("hey")
         except (RawFood.DoesNotExist, Measurement.DoesNotExist) as e:
             context['groceries'] = GroceryItem.objects.filter(user=request.user)
         return render(request, "groceries/table_body.html", context)
 
+
+def change_amount(request):
+    if request.method == "GET":
+        get = request.GET
+        user = request.user
+        id = get.get("id", None)
+        amount = get.get("a", None)
+        context = {}
+        try:
+            groceryItem = GroceryItem.objects.get(id=id, user=user)
+            groceryItem.amount = amount
+            groceryItem.save()
+            context['groceries'] = GroceryItem.objects.filter(user=request.user)
+        except (RawFood.DoesNotExist, Measurement.DoesNotExist) as e:
+            context['groceries'] = GroceryItem.objects.filter(user=request.user)
+        return render(request, "groceries/table_body.html", context)

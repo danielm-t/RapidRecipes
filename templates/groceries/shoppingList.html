@@ -1,8 +1,5 @@
 {% extends 'rapidrecipes/base.html' %}
 {% block content_block %}
-
-
-
 <div class="col-xs-12" style="height:20px;"></div>
 
 <div class="container-fluid">
@@ -110,24 +107,30 @@
     };
 
     function deleteGrocery(event) {
-            var row = event.target.parentNode.parentNode;
+        var row = event.target.parentNode.parentNode;
 
-            var i = encodeURI($(row).find("#item-name").text());
+        var id = encodeURI($(row).find("#item-id").text());
 
-            var itemAmMe = $(row).find("#item-amount-measurement").text()
-            var array = itemAmMe.split(" ", 2);
-            var a = encodeURI(array[0]);
-            var m = encodeURI(array[1]);
-            var o = encodeURI($(row).find("#owned").text() == "✔️");
+        $('.table_body').html('').load(
+            "{% url 'groceries:delete_grocery' %}?id=" + id
+        );
+    };
 
-            var suffix = `?i=${i}&m=${m}&a=${a}&o=${o}`
+    function changeAmount(event) {
+        var row = event.target.parentNode.parentNode.parentNode.parentNode;
 
+        if (event.key === "Enter") {
+           
+            var id = $(row).find("#item-id").text();            
+            var a = encodeURI($(row).find("#item-amount").val());
+
+            var suffix = `?id=${id}&a=${a}`;
             $('.table_body').html('').load(
-                "{% url 'groceries:delete_grocery' %}" + suffix
+                "{% url 'groceries:change_amount' %}" + suffix
             );
-
-
+            
         };
+    };
 
 </script>
 {% endblock %}

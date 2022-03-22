@@ -147,8 +147,6 @@ def add_recipe(request):
                 instructionimagepaths.append(instructionimagepath)
             else:
                 instructionimagepaths.append(None)
-                
-
 
         categories
         recipe = Recipe.objects.get_or_create(name=name,

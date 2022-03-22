@@ -1,7 +1,19 @@
 {% for item in groceries %}
-<tr>
+<tr id="he2y">
+    <td hidden>
+        <p id="item-id">{{ item.id }}</p>
+    </td>
     <td id="item-name">{{ item.rawFood.name }}</td>
-    <td id="item-amount-measurement">{{ item.amount }} {{ item.measuredIn.unit }}</td>
+    <td>
+        <div class="row align-items-center">
+            <div class="col-auto">
+                <input type="number" name="item-amount" id="item-amount" value="{{ item.amount}}" onkeydown="changeAmount(event)"  min="0" step="0.1"/>
+            </div>
+            <div class="col-auto">
+                <p class="justify-content-centre" id="item-measurement">{{ item.measuredIn.unit }}</p>
+            </div>
+        </div>
+    </td>
     <td id="owned">
         {% if item.available %}
         ✔️
