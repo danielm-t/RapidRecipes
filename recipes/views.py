@@ -53,7 +53,7 @@ def contact(request):
                 send_mail("Inquiry from User", message_with_user_info, DEFAULT_FROM_EMAIL, [DEFAULT_FROM_EMAIL])
             except BadHeaderError:
                 return HttpResponse('Invalid header found.')
-            return redirect('success')
+            return redirect('index')
     return render(request, "recipes/contact.html", {'form': form})
 
 def success(request):
