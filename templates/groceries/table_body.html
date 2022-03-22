@@ -1,0 +1,16 @@
+{% for item in groceries %}
+<tr>
+    <td id="item-name">{{ item.rawFood.name }}</td>
+    <td id="item-amount-measurement">{{ item.amount }} {{ item.measuredIn.unit }}</td>
+    <td id="owned">
+        {% if item.available %}
+        ✔️
+        {% else %}
+        ❌
+        {% endif %}
+    </td>
+    <td>
+        <button type="button" class="btn btn-danger" onclick="deleteGrocery(event)">Delete</button>
+    </td>
+</tr>
+{% endfor%}

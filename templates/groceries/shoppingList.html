@@ -1,104 +1,133 @@
 {% extends 'rapidrecipes/base.html' %}
 {% block content_block %}
-<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+
+
 
 <div class="col-xs-12" style="height:20px;"></div>
 
 <div class="container-fluid">
     <h2>Add an ingredient</h2>
-    <div class="row">
-        <form class="col-md-4">
+    <form class="w-25" method="post">
+        {% csrf_token %}
+        <div class="mb-3">
             <label>Select Item</label>
-            <select class="form-control select2" name="ingredient" id="ingredient" onchange="getRawFoodMeasurementTypes(event)" required>
+            <select class="form-control select2" name="ingredient" id="ingredient"
+                onchange="getRawFoodMeasurementTypes(event)" required>
                 <option disabled selected value>Select An Ingredient</option>
-                                {% for rawFood in rawFoods.all %}
-                                <option value="{{ rawFood }}">{{ rawFood }}</option>
-                                {% endfor%}
+                {% for rawFood in rawFoods.all %}
+                <option value="{{ rawFood.name }}">{{ rawFood }}</option>
+                {% endfor%}
             </select>
-        </form>
-    </div>
-    <div class="row w-25 p-3">
-        <label for="quantity" class="form-label">Quantity</label>
-        <input type="number" class="form-control" name="ingredientamount" id="ingredientamount" value="0" min="0">
-        <label for="ingredientmeasurement" class="form-label">Measurement</label>
-                            <select class="form-control" name="ingredientmeasurement" id="ingredientmeasurement" required>
-                                <option disabled selected value>Select A Measurement</option>
-                            </select>
+        </div>
+        <div class="mb-3">
+            <label for="quantity" class="form-label">Quantity</label>
+            <input type="number" class="form-control" name="ingredientamount" id="ingredientamount" value="0" min="0">
+        </div>
+        <div class="mb-3">
+            <label for="ingredientmeasurement" class="form-label">Measurement</label>
+            <select class="form-control select2" name="ingredientmeasurement" id="ingredientmeasurement" required>
+                <option disabled selected value>Select A Measurement</option>
+            </select>
+        </div>
+        <div class="form-check" id="owned-radio">
+            <input class="form-check-input" type="radio" name="owned" id="owned">
+            <label class="form-check-label" for="owned">
+                Owned
+            </label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="owned" id="notowned" checked>
+            <label class="form-check-label" for="owned">
+                Not Owned
+            </label>
+        </div>
 
-    </div>
-    <div class="custom-control custom-radio">
-        <input type="radio" id="owned" name="customRadio" class="custom-control-input">
-        <label class="custom-control-label" for="owned">Owned</label>
-      </div>
-      <div class="custom-control custom-radio">
-        <input type="radio" id="notowned" name="customRadio" class="custom-control-input">
-        <label class="custom-control-label" for="notowned">Not owned</label>
-      </div>
-    
-      <div class="col-xs-12" style="height:20px;"></div>
-    <div class="form-actions">
-        <button type="submit" class="btn btn-primary">Add ingredient</button>
-    </div>
+        <div class="col-xs-12" style="height:20px;"></div>
+        <button type="submit" class="btn btn-primary" onclick="getAddedGroceries()">Add ingredient</button>
+    </form>
     <div class="col-xs-12" style="height:10px;"></div>
     <h2>List of ingredients</h2>
     <div class="table-responsive-lg">
-    <table class="table">
-        <thead class="thead-dark">
-            <tr>
-                <th scope="col">Item</th>
-                <th scope="col">Quantity</th>
-                <th scope="col"></th>
-                <th scope="col">Owned/Not Owned</th>
-                <th scope="col">Delete?</th>
-            </tr>
-        </thead>
-        <tbody>
-
-            {% for item in groceries %}
-            <tr>
-                <td>{{ item.rawFood.name }}</td>
-                <td>{{ item.amount }} {{ item.measuredIn.unit }}</td>
-                <td>
-                    <button type="button btn-sm" class="btn btn-dark">+</button>
-                    <button type="button btn-sm" class="btn btn-dark">-</button>
-                </td>
-                <td>{{ item.available }}  ✔️❌</td>
-                <td><button type="button" class="btn btn-danger">Delete</button></td>
-            </tr>
-            {% endfor%}
-        </tbody>
-    </table>
-</div>
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Item</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Owned</th>
+                    <th scope="col">Delete?</th>
+                </tr>
+            </thead>
+            <tbody class="table_body">
+                {% include 'groceries/table_body.html' %}
+            </tbody>
+        </table>
+    </div>
 </div>
 
 <script>
-    $('.select2').select2();
+    $(document).ready(function () {
+        $('.select2').select2({
+            theme: 'bootstrap-5'
+        });
+    });
 
-    function getRawFoodMeasurementTypes(caller){
-            var ingredientInstance = caller.target.parentNode.parentNode.parentNode;
-            //console.log('text: '+$(this).find(":selected").not(':disabled').text());
-            var $ingredient = $(ingredientInstance).find('#ingredient');
-            var $measurement = $(ingredientInstance).find('#ingredientmeasurement');
-            //console.log($measurement.text()); // Print out html
-            $.ajax({
-                type: 'GET',
-                url: "{% url 'food:getRawFoodMeasurementTypes' %}",
-                data: {"raw-food": $ingredient.find(":selected").not(':disabled').text()},
-                success: function (response){
+    function getRawFoodMeasurementTypes(caller) {
+        var ingredientInstance = caller.target.parentNode.parentNode.parentNode;
+        //console.log('text: '+$(this).find(":selected").not(':disabled').text());
+        var $ingredient = $(ingredientInstance).find('#ingredient');
+        var $measurement = $(ingredientInstance).find('#ingredientmeasurement');
+        //console.log($measurement.text()); // Print out html
+        $.ajax({
+            type: 'GET',
+            url: "{% url 'food:getRawFoodMeasurementTypes' %}",
+            data: { "raw-food": $ingredient.find(":selected").not(':disabled').text() },
+            success: function (response) {
 
-                    $measurement.find('option').not(':disabled').remove();
-                    $.each(response, function(key,value){
-                        $measurement.append(`<option value="${value}">${value}</option>`);
-                    });
-                    $measurement.show();
-                },
-                error: function (response){
-                    console.log(response);
-                }
-            });
+                $measurement.find('option').not(':disabled').remove();
+                $.each(response, function (key, value) {
+                    $measurement.append(`<option value="${value}">${value}</option>`);
+                });
+                $measurement.show();
+            },
+            error: function (response) {
+                console.log(response);
+            }
+        });
     };
 
+    function getAddedGroceries() {
+        var i = encodeURI(document.getElementById("ingredient").value);
+        var m = encodeURI(document.getElementById("ingredientmeasurement").value);
+        var a = encodeURI(document.getElementById("ingredientamount").value);
+        var o = document.getElementById("owned").checked;
+
+        var suffix = `?i=${i}&m=${m}&a=${a}&o=${o}`
+
+        $('.table_body').html('').load(
+            "{% url 'groceries:get_added_grocery' %}" + suffix
+        );
+        
+    };
+
+    function deleteGrocery(event) {
+            var row = event.target.parentNode.parentNode;
+
+            var i = encodeURI($(row).find("#item-name").text());
+
+            var itemAmMe = $(row).find("#item-amount-measurement").text()
+            var array = itemAmMe.split(" ", 2);
+            var a = encodeURI(array[0]);
+            var m = encodeURI(array[1]);
+            var o = encodeURI($(row).find("#owned").text() == "✔️");
+
+            var suffix = `?i=${i}&m=${m}&a=${a}&o=${o}`
+
+            $('.table_body').html('').load(
+                "{% url 'groceries:delete_grocery' %}" + suffix
+            );
+
+
+        };
 
 </script>
 {% endblock %}
