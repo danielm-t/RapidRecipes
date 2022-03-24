@@ -38,76 +38,6 @@
               dinner
             </label>
             </li>
-			<li class="list-group-item py-1">
-            <div class="form-check-input">
-			{{ form.easy }}
-			</div>
-			<label class="form-check-label" for="easy">
-              easy
-            </label>
-            </li>
-			<li class="list-group-item py-1">
-            <div class="form-check-input">
-			{{ form.medium }}
-			</div>
-			<label class="form-check-label" for="medium">
-              medium
-            </label>
-            </li>
-			<li class="list-group-item py-1">
-            <div class="form-check-input">
-			{{ form.hard }}
-			</div>
-			<label class="form-check-label" for="hard">
-              hard
-            </label>
-            </li>
-			<li class="list-group-item py-1">
-            <div class="form-check-input">
-			{{ form.drink }}
-			</div>
-			<label class="form-check-label" for="drink">
-              drink
-            </label>
-            </li>
-			<li class="list-group-item py-1">
-            <div class="form-check-input">
-			{{ form.vegan }}
-			</div>
-			<label class="form-check-label" for="vegan">
-              vegan
-            </label>
-            </li>
-			<li class="list-group-item py-1">
-            <div class="form-check-input">
-			{{ form.vegetarian }}
-			</div>
-			<label class="form-check-label" for="vegetarian">
-              vegetarian
-            </label>
-            </li>
-			<li class="list-group-item py-1">
-            <div class="form-check-input">
-			{{ form.beef }}
-			</div>
-			<label class="form-check-label" for="beef">
-              beef
-            </label>
-            </li><li class="list-group-item py-1">
-            <div class="form-check-input">
-			{{ form.chicken }}
-			</div>
-			<label class="form-check-label" for="chicken">
-              chicken
-            </label>
-            </li><li class="list-group-item py-1">
-            <div class="form-check-input">
-			{{ form.fish }}
-			</div>
-			<label class="form-check-label" for="fish">
-              fish
-            </label>
-            </li>
 			
 			<div>
 				<button class="" type="submit">Submit</button>
@@ -126,8 +56,8 @@
             <div class="container">
                 <div class="row">
 
-                    {% if recipes %}
-                    {% for r in recipes %}
+                    {% if recipesS %}
+                    {% for r in recipesS %}
                     <div class="col-lg-3 d-lg-block">
                         <div class="card">
                             <img src="{{ MEDIA_URL }}recipes/{{ r.imagePath }}" class="card-img-top img-fluid" alt="Recipe Image"/>
