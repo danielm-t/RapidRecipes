@@ -42,16 +42,22 @@ def populate():
                    {'rawFood': 'lettuce', 'amount' : 'a couple', 'recipe': 'Burger', 'unit':'leaf'},
                    {'rawFood': 'tomato', 'amount' : 'a couple', 'recipe': 'Burger', 'unit':'slice'},
                    {'rawFood': 'beef burger', 'amount' : '200', 'recipe': 'Burger', 'unit':'gram'},
-                   {'rawFood': 'bread', 'amount' : '1', 'recipe': 'Burger', 'unit':'bun'},]
+                   {'rawFood': 'bread', 'amount' : '1', 'recipe': 'Burger', 'unit':'bun'},
+                   {'rawFood': 'onion', 'amount' : '1', 'recipe': 'Dahl curry', 'unit':'blank'},
+                   {'rawFood': 'vegetable oil', 'amount' : '1', 'recipe': 'Dahl curry', 'unit':'tablespoon'},
+                   {'rawFood': 'curry paste', 'amount' : '50', 'recipe': 'Dahl curry', 'unit':'millilitre'},
+                   {'rawFood': 'red lentils', 'amount' : '200', 'recipe': 'Dahl curry', 'unit':'gram'},
+                   {'rawFood': 'tinned tomato', 'amount' : '400', 'recipe': 'Dahl curry', 'unit':'gram'},
+                   {'rawFood': 'vegetable stock', 'amount' : '200', 'recipe': 'Dahl curry', 'unit':'millilitre'},]
 
     # Recipe list
     recipes = [
                {'name': 'Dutch butter cake', 'categories': ['snack','easy'], 'rating': 4.0,
-                'difficulty': 0.5, 'time': 70.0, 'imagePath': 'DutchButterCake/Dutch_butter_cake.png', },
+                'difficulty': 0.5, 'time': 70.0, 'imagePath': 'DutchButterCake/dutchButterCake.png', },
                {'name': 'Burger', 'categories': ['dessert','medium'], 'rating': 0.0,
                 'difficulty': 2.0, 'time': 30.0, 'imagePath': 'Burger/borgor.jpg'},
-               {'name': 'Curry', 'categories': ['lunch','hard'], 'rating': 5.0,
-                'difficulty': 5.0, 'time': 110.0, 'imagePath': 'Mix/mix.jpg'}]
+               {'name': 'Dahl curry', 'categories': ['lunch','dinner','easy'], 'rating': 5.0,
+                'difficulty': 5.0, 'time': 30.0, 'imagePath': 'DahlCurry/dahlCurry.png'}]
 
     # Instruction list
     instructions = [
@@ -64,7 +70,10 @@ def populate():
                     {'step': 1, 'recipe': 'Burger', 'media': None, 'description': 'Preheat the oven to what is needed for you beef burgers.'},
                     {'step': 2, 'recipe': 'Burger', 'media': None, 'description': 'When the oven is at the appropriate temperature, put the burger buns in for the time specified for them.'},
                     {'step': 3, 'recipe': 'Burger', 'media': None, 'description': 'Slice your tomato and lettuce leaves to what you want and butter your buns.'},
-                    {'step': 1, 'recipe': 'Burger', 'media': None, 'description': 'Build your burger in the manner that you want.'}]
+                    {'step': 1, 'recipe': 'Burger', 'media': None, 'description': 'Build your burger in the manner that you want.'},
+                    {'step': 1, 'recipe': 'Dahl curry', 'media': None, 'description': 'Dice the onion and fry in a splash of oil.'},
+                    {'step': 1, 'recipe': 'Dahl curry', 'media': None, 'description': 'Add the curry paste.'},
+                    {'step': 1, 'recipe': 'Dahl curry', 'media': None, 'description': 'Add lentils and stock, and simmer for 20 minutes until cooked through.'},]
 
 
     # Populate database

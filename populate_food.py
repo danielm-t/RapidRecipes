@@ -37,7 +37,8 @@ def populate():
                     {'type': 'Volume', 'unit': 'sprig', 'shorthand': 'sprig', 'alternative': None},
                     {'type': 'Volume', 'unit': 'stalk', 'shorthand': 'stalk', 'alternative': None},
                     {'type': 'Volume', 'unit': 'strip', 'shorthand': 'strip', 'alternative': None},
-                    {'type': 'Volume', 'unit': 'teabag', 'shorthand': 'teabag', 'alternative': None} ]
+                    {'type': 'Volume', 'unit': 'teabag', 'shorthand': 'teabag', 'alternative': None},
+                    {'type': 'Volume', 'unit': 'blank', 'shorthand': '', 'alternative': None}]
     
     # Raw food list
     raw_foods = [
@@ -48,7 +49,13 @@ def populate():
                 {'name': 'bread', 'measuredIn': ['bun']},
                 {'name': 'beef burger', 'measuredIn': ['gram']},
                 {'name': 'lettuce', 'measuredIn': ['leaf']},
-                {'name': 'tomato', 'measuredIn': ['slice']}]
+                {'name': 'tomato', 'measuredIn': ['slice']},
+                {'name': 'onion', 'measuredIn': ['blank']},
+                {'name': 'vegetable oil', 'measuredIn': ['tablespoon']},
+                {'name': 'curry paste', 'measuredIn': ['millilitre']},
+                {'name': 'red lentils', 'measuredIn': ['gram']},
+                {'name': 'tinned tomato', 'measuredIn': ['gram']},
+                {'name': 'vegetable stock', 'measuredIn': ['millilitre']}]
 
     
     # Populate database
