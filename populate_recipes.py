@@ -54,7 +54,8 @@ def populate():
                    {'rawFood': 'tomato sauce', 'amount' : '100', 'recipe': 'Pizza', 'unit':'millilitre'},
                    {'rawFood': 'cheese', 'amount' : '200', 'recipe': 'Pizza', 'unit':'gram'},
                    {'rawFood': 'onion', 'amount' : '1', 'recipe': 'Pizza', 'unit':'blank'},
-                   {'rawFood': 'strong flour', 'amount' : '200', 'recipe': 'Pizza', 'unit':'gram'},]
+                   {'rawFood': 'strong flour', 'amount' : '200', 'recipe': 'Pizza', 'unit':'gram'},
+                   {'rawFood': 'vegetable oil', 'amount' : '1', 'recipe': 'Mix', 'unit':'tablespoon'},]
 
     # Recipe list
     recipes = [
@@ -65,7 +66,9 @@ def populate():
                {'name': 'Dahl curry', 'categories': ['lunch','dinner','easy'], 'rating': 5.0,
                 'difficulty': 5.0, 'time': 30.0, 'imagePath': 'DahlCurry/dahlCurry.png'},
                {'name': 'Pizza', 'categories': ['lunch','dinner','medium'], 'rating': 3.5,
-                'difficulty': 4.0, 'time': 120.0, 'imagePath': 'Pizza/pizza.jpg'}]
+                'difficulty': 4.0, 'time': 120.0, 'imagePath': 'Pizza/pizza.jpg'},
+                {'name': 'Mix', 'categories': ['lunch','easy'], 'rating': 1.5,
+                'difficulty': 0.5, 'time': 40.0, 'imagePath': 'Mix/mix.jpg'}]
 
     # Instruction list
     instructions = [
@@ -89,7 +92,10 @@ def populate():
                     {'step': 5, 'recipe': 'Pizza', 'media': None, 'description': 'Preheat the oven to 200 degrees Celsius.'},
                     {'step': 6, 'recipe': 'Pizza', 'media': None, 'description': 'Knock the dough back and roll out pizza bases.'},
                     {'step': 7, 'recipe': 'Pizza', 'media': None, 'description': 'Dice onion and spread over pizza base with tomato sauce.'},
-                    {'step': 8, 'recipe': 'Pizza', 'media': None, 'description': 'Grate cheese and sprinkle on top and the place in oven for 30 minutes.'}]
+                    {'step': 8, 'recipe': 'Pizza', 'media': None, 'description': 'Grate cheese and sprinkle on top and the place in oven for 30 minutes.'},
+                    {'step': 1, 'recipe': 'Mix', 'media': None, 'description': 'Preheat oven to 200 degrees Celsius.'},
+                    {'step': 2, 'recipe': 'Mix', 'media': None, 'description': 'Take whatever vegetables you wish to use and cut them as you desire.'},
+                    {'step': 3, 'recipe': 'Mix', 'media': None, 'description': 'Place all on baking tray with a drizzle of vegetable oil and roast for 35 minutes.'}]
 
 
     # Populate database
