@@ -148,12 +148,12 @@ def add_recipe(request):
             else:
                 instructionimagepaths.append(None)
 
-        categories
+        # categories
         recipe = Recipe.objects.get_or_create(name=name,
                         rating=rating,
                         difficulty=difficulty,
                         time=time,
-                        imagePath=recipeimagepath)[0]
+                        imagePath = recipeimagepath)[0]
         recipe.save()
 
         for category in categories:
