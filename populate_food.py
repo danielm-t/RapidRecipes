@@ -55,7 +55,12 @@ def populate():
                 {'name': 'curry paste', 'measuredIn': ['millilitre']},
                 {'name': 'red lentils', 'measuredIn': ['gram']},
                 {'name': 'tinned tomato', 'measuredIn': ['gram']},
-                {'name': 'vegetable stock', 'measuredIn': ['millilitre']}]
+                {'name': 'vegetable stock', 'measuredIn': ['millilitre']},
+                {'name': 'strong flour', 'measuredIn': ['gram']},
+                {'name': 'yeast', 'measuredIn': ['gram']},
+                {'name': 'olive oil', 'measuredIn': ['tablespoon']},
+                {'name': 'tomato sauce', 'measuredIn': ['millilitre']},
+                {'name': 'cheese', 'measuredIn': ['gram']}]
 
     
     # Populate database

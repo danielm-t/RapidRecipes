@@ -48,7 +48,13 @@ def populate():
                    {'rawFood': 'curry paste', 'amount' : '50', 'recipe': 'Dahl curry', 'unit':'millilitre'},
                    {'rawFood': 'red lentils', 'amount' : '200', 'recipe': 'Dahl curry', 'unit':'gram'},
                    {'rawFood': 'tinned tomato', 'amount' : '400', 'recipe': 'Dahl curry', 'unit':'gram'},
-                   {'rawFood': 'vegetable stock', 'amount' : '200', 'recipe': 'Dahl curry', 'unit':'millilitre'},]
+                   {'rawFood': 'vegetable stock', 'amount' : '200', 'recipe': 'Dahl curry', 'unit':'millilitre'},
+                   {'rawFood': 'yeast', 'amount' : '7', 'recipe': 'Pizza', 'unit':'gram'},
+                   {'rawFood': 'olive oil', 'amount' : '1', 'recipe': 'Pizza', 'unit':'tablespoon'},
+                   {'rawFood': 'tomato sauce', 'amount' : '100', 'recipe': 'Pizza', 'unit':'millilitre'},
+                   {'rawFood': 'cheese', 'amount' : '200', 'recipe': 'Pizza', 'unit':'gram'},
+                   {'rawFood': 'onion', 'amount' : '1', 'recipe': 'Pizza', 'unit':'blank'},
+                   {'rawFood': 'strong flour', 'amount' : '200', 'recipe': 'Pizza', 'unit':'gram'},]
 
     # Recipe list
     recipes = [
@@ -57,7 +63,9 @@ def populate():
                {'name': 'Burger', 'categories': ['dessert','medium'], 'rating': 0.0,
                 'difficulty': 2.0, 'time': 30.0, 'imagePath': 'Burger/borgor.jpg'},
                {'name': 'Dahl curry', 'categories': ['lunch','dinner','easy'], 'rating': 5.0,
-                'difficulty': 5.0, 'time': 30.0, 'imagePath': 'DahlCurry/dahlCurry.png'}]
+                'difficulty': 5.0, 'time': 30.0, 'imagePath': 'DahlCurry/dahlCurry.png'},
+               {'name': 'Pizza', 'categories': ['lunch','dinner','medium'], 'rating': 3.5,
+                'difficulty': 4.0, 'time': 120.0, 'imagePath': 'Pizza/pizza.jpg'}]
 
     # Instruction list
     instructions = [
@@ -70,10 +78,18 @@ def populate():
                     {'step': 1, 'recipe': 'Burger', 'media': None, 'description': 'Preheat the oven to what is needed for you beef burgers.'},
                     {'step': 2, 'recipe': 'Burger', 'media': None, 'description': 'When the oven is at the appropriate temperature, put the burger buns in for the time specified for them.'},
                     {'step': 3, 'recipe': 'Burger', 'media': None, 'description': 'Slice your tomato and lettuce leaves to what you want and butter your buns.'},
-                    {'step': 1, 'recipe': 'Burger', 'media': None, 'description': 'Build your burger in the manner that you want.'},
+                    {'step': 4, 'recipe': 'Burger', 'media': None, 'description': 'Build your burger in the manner that you want.'},
                     {'step': 1, 'recipe': 'Dahl curry', 'media': None, 'description': 'Dice the onion and fry in a splash of oil.'},
-                    {'step': 1, 'recipe': 'Dahl curry', 'media': None, 'description': 'Add the curry paste.'},
-                    {'step': 1, 'recipe': 'Dahl curry', 'media': None, 'description': 'Add lentils and stock, and simmer for 20 minutes until cooked through.'},]
+                    {'step': 2, 'recipe': 'Dahl curry', 'media': None, 'description': 'Add the curry paste and mix.'},
+                    {'step': 3, 'recipe': 'Dahl curry', 'media': None, 'description': 'Add lentils and stock, and simmer for 20 minutes until cooked through.'},
+                    {'step': 1, 'recipe': 'Pizza', 'media': None, 'description': 'Mix the yeast into the flour.'},
+                    {'step': 2, 'recipe': 'Pizza', 'media': None, 'description': 'Add olive oil and 75ml of warm water.'},
+                    {'step': 3, 'recipe': 'Pizza', 'media': None, 'description': 'Mix untill it forms a dough.'},
+                    {'step': 4, 'recipe': 'Pizza', 'media': None, 'description': 'Leace the dough to rise for 1 hour.'},
+                    {'step': 5, 'recipe': 'Pizza', 'media': None, 'description': 'Preheat the oven to 200 degrees Celsius.'},
+                    {'step': 6, 'recipe': 'Pizza', 'media': None, 'description': 'Knock the dough back and roll out pizza bases.'},
+                    {'step': 7, 'recipe': 'Pizza', 'media': None, 'description': 'Dice onion and spread over pizza base with tomato sauce.'},
+                    {'step': 8, 'recipe': 'Pizza', 'media': None, 'description': 'Grate cheese and sprinkle on top and the place in oven for 30 minutes.'}]
 
 
     # Populate database
