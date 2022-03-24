@@ -15,7 +15,7 @@ from django.core.files.storage import default_storage
 
 def index(request):
     context_dict = {}
-    recipe_list = Recipe.objects.order_by('-rating')[:5]
+    recipe_list = Recipe.objects.order_by('-rating')
     context_dict = {'recipes': recipe_list}
     #visitor_cookie_handler(request)
     response = render(request, 'recipes/index.html', context_dict)
@@ -76,12 +76,14 @@ def show_recipe(request, recipe_name_slug):
     context_dict = {}
     try:
         recipe = Recipe.objects.get(slug=recipe_name_slug)
+        recommended_recipes = Recipe.objects.order_by('-rating').exclude(id=recipe.id)[:5]
         ingredients = recipe.ingredient_set.all()
         instructions = recipe.instruction_set.all()
         
         context_dict['recipe'] = recipe
         context_dict['ingredients'] = ingredients
         context_dict['instructions'] = instructions
+        context_dict['recommended_recipes'] = recommended_recipes
         
     except Recipe.DoesNotExist:
         context_dict['recipe'] = None

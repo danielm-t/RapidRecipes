@@ -86,25 +86,25 @@ def populate():
     # Recipe list
     recipes = [
                {'name': 'Dutch butter cake', 'categories': ['snack','easy','vegetarian'], 'rating': 4.0,
-                'difficulty': 0.5, 'time': 70.0, 'imagePath': 'DutchButterCake/dutchButterCake.png', },
+                'difficulty': 0.5, 'time': 70.0, 'imagePath': 'recipes/DutchButterCake/dutchButterCake.png', },
                {'name': 'Burger', 'categories': ['main','dessert','medium'], 'rating': 0.0,
-                'difficulty': 2.0, 'time': 30.0, 'imagePath': 'Burger/burger.jpg'},
+                'difficulty': 2.0, 'time': 30.0, 'imagePath': 'recipes/Burger/burger.jpg'},
                {'name': 'Dahl curry', 'categories': ['main','lunch','dinner','easy','vegan','vegetarian'], 'rating': 5.0,
-                'difficulty': 5.0, 'time': 30.0, 'imagePath': 'DahlCurry/dahlCurry.png'},
+                'difficulty': 5.0, 'time': 30.0, 'imagePath': 'recipes/DahlCurry/dahlCurry.png'},
                {'name': 'Pizza', 'categories': ['main','lunch','dinner','medium','vegetarian'], 'rating': 3.5,
-                'difficulty': 4.0, 'time': 120.0, 'imagePath': 'Pizza/pizza.jpg'},
+                'difficulty': 4.0, 'time': 120.0, 'imagePath': 'recipes/Pizza/pizza.jpg'},
                 {'name': 'Mix', 'categories': ['main','lunch','easy','vegan','vegetarian'], 'rating': 1.5,
-                'difficulty': 0.5, 'time': 40.0, 'imagePath': 'Mix/mix.jpg'},
+                'difficulty': 0.5, 'time': 40.0, 'imagePath': 'recipes/Mix/mix.jpg'},
                 {'name': 'Baked potato', 'categories': ['main','dinner','easy','lunch','vegetarian'], 'rating': 4.5,
-                'difficulty': 1.0, 'time': 40.0, 'imagePath': 'BakedPotato/bakedPotato.png'},
+                'difficulty': 1.0, 'time': 40.0, 'imagePath': 'recipes/BakedPotato/bakedPotato.png'},
                 {'name': 'Roast veg and feta', 'categories': ['starter','dinner','easy','vegetarian','salad'], 'rating': 1.5,
-                'difficulty': 1.0, 'time': 40.0, 'imagePath': 'RoastVegAndFeta/roastVegAndFeta.png'},
+                'difficulty': 1.0, 'time': 40.0, 'imagePath': 'recipes/RoastVegAndFeta/roastVegAndFeta.png'},
                 {'name': 'Macaroni cheese', 'categories': ['main','dinner','medium','vegetarian'], 'rating': 5.0,
-                'difficulty': 3.0, 'time': 30.0, 'imagePath': 'MacaroniCheese/macaroniCheese.png'},
+                'difficulty': 3.0, 'time': 30.0, 'imagePath': 'recipes/MacaroniCheese/macaroniCheese.png'},
                 {'name': 'Chilli con carne', 'categories': ['main','dinner','medium'], 'rating': 4.0,
-                'difficulty': 2.5, 'time': 30.0, 'imagePath': 'ChilliConCarne/chilliConCarne.png'},
+                'difficulty': 2.5, 'time': 30.0, 'imagePath': 'recipes/ChilliConCarne/chilliConCarne.png'},
                 {'name': 'Stir fry', 'categories': ['main','dinner','easy','vegetarian','quick'], 'rating': 3.0,
-                'difficulty': 1.5, 'time': 20.0, 'imagePath': 'StirFry/stirFry.png'}]
+                'difficulty': 1.5, 'time': 20.0, 'imagePath': 'recipes/StirFry/stirFry.png'}]
 
     # Instruction list
     instructions = [
