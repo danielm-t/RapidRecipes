@@ -1,15 +1,20 @@
+from calendar import c
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
 from django.urls import reverse
-from django.http import HttpResponse
-from groceries.models import UserProfile
+from django.http import HttpResponse, JsonResponse
+from groceries.models import UserProfile, GroceryItem
+from recipes.models import Measurement
+from food.models import RawFood
+from django.contrib.auth.models import User
 from groceries.forms import UserForm
 
 
 def register(request):
     registered = False
+    context = {'registered': registered}
     if request.method == 'POST':
         user_form = UserForm(request.POST)
 
@@ -18,13 +23,12 @@ def register(request):
             user.set_password(user.password)
             user.save()
             registered = True
+            login(request, user)
+            return redirect(reverse('index'))
         else:
             print(user_form.errors)
-    else:
-        user_form = UserForm()
-    return render(request,'groceries/register.html',
-context = {'user_form': user_form,
-'registered': registered})
+            context['form'] = user_form
+    return render(request,'groceries/register.html', context)
                 
 def user_login(request):
     if request.method == 'POST':
@@ -52,5 +56,64 @@ def user_logout(request):
 
 @login_required
 def shopping_list(request):
-    # TODO
-    return render(request, 'groceries/shoppinglist')
+    context = {'rawFoods' : RawFood.objects.all()}
+    context['groceries'] = GroceryItem.objects.filter(user=request.user)
+    return render(request, 'groceries/shoppinglist.html', context)
+
+
+def get_added_grocery(request):
+    if request.method == "GET":
+        get = request.GET
+        user = request.user
+        ingredient = get.get("i", None)
+        measurement = get.get("m", None)
+        amount = get.get("a", None)
+        owned = get.get("o", None)
+        if owned:
+            owned = not (owned == "false")
+        else:
+            owned = False
+        context={}
+        try:
+            rawFood = RawFood.objects.get(name=ingredient)
+            measuredIn = Measurement.objects.get(unit=measurement)
+            grocery = GroceryItem.objects.create(rawFood=rawFood,
+                                                        amount=amount,
+                                                        available=owned,
+                                                        user=user,
+                                                        measuredIn=measuredIn)[0]
+            grocery.save()
+            context['groceries'] = GroceryItem.objects.filter(user=request.user)
+        except (RawFood.DoesNotExist, Measurement.DoesNotExist) as e:
+            context['groceries'] = GroceryItem.objects.filter(user=request.user)
+        return render(request, "groceries/table_body.html", context)
+
+def delete_grocery(request):
+    if request.method == "GET":
+        get = request.GET
+        user = request.user
+        id = get.get("id", None)
+        context = {}
+        try:
+            GroceryItem.objects.get(id=id, user=user).delete()
+            context['groceries'] = GroceryItem.objects.filter(user=request.user)
+        except (RawFood.DoesNotExist, Measurement.DoesNotExist) as e:
+            context['groceries'] = GroceryItem.objects.filter(user=request.user)
+        return render(request, "groceries/table_body.html", context)
+
+
+def change_amount(request):
+    if request.method == "GET":
+        get = request.GET
+        user = request.user
+        id = get.get("id", None)
+        amount = get.get("a", None)
+        context = {}
+        try:
+            groceryItem = GroceryItem.objects.get(id=id, user=user)
+            groceryItem.amount = amount
+            groceryItem.save()
+            context['groceries'] = GroceryItem.objects.filter(user=request.user)
+        except (RawFood.DoesNotExist, Measurement.DoesNotExist) as e:
+            context['groceries'] = GroceryItem.objects.filter(user=request.user)
+        return render(request, "groceries/table_body.html", context)

@@ -36,8 +36,10 @@ def populate():
                     {'type': 'Volume', 'unit': 'slice', 'shorthand': 'slice', 'alternative': None},
                     {'type': 'Volume', 'unit': 'sprig', 'shorthand': 'sprig', 'alternative': None},
                     {'type': 'Volume', 'unit': 'stalk', 'shorthand': 'stalk', 'alternative': None},
+                    {'type': 'Volume', 'unit': 'stem', 'shorthand': 'stem', 'alternative': None},
                     {'type': 'Volume', 'unit': 'strip', 'shorthand': 'strip', 'alternative': None},
-                    {'type': 'Volume', 'unit': 'teabag', 'shorthand': 'teabag', 'alternative': None} ]
+                    {'type': 'Volume', 'unit': 'teabag', 'shorthand': 'teabag', 'alternative': None},
+                    {'type': 'Volume', 'unit': 'blank', 'shorthand': '', 'alternative': None}]
     
     # Raw food list
     raw_foods = [
@@ -45,10 +47,47 @@ def populate():
                 {'name': 'caster sugar', 'measuredIn': ['gram']},
                 {'name': 'butter', 'measuredIn': ['gram']},
                 {'name': 'vanilla extract', 'measuredIn': ['drop']},
-                {'name': 'bread', 'measuredIn': ['bun']},
+                {'name': 'bread bun', 'measuredIn': ['blank']},
                 {'name': 'beef burger', 'measuredIn': ['gram']},
                 {'name': 'lettuce', 'measuredIn': ['leaf']},
-                {'name': 'tomato', 'measuredIn': ['slice']}]
+                {'name': 'tomato', 'measuredIn': ['blank']},
+                {'name': 'onion', 'measuredIn': ['blank']},
+                {'name': 'vegetable oil', 'measuredIn': ['tablespoon']},
+                {'name': 'curry paste', 'measuredIn': ['millilitre']},
+                {'name': 'red lentils', 'measuredIn': ['gram']},
+                {'name': 'tinned tomato', 'measuredIn': ['gram']},
+                {'name': 'vegetable stock', 'measuredIn': ['millilitre']},
+                {'name': 'strong flour', 'measuredIn': ['gram']},
+                {'name': 'yeast', 'measuredIn': ['gram']},
+                {'name': 'olive oil', 'measuredIn': ['tablespoon']},
+                {'name': 'tomato sauce', 'measuredIn': ['millilitre']},
+                {'name': 'cheese', 'measuredIn': ['gram']},
+                {'name': 'big potato', 'measuredIn': ['blank']},
+                {'name': 'courgette', 'measuredIn': ['blank']},
+                {'name': 'aubergine', 'measuredIn': ['blank']},
+                {'name': 'pepper', 'measuredIn': ['blank']},
+                {'name': 'feta', 'measuredIn': ['gram']},
+                {'name': 'baked beans', 'measuredIn': ['gram']},
+                {'name': 'milk', 'measuredIn': ['millilitre']},
+                {'name': 'carrot', 'measuredIn': ['blank']},
+                {'name': 'macaroni pasta', 'measuredIn': ['gram']},
+                {'name': 'mince', 'measuredIn': ['gram']},
+                {'name': 'black beans', 'measuredIn': ['gram']},
+                {'name': 'smoked paprika', 'measuredIn': ['dash']},
+                {'name': 'bean sprouts', 'measuredIn': ['gram']},
+                {'name': 'peas', 'measuredIn': ['gram']},
+                {'name': 'ginger', 'measuredIn': ['stem']},
+                {'name': 'stir fry sauce', 'measuredIn': ['millilitre']},
+                {'name': 'noodles', 'measuredIn': ['gram']},
+                {'name': 'double cream', 'measuredIn': ['millilitre']},
+                {'name': 'dark chocolate', 'measuredIn': ['gram']},
+                {'name': 'egg', 'measuredIn': ['blank']},
+                {'name': 'chocolate chips', 'measuredIn': ['gram']},
+                {'name': 'rolled oats', 'measuredIn': ['gram']},
+                {'name': 'apple', 'measuredIn': ['gram']},
+                {'name': 'ground almonds', 'measuredIn': ['gram']},
+                {'name': 'chocolate', 'measuredIn': ['gram']},
+                {'name': 'baking powder', 'measuredIn': ['teaspoon']}]
 
     
     # Populate database

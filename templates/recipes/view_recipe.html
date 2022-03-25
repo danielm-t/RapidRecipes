@@ -1,26 +1,33 @@
 {% extends 'rapidrecipes/base.html' %}
 {% block content_block %}
 
-<div class="container-fluid">
+<div class="container-fluid my-5">
     {% if recipe %}
     <h2>{{ recipe.name }}</h2>
     <div class="container-fluid">
 
         <div class="row">
             <div class="col-md-4 ">
-                <img src="{{ MEDIA_URL }}recipes/{{ recipe.imagePath }}" class="card-img-top" alt="Image" width="30%" />
+                <img src="{{ MEDIA_URL }}{{ recipe.imagePath }}" class="card-img-top" alt="Image" width="30%" />
                 <div class="col-xs-12" style="height: 15px"></div>
                 <h4>Instructions:</h4>
                 <p class="fs-1">
                     {% for instruction in instructions %}
+                    {% if instruction.media %}
+                    <img src="{{ MEDIA_URL }}{{ instruction.media }}" alt="Image" class="img-fluid" />
+                    {% endif %}
                     <strong>{{ instruction.step }}. </strong>{{ instruction.description }}<br>
                     {% endfor %}
                 </p>
             </div>
 
             <div class="col-md-2">
-                <strong>Preparation time: <br></strong>
-                30 min <br>
+                <strong>
+                    Preparation time:
+                </strong>
+                <br>
+                {{ recipe.time | floatformat }} min
+                <br>
                 <br>
                 <strong>Rating: <br></strong>
                     <!--stars-->
@@ -50,10 +57,15 @@
             <div class="col-md-2 text-center"></div>
             <div class="col-md-4 text-center">
                 <h4>Recommended recipes</h4>
-                <p class="text-center">Burger</p>
-                <img src="{{ MEDIA_URL }}recipes/borgor.jpg" class="card-img-top w-50" alt="Image" />
-                <p>Burger</p>
-                <img src="{{ MEDIA_URL }}recipes/borgor.jpg" class="card-img-top w-50" alt="Image" />
+                {% for recipe in recommended_recipes %}
+                <a href="{% url 'recipes:show_recipe' recipe.slug %}"><div class="mb-4" >
+                    <h5 class="text-center">{{recipe.name}}</h5>
+                    <img src="{{ MEDIA_URL }}{{ recipe.imagePath}}" class="card-img-top w-50" alt="Image" />
+                </div>
+                </a>
+                {% endfor%}
+
+                
             </div>
         </div>
     </div>

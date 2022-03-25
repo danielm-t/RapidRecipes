@@ -1,0 +1,136 @@
+{% extends 'rapidrecipes/base.html' %}
+{% block content_block %}
+<div class="col-xs-12" style="height:20px;"></div>
+
+<div class="container-fluid">
+    <h2>Add an ingredient</h2>
+    <form class="w-25" method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label>Select Item</label>
+            <select class="form-control select2" name="ingredient" id="ingredient"
+                onchange="getRawFoodMeasurementTypes(event)" required>
+                <option disabled selected value>Select An Ingredient</option>
+                {% for rawFood in rawFoods.all %}
+                <option value="{{ rawFood.name }}">{{ rawFood }}</option>
+                {% endfor%}
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="quantity" class="form-label">Quantity</label>
+            <input type="number" class="form-control" name="ingredientamount" id="ingredientamount" value="0" min="0">
+        </div>
+        <div class="mb-3">
+            <label for="ingredientmeasurement" class="form-label">Measurement</label>
+            <select class="form-control select2" name="ingredientmeasurement" id="ingredientmeasurement" required>
+                <option disabled selected value>Select A Measurement</option>
+            </select>
+        </div>
+        <div class="form-check" id="owned-radio">
+            <input class="form-check-input" type="radio" name="owned" id="owned">
+            <label class="form-check-label" for="owned">
+                Owned
+            </label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="owned" id="notowned" checked>
+            <label class="form-check-label" for="owned">
+                Not Owned
+            </label>
+        </div>
+
+        <div class="col-xs-12" style="height:20px;"></div>
+        <button type="submit" class="btn btn-primary" onclick="getAddedGroceries()">Add ingredient</button>
+    </form>
+    <div class="col-xs-12" style="height:10px;"></div>
+    <h2>List of ingredients</h2>
+    <div class="table-responsive-lg">
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Item</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Owned</th>
+                    <th scope="col">Delete?</th>
+                </tr>
+            </thead>
+            <tbody class="table_body">
+                {% include 'groceries/table_body.html' %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('.select2').select2({
+            theme: 'bootstrap-5'
+        });
+    });
+
+    function getRawFoodMeasurementTypes(caller) {
+        var ingredientInstance = caller.target.parentNode.parentNode.parentNode;
+        //console.log('text: '+$(this).find(":selected").not(':disabled').text());
+        var $ingredient = $(ingredientInstance).find('#ingredient');
+        var $measurement = $(ingredientInstance).find('#ingredientmeasurement');
+        //console.log($measurement.text()); // Print out html
+        $.ajax({
+            type: 'GET',
+            url: "{% url 'food:getRawFoodMeasurementTypes' %}",
+            data: { "raw-food": $ingredient.find(":selected").not(':disabled').text() },
+            success: function (response) {
+
+                $measurement.find('option').not(':disabled').remove();
+                $.each(response, function (key, value) {
+                    $measurement.append(`<option value="${value}">${value}</option>`);
+                });
+                $measurement.show();
+            },
+            error: function (response) {
+                console.log(response);
+            }
+        });
+    };
+
+    function getAddedGroceries() {
+        var i = encodeURI(document.getElementById("ingredient").value);
+        var m = encodeURI(document.getElementById("ingredientmeasurement").value);
+        var a = encodeURI(document.getElementById("ingredientamount").value);
+        var o = document.getElementById("owned").checked;
+
+        var suffix = `?i=${i}&m=${m}&a=${a}&o=${o}`
+
+        $('.table_body').html('').load(
+            "{% url 'groceries:get_added_grocery' %}" + suffix
+        );
+        
+    };
+
+    function deleteGrocery(event) {
+        var row = event.target.parentNode.parentNode;
+
+        var id = encodeURI($(row).find("#item-id").text());
+
+        $('.table_body').html('').load(
+            "{% url 'groceries:delete_grocery' %}?id=" + id
+        );
+    };
+
+    function changeAmount(event) {
+        var row = event.target.parentNode.parentNode.parentNode.parentNode;
+
+        if (event.key === "Enter") {
+           
+            var id = $(row).find("#item-id").text();            
+            var a = encodeURI($(row).find("#item-amount").val());
+
+            var suffix = `?id=${id}&a=${a}`;
+            $('.table_body').html('').load(
+                "{% url 'groceries:change_amount' %}" + suffix
+            );
+            
+        };
+    };
+
+</script>
+{% endblock %}

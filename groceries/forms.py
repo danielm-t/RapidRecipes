@@ -6,3 +6,11 @@ class UserForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ('username', 'email', 'password',)
+
+    def clean(self):
+        clean_data = super(UserForm, self).clean()
+        password = clean_data.get('password')
+
+        if password is not None:
+            if len(password) < 6:
+                raise forms.ValidationError('Password is too short')

@@ -1,11 +1,9 @@
 {% extends 'rapidrecipes/base.html' %}
-{% load staticfiles %}
 {% block content_block %}
-{% load crispy_forms_tags %}
 
 <div class="container-fluid my-5">
     <h2>Add A Recipe</h2>
-    <form method="post">
+    <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <div>
             <div class="mb-3">
@@ -18,7 +16,11 @@
             </div>
             <div class="custom-file mb-3">
                 <label for="recipeimage" class="custom-file-label">Add Recipe Image</label>
-                <input type="file" class="custom-file-input" name="recipeimage" onchange="addRecipeImage(event)">
+                <input type="file" class="custom-file-input" name="recipeimage" oninput="addRecipeImage(event)" accept="image/*" required>
+            </div>
+            <div class="mb-3">
+                <label for="time" class="form-label">Preperation Time (in minutes)</label>
+                <input type="number" class="form-control" id="time" name="time"  min="0" value="0">
             </div>
             <div class="mb-3">
                 <label for="rating" class="form-label">Rating (between 0 to 5)</label>
@@ -49,7 +51,7 @@
                     <div class="form-row mb-3">
                         <div class="col">
                             <label for="ingredient" class="form-label">Choose Ingredient</label>
-                            <select class="form-control" name="ingredient" id="ingredient" onchange="getRawFoodMeasurementTypes(event)" required>
+                            <select class="form-control select2" name="ingredient" id="ingredient" onchange="getRawFoodMeasurementTypes(event)" required>
                                 <option disabled selected value>Select An Ingredient</option>
                                 {% for rawFood in rawFoods.all %}
                                 <option value="{{ rawFood }}">{{ rawFood }}</option>
@@ -62,7 +64,7 @@
                         </div>
                         <div class="col">
                             <label for="ingredientmeasurement" class="form-label">Measurement</label>
-                            <select class="form-control" name="ingredientmeasurement" id="ingredientmeasurement" required>
+                            <select class="form-control select2" name="ingredientmeasurement" id="ingredientmeasurement" required>
                                 <option disabled selected value>Select A Measurement</option>
                             </select>
                         </div>
@@ -82,12 +84,12 @@
                 <div id="instructionform">
                     <div class="mb-3">
                         <textarea class="form-control" rows="10" placeholder="Add Description Here"
-                            name="instruction"></textarea>
+                            name="instruction" id="instruction"></textarea>
                     </div>
                     <div class="form-row mb-3 mx-0">
                         <div class="col custom-file">
-                            <label for="instructionimage" class="custom-file-label">Add Instruction Image</label>
-                            <input type="file" class="custom-file-input" name="instructionimage"
+                            <label for="instructionimage" class="custom-file-label" id="instructionimagelabel">Add Instruction Image</label>
+                            <input type="file" class="custom-file-input" name="instructionimage" id="instructionimage" accept="image/*"
                                 onchange="instructionImageAdded(event)">
                         </div>
                         <div class="col-auto">
@@ -100,12 +102,12 @@
                 Add Another Instruction
             </button>
         </div>
-        <button class="btn btn-primary mb-5" type="submit">Submit</button>
+        <button class="btn btn-primary mb-5" type="submit" onsubmit="alert('You have successfully added a new recipe.')">Submit</button>
     </form>
 </div>
 <script>
 
-    function getRawFoodMeasurementTypes(caller){
+    function getRawFoodMeasurementTypes(caller) {
             var ingredientInstance = caller.target.parentNode.parentNode.parentNode;
             //console.log('text: '+$(this).find(":selected").not(':disabled').text());
             var $ingredient = $(ingredientInstance).find('#ingredient');
@@ -129,6 +131,11 @@
             });
     };
 
+    $(document).ready(function() {
+        $('.select2').select2({
+            theme: 'bootstrap-5',
+        });
+    });
 
     var addRecipeImage = function (event) {
         var imageContainer = document.getElementById('recipeImageContainer');
@@ -136,6 +143,7 @@
         var image = document.getElementById('recipeimageoutput');
         image.src = URL.createObjectURL(event.target.files[0]);
     };
+
 
     var addIngredient = function () {
         var ingredientform = document.getElementById('ingredientform');
@@ -160,16 +168,32 @@
 
     var instructionImageAdded = function (event) {
         alert("You successfully added an instruction image!")
-        var label = event.target.parentNode.children[0];
+
+        var element = event.target;
+        var label = element.parentNode.children[0];
         label.innerHTML = "Change Instruction Image";
         label.style.backgroundColor = "lightgreen";
     };
 
     var addInstruction = function () {
         var instructionform = document.getElementById('instructionform');
+        var instructionforms = instructionform.parentNode;
         var clone = instructionform.cloneNode(true);
 
+        
         document.getElementById('instructionforms').appendChild(clone);
+        
+        var instructions = instructionforms.children.length;
+
+        for (var i = 1; i <= instructions; i++) {
+            var hello = instructionforms.children[i-1].children[1].children[0].children[1];
+            hello.name = "instructionimage" + i;
+        }
+
+        $(clone).find('#instruction').val("");
+        var imagelabel = $(clone).find('#instructionimagelabel');
+        imagelabel.css("background-color", "initial");
+        imagelabel.html("Add Instruction Image");
     };
 
     var deleteInstruction = function () {
@@ -180,67 +204,16 @@
                 alert("You have to have at least one instruction in your recipe.");
             } else {
                 instructionformtodelete.remove();
+
+                var instructions = instructionforms.children.length;
+
+                for (var i = 1; i <= instructions; i++) {
+                    var instructionimage = instructionforms.children[i - 1].children[1].children[0].children[1];
+                    instructionimage.name = "instructionimage" + i;
+                }
+
             }
     };
 
 </script>
 {% endblock %}
-
-<!--
-    <div>
-                {{ form.name.errors }}
-                {{ form.name | as_crispy_field}}
-            </div>
-            <div>
-                {{ form.imagePath.errors }}
-                {{ form.imagePath | as_crispy_field }}
-            </div>
-            <div class="row">
-                <div class="col">
-                    {{ form.category.errors }}
-                    {{ form.category | as_crispy_field }}
-                </div>
-                <div class="col">
-                    <div>
-                        {{ form.rating.errors }}
-                        {{ form.rating | as_crispy_field }}
-                    </div>
-                    <div>
-                        {{ form.difficulty.errors }}
-                        {{ form.difficulty | as_crispy_field }}
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <h3>Add Ingredients</h3>
-                {{ ingredientformset.management_form }}
-                {% for form in ingredientformset %}
-                {{ form | crispy }}
-                {% endfor %}
-            </div>
-            <div class="col">
-                <h3>Add Instructions</h3>
-                {{ instructionformset.management_form }}
-                {% for form in instructionformset %}
-                {{ form | crispy }}
-                {% endfor %}
-            </div>
--->
-
-
-<!--
-<div class="row mb-3" style="height: 300px;">
-    <div class="col-3 align-self-end">
-        <div class="container border border-dark rounded mb-3" id="instructionImageContainer" style="height: 24vh;">
-            <img id="instructionimageoutput" class="rounded mx-auto d-block" style="max-height: 100%;" />
-        </div>
-        <div class="custom-file align-self-end">
-            <label for="instructionimage" class="custom-file-label">Add Recipe Image</label>
-            <input type="file" class="custom-file-input" name="instructionimage" onchange="addInstructionImage(event)">
-        </div>
-    </div>
-    <div class="col">
-        <textarea class="form-control" rows="10" placeholder="Add Description Here" style="height: 30vh;"></textarea>
-    </div>
-</div>
--->
