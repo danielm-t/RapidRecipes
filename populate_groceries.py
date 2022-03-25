@@ -17,7 +17,7 @@ def populate():
              {'rawFood': 'butter', 'amount': '250', 'available': True, 'user': 'Bob', 'unit':'gram'},
              {'rawFood': 'vanilla extract', 'amount': 'a few', 'available': False, 'user': 'Bob', 'unit':'drop'},
              {'rawFood': 'butter', 'amount': '50', 'available': True, 'user': 'Jill', 'unit':'gram'},
-             {'rawFood': 'bread', 'amount': '1', 'available': True, 'user': 'Jill', 'unit':'bun'},
+             {'rawFood': 'bread bun', 'amount': '1', 'available': True, 'user': 'Jill', 'unit':'blank'},
              {'rawFood': 'lettuce', 'amount': 'a couple', 'available': False, 'user': 'Jill', 'unit':'leaf'},
              {'rawFood': 'tomato', 'amount': 'a couple', 'available': True, 'user': 'Jill', 'unit':'slice'},
              {'rawFood': 'beef burger', 'amount': '200', 'available': False, 'user': 'Jill', 'unit':'gram'}]

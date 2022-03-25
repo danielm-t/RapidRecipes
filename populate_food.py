@@ -47,10 +47,10 @@ def populate():
                 {'name': 'caster sugar', 'measuredIn': ['gram']},
                 {'name': 'butter', 'measuredIn': ['gram']},
                 {'name': 'vanilla extract', 'measuredIn': ['drop']},
-                {'name': 'bread', 'measuredIn': ['bun']},
+                {'name': 'bread bun', 'measuredIn': ['blank']},
                 {'name': 'beef burger', 'measuredIn': ['gram']},
                 {'name': 'lettuce', 'measuredIn': ['leaf']},
-                {'name': 'tomato', 'measuredIn': ['slice']},
+                {'name': 'tomato', 'measuredIn': ['blank']},
                 {'name': 'onion', 'measuredIn': ['blank']},
                 {'name': 'vegetable oil', 'measuredIn': ['tablespoon']},
                 {'name': 'curry paste', 'measuredIn': ['millilitre']},
@@ -78,7 +78,16 @@ def populate():
                 {'name': 'peas', 'measuredIn': ['gram']},
                 {'name': 'ginger', 'measuredIn': ['stem']},
                 {'name': 'stir fry sauce', 'measuredIn': ['millilitre']},
-                {'name': 'noodles', 'measuredIn': ['gram']}]
+                {'name': 'noodles', 'measuredIn': ['gram']},
+                {'name': 'double cream', 'measuredIn': ['millilitre']},
+                {'name': 'dark chocolate', 'measuredIn': ['gram']},
+                {'name': 'egg', 'measuredIn': ['blank']},
+                {'name': 'chocolate chips', 'measuredIn': ['gram']},
+                {'name': 'rolled oats', 'measuredIn': ['gram']},
+                {'name': 'apple', 'measuredIn': ['gram']},
+                {'name': 'ground almonds', 'measuredIn': ['gram']},
+                {'name': 'chocolate', 'measuredIn': ['gram']},
+                {'name': 'baking powder', 'measuredIn': ['teaspoon']}]
 
     
     # Populate database
