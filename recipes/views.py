@@ -4,8 +4,9 @@ from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from datetime import datetime
 from recipes.models import Category, Recipe, Ingredient, Instruction
+
 from food.models import RawFood, Measurement
-from recipes.forms import ContactForm
+from recipes.forms import InstructionFormSet, RecipeForm, IngredientFormSet, ContactForm, FilterForm
 from django.core.mail import send_mail, BadHeaderError
 from rapid_recipes.settings import DEFAULT_FROM_EMAIL
 from django.core.files.storage import default_storage
@@ -14,6 +15,76 @@ from django.core.files.storage import default_storage
 # Create your views here.
 
 def index(request):
+    a = 0
+    if request.method == 'GET':
+        form = FilterForm()
+        context_dict = {}
+        recipe_list = Recipe.objects.order_by('-rating')[:5]
+        context_dict = {'recipes': recipe_list, 'form':form}
+        #visitor_cookie_handler(request)
+        
+    elif request.method == 'POST':
+        context_dict = {}
+        form = FilterForm(request.POST)
+        if 'lunch' in request.POST:
+            recipe_list = Recipe.objects.filter(category=6).order_by('-rating')[:5]
+            context_dict = {'recipes': recipe_list, 'form':form}
+            a = 1
+        if 'dinner' in request.POST:
+            recipe_list = Recipe.objects.filter(category=7).order_by('-rating')[:5]
+            context_dict = {'recipes': recipe_list, 'form':form}
+            a = 1
+        if 'breakfast' in request.POST:
+            recipe_list = Recipe.objects.filter(category=5).order_by('-rating')[:5]
+            context_dict = {'recipes': recipe_list, 'form':form}
+            a = 1
+        if 'easy' in request.POST:
+            recipe_list = Recipe.objects.filter(category=14).order_by('-rating')[:5]
+            context_dict = {'recipes': recipe_list, 'form':form}
+            a = 1
+        if 'medium' in request.POST:
+            recipe_list = Recipe.objects.filter(category=15).order_by('-rating')[:5]
+            context_dict = {'recipes': recipe_list, 'form':form}
+            a = 1
+        if 'hard' in request.POST:
+            recipe_list = Recipe.objects.filter(category=16).order_by('-rating')[:5]
+            context_dict = {'recipes': recipe_list, 'form':form}
+            a = 1
+       
+        if 'drink' in request.POST:
+            recipe_list = Recipe.objects.filter(category=8).order_by('-rating')[:5]
+            context_dict = {'recipes': recipe_list, 'form':form}
+            a = 1
+        if 'vegan' in request.POST:
+            recipe_list = Recipe.objects.filter(category=9).order_by('-rating')[:5]
+            context_dict = {'recipes': recipe_list, 'form':form}
+            a = 1
+        if 'vegetarian' in request.POST:
+            recipe_list = Recipe.objects.filter(category=10).order_by('-rating')[:5]
+            context_dict = {'recipes': recipe_list, 'form':form}
+            a = 1
+        if 'beef' in request.POST:
+            recipe_list = Recipe.objects.filter(category=11).order_by('-rating')[:5]
+            context_dict = {'recipes': recipe_list, 'form':form}
+            a = 1
+        if 'chicken' in request.POST:
+            recipe_list = Recipe.objects.filter(category=12).order_by('-rating')[:5]
+            context_dict = {'recipes': recipe_list, 'form':form}
+            a = 1
+        if 'fish' in request.POST:
+            recipe_list = Recipe.objects.filter(category=13).order_by('-rating')[:5]
+            context_dict = {'recipes': recipe_list, 'form':form}
+            a = 1
+        
+        
+        
+        elif a == 0:
+            form = FilterForm()
+            recipe_list = Recipe.objects.order_by('-rating')[:5]
+            context_dict = {'recipes': recipe_list, 'form':form}
+            return render(request, "recipes/index.html", context_dict)
+            
+    return render(request, "recipes/index.html", context_dict)
     context_dict = {}
     recipe_list = Recipe.objects.order_by('-rating')
     context_dict = {'recipes': recipe_list}
@@ -58,6 +129,7 @@ def contact(request):
 
 def success(request):
     return HttpResponse("The email was successfully sent!")
+
 
 # def show_category(request, category_name_slug):
 #     context_dict = {}
@@ -188,6 +260,88 @@ def add_recipe(request):
 
         return redirect('index')
     
+
+def search(request):
+    if request.method == "POST":
+        search = request.POST['search']
+        recipes = Recipe.objects.filter(name__icontains=search)
+        a = 0
+        context_dict = {'search':search, 'recipes':recipes}
+        response = render(request, 'recipes/search.html', context_dict)
+        return response
+    if request.method == 'GET':
+        form = FilterForm()
+        context_dict = {}
+        recipe_list = Recipe.objects.order_by('-rating')[:5]
+        context_dict = {'recipes': recipe_list, 'form':form}
+        #visitor_cookie_handler(request)
+        
+    elif request.method == 'POST':
+        context_dict = {}
+        form = FilterForm(request.POST)
+        if 'lunch' in request.POST:
+            recipe_list = Recipe.objects.filter(category=6).order_by('-rating')[:5]
+            context_dict = {'recipes': recipe_list, 'form':form}
+            a = 1
+        if 'dinner' in request.POST:
+            recipe_list = Recipe.objects.filter(category=7).order_by('-rating')[:5]
+            context_dict = {'recipes': recipe_list, 'form':form}
+            a = 1
+        if 'breakfast' in request.POST:
+            recipe_list = Recipe.objects.filter(category=5).order_by('-rating')[:5]
+            context_dict = {'recipes': recipe_list, 'form':form}
+            a = 1
+        if 'easy' in request.POST:
+            recipe_list = Recipe.objects.filter(category=14).order_by('-rating')[:5]
+            context_dict = {'recipes': recipe_list, 'form':form}
+            a = 1
+        if 'medium' in request.POST:
+            recipe_list = Recipe.objects.filter(category=15).order_by('-rating')[:5]
+            context_dict = {'recipes': recipe_list, 'form':form}
+            a = 1
+        if 'hard' in request.POST:
+            recipe_list = Recipe.objects.filter(category=16).order_by('-rating')[:5]
+            context_dict = {'recipes': recipe_list, 'form':form}
+            a = 1
+       
+        if 'drink' in request.POST:
+            recipe_list = Recipe.objects.filter(category=8).order_by('-rating')[:5]
+            context_dict = {'recipes': recipe_list, 'form':form}
+            a = 1
+        if 'vegan' in request.POST:
+            recipe_list = Recipe.objects.filter(category=9).order_by('-rating')[:5]
+            context_dict = {'recipes': recipe_list, 'form':form}
+            a = 1
+        if 'vegetarian' in request.POST:
+            recipe_list = Recipe.objects.filter(category=10).order_by('-rating')[:5]
+            context_dict = {'recipes': recipe_list, 'form':form}
+            a = 1
+        if 'beef' in request.POST:
+            recipe_list = Recipe.objects.filter(category=11).order_by('-rating')[:5]
+            context_dict = {'recipes': recipe_list, 'form':form}
+            a = 1
+        if 'chicken' in request.POST:
+            recipe_list = Recipe.objects.filter(category=12).order_by('-rating')[:5]
+            context_dict = {'recipes': recipe_list, 'form':form}
+            a = 1
+        if 'fish' in request.POST:
+            recipe_list = Recipe.objects.filter(category=13).order_by('-rating')[:5]
+            context_dict = {'recipes': search, 'form':form}
+            a = 1
+        
+        
+        
+        elif a == 0:
+            form = FilterForm()
+            recipe_list = Recipe.objects.order_by('-rating')[:5]
+            context_dict = {'recipes': recipe_list, 'form':form}
+            return render(request, "recipes/search.html", context_dict)
+            
+        else:
+            context_dict = {}
+            response = render(request, 'recipes/search.html', context_dict)
+            return response
+    return render(request, "recipes/index.html", context_dict)
 
 
 # def some_view(request):
