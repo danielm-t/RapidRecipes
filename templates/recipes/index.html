@@ -128,8 +128,8 @@
             <div class="carousel-item active">
                 <div class="container">
                     <div class="row">
-
                         {% if recipes %}
+                        <script src="{% static 'javascript/index.js' %}"></script>
                         {% for r in recipes %}
                         <div class="col-lg-3 d-lg-block">
                             <div class="card">
@@ -151,24 +151,12 @@
                             </div>
                             <div class="col-xs-12" style="height:20px;"></div>
                         </div>
-
-                        <script>
-                            function getRatings() {
-                                const starTotal = 5;
-                                var my_rating = "{{ r.rating }}";
-                                var my_slug = "{{ r.slug }} "
-                                const starPercentage = (my_rating / starTotal) * 100;
-                                const starPercentageRounded = `${(Math.round(starPercentage / 10) * 10)}%`;
-                                document.querySelector(`#${my_slug} .stars-inner`).style.width = starPercentageRounded;
-                            }
-                            getRatings();
-                        </script>
+                        <script>getRatings("{{ r.rating }}", "{{ r.slug }}");</script>
 
                         {% endfor %}
                         {% else %}
                         <li><strong>There are no recipes present.</strong></li>
                         {% endif %}
-
                     </div>
                 </div>
             </div>

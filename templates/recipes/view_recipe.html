@@ -1,8 +1,10 @@
 {% extends 'rapidrecipes/base.html' %}
+{% load staticfiles %}
 {% block content_block %}
 
 <div class="container-fluid my-5">
     {% if recipe %}
+    <script src="{% static 'javascript/viewRecipe.js' %}"></script>
     <h2>{{ recipe.name }}</h2>
     <div class="container-fluid">
 
@@ -54,6 +56,7 @@
                     </p>
                 </div>
             </div>
+            <script>getRatings('{{ recipe.slug }}', '{{ recipe.rating }}', '{{ recipe.difficulty }}')</script>
             <div class="col-md-2 text-center"></div>
             <div class="col-md-4 text-center">
                 <h4>Recommended recipes</h4>
@@ -69,21 +72,6 @@
             </div>
         </div>
     </div>
-    <script>
-        function starPercentage(value_){
-            const starTotal = 5;
-            const starPercentage = (value_ / starTotal) * 100;
-            return `${(Math.round(starPercentage / 10) * 10)}%`;
-        }
-
-        function getRatings() {
-            var my_slug = "{{ recipe.slug }}"
-            
-            document.querySelector(`#${my_slug}-rating .stars-inner`).style.width = starPercentage("{{ recipe.rating }}");
-            document.querySelector(`#${my_slug}-difficulty .stars-inner`).style.width = starPercentage("{{ recipe.difficulty }}");
-        }
-        getRatings();
-    </script>
     {% endif %}
 </div>
 {% endblock %}
