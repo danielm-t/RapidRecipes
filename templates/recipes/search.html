@@ -1,53 +1,6 @@
 <!DOCTYPE html>
 {% extends 'rapidrecipes/base.html' %}
 {% load staticfiles %}
-{% block filter_block %}
-<nav id="sidebarMenu" class="collapse d-lg-block sidebar collapse bg-white">
-      <div class="position-sticky">
-        <div class="list-group list-group-flush mx-4 mt-4">
-          <a class="list-group-item list-group-item-action py-2 ripple" aria-current="true" data-mdb-toggle="collapse"
-            href="#collapseExample1" aria-expanded="true" aria-controls="collapseExample1">
-            <i class="fa-solid fa-filter fa-fw me-3"></i><span>Filters</span>
-          </a>
-          <ul id="collapseExample1" class="collapse show list-group list-group-flush">
-		  <form method="post">
-			{% csrf_token %}
-            <li class="list-group-item py-1">
-            <div class="form-check-input">
-			{{ form.breakfast }}
-			</div>
-			<label class="form-check-label" for="dinner">
-              breakfast
-            </label>
-            </li>
-			
-            <li class="list-group-item py-1">
-			<div class="form-check-input">
-			{{ form.lunch }}
-			</div>
-			<label class="form-check-label" for="lunch">
-              lunch
-            </label>
-            </li>
-			
-            <li class="list-group-item py-1">
-            <div class="form-check-input">
-			{{ form.dinner }}
-			</div>
-			<label class="form-check-label" for="dinner">
-              dinner
-            </label>
-            </li>
-			
-			<div>
-				<button class="" type="submit">Submit</button>
-			</div>
-			</form>
-          </ul>
-        </div>
-      </div>
-    </nav>
-{% endblock %}
 {% block content_block %}
 
 <div id="carouselMultiItemExample" class="carousel slide carousel-dark text-center" data-mdb-ride="carousel">
@@ -56,8 +9,8 @@
             <div class="container">
                 <div class="row">
 
-                    {% if recipesS %}
-                    {% for r in recipesS %}
+                    {% if recipes %}
+                    {% for r in recipes %}
                     <div class="col-lg-3 d-lg-block">
                         <div class="card">
                             <img src="{{ MEDIA_URL }}recipes/{{ r.imagePath }}" class="card-img-top img-fluid" alt="Recipe Image"/>
@@ -92,6 +45,8 @@
                     {% endfor %}
                     {% else %}
                     <li><strong>There are no recipes present.</strong></li>
+					
+					<li><a href="https://www.google.co.uk/search?q=" + views.search.search.value> Search on google <a/></li>
                     {% endif %}
 
                 </div>

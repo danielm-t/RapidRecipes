@@ -177,16 +177,85 @@ def add_recipe(request):
 
 def search(request):
     if request.method == "POST":
-        searched = request.POST['searched']
-        recipesS = Recipe.objects.filter(feeder__icontains=searched)
-        
-        context_dict = {'searched':searched, 'recipesS':recipesS}
+        search = request.POST['search']
+        recipes = Recipe.objects.filter(name__icontains=search)
+        a = 0
+        context_dict = {'search':search, 'recipes':recipes}
         response = render(request, 'recipes/search.html', context_dict)
         return response
-    else:
+    if request.method == 'GET':
+        form = FilterForm()
         context_dict = {}
-        response = render(request, 'recipes/search.html', context_dict)
-        return response
+        recipe_list = Recipe.objects.order_by('-rating')[:5]
+        context_dict = {'recipes': recipe_list, 'form':form}
+        #visitor_cookie_handler(request)
+        
+    elif request.method == 'POST':
+        context_dict = {}
+        form = FilterForm(request.POST)
+        if 'lunch' in request.POST:
+            recipe_list = Recipe.objects.filter(category=6).order_by('-rating')[:5]
+            context_dict = {'recipes': recipe_list, 'form':form}
+            a = 1
+        if 'dinner' in request.POST:
+            recipe_list = Recipe.objects.filter(category=7).order_by('-rating')[:5]
+            context_dict = {'recipes': recipe_list, 'form':form}
+            a = 1
+        if 'breakfast' in request.POST:
+            recipe_list = Recipe.objects.filter(category=5).order_by('-rating')[:5]
+            context_dict = {'recipes': recipe_list, 'form':form}
+            a = 1
+        if 'easy' in request.POST:
+            recipe_list = Recipe.objects.filter(category=14).order_by('-rating')[:5]
+            context_dict = {'recipes': recipe_list, 'form':form}
+            a = 1
+        if 'medium' in request.POST:
+            recipe_list = Recipe.objects.filter(category=15).order_by('-rating')[:5]
+            context_dict = {'recipes': recipe_list, 'form':form}
+            a = 1
+        if 'hard' in request.POST:
+            recipe_list = Recipe.objects.filter(category=16).order_by('-rating')[:5]
+            context_dict = {'recipes': recipe_list, 'form':form}
+            a = 1
+       
+        if 'drink' in request.POST:
+            recipe_list = Recipe.objects.filter(category=8).order_by('-rating')[:5]
+            context_dict = {'recipes': recipe_list, 'form':form}
+            a = 1
+        if 'vegan' in request.POST:
+            recipe_list = Recipe.objects.filter(category=9).order_by('-rating')[:5]
+            context_dict = {'recipes': recipe_list, 'form':form}
+            a = 1
+        if 'vegetarian' in request.POST:
+            recipe_list = Recipe.objects.filter(category=10).order_by('-rating')[:5]
+            context_dict = {'recipes': recipe_list, 'form':form}
+            a = 1
+        if 'beef' in request.POST:
+            recipe_list = Recipe.objects.filter(category=11).order_by('-rating')[:5]
+            context_dict = {'recipes': recipe_list, 'form':form}
+            a = 1
+        if 'chicken' in request.POST:
+            recipe_list = Recipe.objects.filter(category=12).order_by('-rating')[:5]
+            context_dict = {'recipes': recipe_list, 'form':form}
+            a = 1
+        if 'fish' in request.POST:
+            recipe_list = Recipe.objects.filter(category=13).order_by('-rating')[:5]
+            context_dict = {'recipes': search, 'form':form}
+            a = 1
+        
+        
+        
+        elif a == 0:
+            form = FilterForm()
+            recipe_list = Recipe.objects.order_by('-rating')[:5]
+            context_dict = {'recipes': recipe_list, 'form':form}
+            return render(request, "recipes/search.html", context_dict)
+            
+        else:
+            context_dict = {}
+            response = render(request, 'recipes/search.html', context_dict)
+            return response
+    return render(request, "recipes/index.html", context_dict)
 
 
 # def some_view(request):
