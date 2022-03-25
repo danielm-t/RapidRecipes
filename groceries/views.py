@@ -5,8 +5,8 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
 from django.urls import reverse
 from django.http import HttpResponse, JsonResponse
-from groceries.models import UserProfile, GroceryItem
-from recipes.models import Measurement
+from groceries.models import GroceryItem
+from recipes.models import Measurement, Recipe
 from food.models import RawFood
 from django.contrib.auth.models import User
 from groceries.forms import UserForm
@@ -59,6 +59,12 @@ def shopping_list(request):
     context = {'rawFoods' : RawFood.objects.all()}
     context['groceries'] = GroceryItem.objects.filter(user=request.user)
     return render(request, 'groceries/shoppinglist.html', context)
+
+@login_required
+def recipes_list(request):
+    context = {}
+    context['recipes'] = Recipe.objects.filter(users=request.user)
+    return render(request, 'groceries/recipesList.html', context)
 
 
 def get_added_grocery(request):
@@ -117,3 +123,18 @@ def change_amount(request):
         except (RawFood.DoesNotExist, Measurement.DoesNotExist) as e:
             context['groceries'] = GroceryItem.objects.filter(user=request.user)
         return render(request, "groceries/table_body.html", context)
+
+
+def save_recipe(request):
+    if request.is_ajax and request.method == "GET":
+        recipe = request.GET.get("recipe_id", None)
+        user = request.user
+        try:
+            recipe = Recipe.objects.get(id=recipe)
+            user = User.objects.get(id=user.id)
+            recipe.users.add(user)
+            recipe.save()
+        except (Recipe.DoesNotExist, User.DoesNotExist) as e:
+            print("Error")
+    return JsonResponse({}, status=200)        
+

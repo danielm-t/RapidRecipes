@@ -14,4 +14,6 @@ urlpatterns = [
     path('get_added_grocery/', views.get_added_grocery, name="get_added_grocery"),
     path('delete_grocery/', views.delete_grocery, name="delete_grocery"),
     path('change_amount/', views.change_amount, name="change_amount"),
+    path('save_recipe', views.save_recipe, name="save_recipe"),
+    path('recipelist/', views.recipes_list, name="recipe_list"),
 ]

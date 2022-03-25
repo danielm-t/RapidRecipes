@@ -121,12 +121,11 @@
 </nav>
 {% endblock %}
 {% block content_block %}
-
 <div class="col-md-9 ml-sm-auto col-lg-10">
     <div id="carouselMultiItemExample" class="carousel slide carousel-dark text-center" data-mdb-ride="carousel">
-        <div class="carousel-inner py-4">
+        <div class="carousel-inner">
             <div class="carousel-item active">
-                <div class="container">
+                <div class="container-fluid">
                     <div class="row">
                         {% if recipes %}
                         <script src="{% static 'javascript/index.js' %}"></script>
@@ -163,5 +162,4 @@
         </div>
     </div>
 </div>
-
 {% endblock %}
