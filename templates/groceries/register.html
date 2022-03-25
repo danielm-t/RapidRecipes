@@ -1,7 +1,7 @@
 {% extends 'rapidrecipes/base.html' %}
 
 {% block content_block %}
-<div class="container-fluid">
+<div class="container-fluid my-2">
     <h2>Register</h2>
     <form class="form-signin" role="form" method="post" action="."
     oninput='id_password2.setCustomValidity(id_password.value != id_password2.value ? "Passwords do not match." : "")'>
