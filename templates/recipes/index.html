@@ -2,171 +2,178 @@
 {% extends 'rapidrecipes/base.html' %}
 {% load staticfiles %}
 {% block filter_block %}
-<nav id="sidebarMenu" class="collapse d-lg-block sidebar collapse bg-white">
-      <div class="position-sticky">
+<nav id="sidebarMenu" class="collapse d-lg-block sidebar collapse bg-white col-auto">
+    <div class="position-sticky">
         <div class="list-group list-group-flush mx-4 mt-4">
-          <a class="list-group-item list-group-item-action py-2 ripple" aria-current="true" data-mdb-toggle="collapse"
-            href="#collapseExample1" aria-expanded="true" aria-controls="collapseExample1">
-            <i class="fa-solid fa-filter fa-fw me-3"></i><span>Filters</span>
-          </a>
-          <ul id="collapseExample1" class="collapse show list-group list-group-flush">
-		  <form method="post">
-			{% csrf_token %}
-            <li class="list-group-item py-1">
-            <div class="form-check-input">
-			{{ form.breakfast }}
-			</div>
-			<label class="form-check-label" for="dinner">
-              breakfast
-            </label>
-            </li>
-			
-            <li class="list-group-item py-1">
-			<div class="form-check-input">
-			{{ form.lunch }}
-			</div>
-			<label class="form-check-label" for="lunch">
-              lunch
-            </label>
-            </li>
-			
-            <li class="list-group-item py-1">
-            <div class="form-check-input">
-			{{ form.dinner }}
-			</div>
-			<label class="form-check-label" for="dinner">
-              dinner
-            </label>
-            </li>
-			<li class="list-group-item py-1">
-            <div class="form-check-input">
-			{{ form.easy }}
-			</div>
-			<label class="form-check-label" for="easy">
-              easy
-            </label>
-            </li>
-			<li class="list-group-item py-1">
-            <div class="form-check-input">
-			{{ form.medium }}
-			</div>
-			<label class="form-check-label" for="medium">
-              medium
-            </label>
-            </li>
-			<li class="list-group-item py-1">
-            <div class="form-check-input">
-			{{ form.hard }}
-			</div>
-			<label class="form-check-label" for="hard">
-              hard
-            </label>
-            </li>
-			<li class="list-group-item py-1">
-            <div class="form-check-input">
-			{{ form.drink }}
-			</div>
-			<label class="form-check-label" for="drink">
-              drink
-            </label>
-            </li>
-			<li class="list-group-item py-1">
-            <div class="form-check-input">
-			{{ form.vegan }}
-			</div>
-			<label class="form-check-label" for="vegan">
-              vegan
-            </label>
-            </li>
-			<li class="list-group-item py-1">
-            <div class="form-check-input">
-			{{ form.vegetarian }}
-			</div>
-			<label class="form-check-label" for="vegetarian">
-              vegetarian
-            </label>
-            </li>
-			<li class="list-group-item py-1">
-            <div class="form-check-input">
-			{{ form.beef }}
-			</div>
-			<label class="form-check-label" for="beef">
-              beef
-            </label>
-            </li><li class="list-group-item py-1">
-            <div class="form-check-input">
-			{{ form.chicken }}
-			</div>
-			<label class="form-check-label" for="chicken">
-              chicken
-            </label>
-            </li><li class="list-group-item py-1">
-            <div class="form-check-input">
-			{{ form.fish }}
-			</div>
-			<label class="form-check-label" for="fish">
-              fish
-            </label>
-            </li>
-			
-			<div>
-				<button class="" type="submit">Submit</button>
-			</div>
-			</form>
-          </ul>
+            <a class="list-group-item list-group-item-action py-2 ripple" aria-current="true" data-mdb-toggle="collapse"
+                href="#collapseExample1" aria-expanded="true" aria-controls="collapseExample1">
+                <i class="fa-solid fa-filter fa-fw me-3"></i><span>Filters</span>
+            </a>
+            <ul id="collapseExample1" class="collapse show list-group list-group-flush">
+                <form method="post">
+                    {% csrf_token %}
+                    <li class="list-group-item py-1">
+                        <div class="form-check-input">
+                            {{ form.breakfast }}
+                        </div>
+                        <label class="form-check-label" for="dinner">
+                            breakfast
+                        </label>
+                    </li>
+
+                    <li class="list-group-item py-1">
+                        <div class="form-check-input">
+                            {{ form.lunch }}
+                        </div>
+                        <label class="form-check-label" for="lunch">
+                            lunch
+                        </label>
+                    </li>
+
+                    <li class="list-group-item py-1">
+                        <div class="form-check-input">
+                            {{ form.dinner }}
+                        </div>
+                        <label class="form-check-label" for="dinner">
+                            dinner
+                        </label>
+                    </li>
+                    <li class="list-group-item py-1">
+                        <div class="form-check-input">
+                            {{ form.easy }}
+                        </div>
+                        <label class="form-check-label" for="easy">
+                            easy
+                        </label>
+                    </li>
+                    <li class="list-group-item py-1">
+                        <div class="form-check-input">
+                            {{ form.medium }}
+                        </div>
+                        <label class="form-check-label" for="medium">
+                            medium
+                        </label>
+                    </li>
+                    <li class="list-group-item py-1">
+                        <div class="form-check-input">
+                            {{ form.hard }}
+                        </div>
+                        <label class="form-check-label" for="hard">
+                            hard
+                        </label>
+                    </li>
+                    <li class="list-group-item py-1">
+                        <div class="form-check-input">
+                            {{ form.drink }}
+                        </div>
+                        <label class="form-check-label" for="drink">
+                            drink
+                        </label>
+                    </li>
+                    <li class="list-group-item py-1">
+                        <div class="form-check-input">
+                            {{ form.vegan }}
+                        </div>
+                        <label class="form-check-label" for="vegan">
+                            vegan
+                        </label>
+                    </li>
+                    <li class="list-group-item py-1">
+                        <div class="form-check-input">
+                            {{ form.vegetarian }}
+                        </div>
+                        <label class="form-check-label" for="vegetarian">
+                            vegetarian
+                        </label>
+                    </li>
+                    <li class="list-group-item py-1">
+                        <div class="form-check-input">
+                            {{ form.beef }}
+                        </div>
+                        <label class="form-check-label" for="beef">
+                            beef
+                        </label>
+                    </li>
+                    <li class="list-group-item py-1">
+                        <div class="form-check-input">
+                            {{ form.chicken }}
+                        </div>
+                        <label class="form-check-label" for="chicken">
+                            chicken
+                        </label>
+                    </li>
+                    <li class="list-group-item py-1">
+                        <div class="form-check-input">
+                            {{ form.fish }}
+                        </div>
+                        <label class="form-check-label" for="fish">
+                            fish
+                        </label>
+                    </li>
+
+                    <div>
+                        <button class="" type="submit">Submit</button>
+                    </div>
+                </form>
+            </ul>
         </div>
-      </div>
-    </nav>
+    </div>
+</nav>
 {% endblock %}
 {% block content_block %}
 
-<div id="carouselMultiItemExample" class="carousel slide carousel-dark text-center" data-mdb-ride="carousel">
-    <div class="carousel-inner py-4">
-        <div class="carousel-item active">
-            <div class="container">
-                <div class="row">
+<div class="col-md-9 ml-sm-auto col-lg-10">
+    <div id="carouselMultiItemExample" class="carousel slide carousel-dark text-center" data-mdb-ride="carousel">
+        <div class="carousel-inner py-4">
+            <div class="carousel-item active">
+                <div class="container">
+                    <div class="row">
 
-                    {% if recipes %}
-                    {% for r in recipes %}
-                    <div class="col-lg-3 d-lg-block">
-                        <div class="card">
-                            <img src="{{ MEDIA_URL }}{{ r.imagePath }}" class="card-img-top img-fluid" alt="Recipe Image"/>
-                            <div class="card-body">
-                                <h5 class="card-title">{{ r.name }}</h5>
-                                <p class="card-text">
-                                    Description
-                                <div id="{{ r.slug }}">
-                                    <div class="stars-outer">
-                                        <div class="stars-inner"></div>
+                        {% if recipes %}
+                        {% for r in recipes %}
+                        <div class="col-lg-3 d-lg-block">
+                            <div class="card">
+                                <img src="{{ MEDIA_URL }}{{ r.imagePath }}" class="card-img-top img-fluid"
+                                    alt="Recipe Image" />
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ r.name }}</h5>
+                                    <p class="card-text">
+                                        Description
+                                    <div id="{{ r.slug }}">
+                                        <div class="stars-outer">
+                                            <div class="stars-inner"></div>
+                                        </div>
+                                        </p>
+                                        <a href="{% url 'recipes:show_recipe' r.slug %}"
+                                            class="btn btn-primary">View</a>
                                     </div>
-                                    </p>
-                                    <a href="{% url 'recipes:show_recipe' r.slug %}"class="btn btn-primary">View</a>
                                 </div>
                             </div>
+                            <div class="col-xs-12" style="height:20px;"></div>
                         </div>
-                        <div class="col-xs-12" style="height:20px;"></div>
+
+                        <script>
+                            function getRatings() {
+                                const starTotal = 5;
+                                var my_rating = "{{ r.rating }}";
+                                var my_slug = "{{ r.slug }} "
+                                const starPercentage = (my_rating / starTotal) * 100;
+                                const starPercentageRounded = `${(Math.round(starPercentage / 10) * 10)}%`;
+                                document.querySelector(`#${my_slug} .stars-inner`).style.width = starPercentageRounded;
+                            }
+                            getRatings();
+                        </script>
+
+                        {% endfor %}
+                        {% else %}
+                        <li><strong>There are no recipes present.</strong></li>
+                        {% endif %}
+
                     </div>
-              
-                    <script>
-                        function getRatings() {
-                            const starTotal = 5;
-                            var my_rating = "{{ r.rating }}";
-                            var my_slug = "{{ r.slug }} "
-                            const starPercentage = ( my_rating / starTotal) * 100;
-                            const starPercentageRounded = `${(Math.round(starPercentage / 10) * 10)}%`;
-                            document.querySelector(`#${my_slug} .stars-inner`).style.width = starPercentageRounded;
-                        }
-                        getRatings();
-                    </script>
-
-                    {% endfor %}
-                    {% else %}
-                    <li><strong>There are no recipes present.</strong></li>
-                    {% endif %}
-
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 {% endblock %}
