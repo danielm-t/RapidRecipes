@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from food.models import RawFood, Measurement
+from recipes.models import Recipe
 
 class GroceryItem(models.Model):
 
@@ -14,16 +15,3 @@ class GroceryItem(models.Model):
 
     def __str__(self):
         return self.rawFood.name
-
-class UserProfile(models.Model):
-
-    EMAIL_MAX_LENGTH = 255
-    PASSWORD_MAX_LENGTH = 255
-
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-
-    email = models.CharField(max_length=EMAIL_MAX_LENGTH)
-    password = models.CharField(max_length=PASSWORD_MAX_LENGTH)
-
-    def __str__(self):
-        return self.user.username

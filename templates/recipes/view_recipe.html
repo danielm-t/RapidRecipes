@@ -1,88 +1,103 @@
 {% extends 'rapidrecipes/base.html' %}
 {% block content_block %}
 
-<div class="container-fluid my-5">
+<div class="container-fluid my-2">
     {% if recipe %}
-    <h2>{{ recipe.name }}</h2>
-    <div class="container-fluid">
+    <div class="row mb-3">
+        <div class="col">
+            <h2>{{ recipe.name }}</h2>
+        </div>
+        {% if user.is_authenticated %}
+        <div class="col-auto">
+            <button class="btn btn-success" onclick="save()">Save</button>
+        </div>
+        {% endif%}
+    </div>
+    <div class="row">
+        <div class="col-md-5">
+            <img src="{{ MEDIA_URL }}{{ recipe.imagePath }}" class="card-img-top" alt="Image" width="30%" />
+            <div class="col-xs-12" style="height: 15px"></div>
+            <h4>Instructions:</h4>
+            <p class="fs-1">
+                {% for instruction in instructions %}
+                {% if instruction.media %}
+                <img src="{{ MEDIA_URL }}{{ instruction.media }}" alt="Image" class="img-fluid" />
+                {% endif %}
+                <strong>{{ instruction.step }}. </strong>{{ instruction.description }}<br>
+                {% endfor %}
+            </p>
+        </div>
 
-        <div class="row">
-            <div class="col-md-4 ">
-                <img src="{{ MEDIA_URL }}{{ recipe.imagePath }}" class="card-img-top" alt="Image" width="30%" />
-                <div class="col-xs-12" style="height: 15px"></div>
-                <h4>Instructions:</h4>
-                <p class="fs-1">
-                    {% for instruction in instructions %}
-                    {% if instruction.media %}
-                    <img src="{{ MEDIA_URL }}{{ instruction.media }}" alt="Image" class="img-fluid" />
-                    {% endif %}
-                    <strong>{{ instruction.step }}. </strong>{{ instruction.description }}<br>
+        <div class="col-md-4">
+            <strong>
+                Preparation time:
+            </strong>
+            <br>
+            {{ recipe.time | floatformat }} min
+            <br>
+            <br>
+            <strong>Rating: <br></strong>
+            <!--stars-->
+            <div id="{{ recipe.slug }}-rating">
+                <div class="stars-outer">
+                    <div class="stars-inner"></div>
+                </div>
+            </div> <br>
+            <br>
+            <strong>Difficulty: <br></strong>
+            <!--stars-->
+            <div id="{{ recipe.slug }}-difficulty">
+                <div class="stars-outer">
+                    <div class="stars-inner"></div>
+                </div>
+            </div> <br>
+            <br>
+            <strong>Ingredients: <br></strong>
+            <div class="list-group">
+                <p>
+                    {% for ingredient in ingredients %}
+                    &#9642;{{ ingredient.rawFood.name }} - {{ ingredient.amount }} {{ ingredient.measuredIn }}.<br>
                     {% endfor %}
                 </p>
             </div>
-
-            <div class="col-md-2">
-                <strong>
-                    Preparation time:
-                </strong>
-                <br>
-                {{ recipe.time | floatformat }} min
-                <br>
-                <br>
-                <strong>Rating: <br></strong>
-                    <!--stars-->
-                    <div id="{{ recipe.slug }}-rating">
-                        <div class="stars-outer">
-                            <div class="stars-inner"></div>
-                        </div>
-                    </div> <br>
-                <br>
-                <strong>Difficulty: <br></strong>
-                    <!--stars-->
-                    <div id="{{ recipe.slug }}-difficulty">
-                        <div class="stars-outer">
-                            <div class="stars-inner"></div>
-                        </div>
-                    </div> <br>
-                <br>
-                <strong>Ingredients: <br></strong>
-                <div class="list-group">
-                    <p>
-                        {% for ingredient in ingredients %}
-                        &#9642;{{ ingredient.rawFood.name }} - {{ ingredient.amount }} {{ ingredient.measuredIn }}.<br>
-                        {% endfor %}
-                    </p>
-                </div>
-            </div>
-            <div class="col-md-2 text-center"></div>
-            <div class="col-md-4 text-center">
-                <h4>Recommended recipes</h4>
-                {% for recipe in recommended_recipes %}
-                <a href="{% url 'recipes:show_recipe' recipe.slug %}"><div class="mb-4" >
+        </div>
+        <div class="col-md-3 text-center">
+            <h4>Recommended recipes</h4>
+            {% for recipe in recommended_recipes %}
+            <a href="{% url 'recipes:show_recipe' recipe.slug %}">
+                <div class="mb-4">
                     <h5 class="text-center">{{recipe.name}}</h5>
-                    <img src="{{ MEDIA_URL }}{{ recipe.imagePath}}" class="card-img-top w-50" alt="Image" />
+                    <img src="{{ MEDIA_URL }}{{ recipe.imagePath }}" class="card-img-top w-75" alt="Image" />
                 </div>
-                </a>
-                {% endfor%}
-
-                
-            </div>
+            </a>
+            {% endfor %}
         </div>
     </div>
     <script>
-        function starPercentage(value_){
+        function starPercentage(value_) {
             const starTotal = 5;
             const starPercentage = (value_ / starTotal) * 100;
             return `${(Math.round(starPercentage / 10) * 10)}%`;
-        }
+        };
 
         function getRatings() {
             var my_slug = "{{ recipe.slug }}"
-            
+
             document.querySelector(`#${my_slug}-rating .stars-inner`).style.width = starPercentage("{{ recipe.rating }}");
             document.querySelector(`#${my_slug}-difficulty .stars-inner`).style.width = starPercentage("{{ recipe.difficulty }}");
-        }
+        };
         getRatings();
+
+        function save() {
+            var id = "{{ recipe.id }}";
+
+            $.ajax({
+                type: 'GET',
+                url: "{% url 'groceries:save_recipe' %}",
+                data: { "recipe_id": id }
+            });
+        };
+
     </script>
     {% endif %}
 </div>

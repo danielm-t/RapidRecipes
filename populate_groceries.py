@@ -5,7 +5,7 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE',
 import django
 django.setup()
 from django.contrib.auth.models import User
-from groceries.models import GroceryItem, UserProfile
+from groceries.models import GroceryItem
 from food.models import RawFood, Measurement
 
 def populate():
@@ -29,18 +29,9 @@ def populate():
     
     # populate database
     for person in users:
-        try:
-            u = User.objects.create_user(email=person['email'],
-                                       password=person['password'],
-                                       username=person['user'])
-        except:
-            pass
-        
-        name = User.objects.get(username=person['user'])
-        p = UserProfile.objects.get_or_create(email=person['email'],
-                                              password=person['password'],
-                                              user=name)[0]
-        p.save()
+        u = User.objects.create_user(email=person['email'],
+                                    password=person['password'],
+                                    username=person['user'])
     
     for food in items:
         raw_food = RawFood.objects.get(name=food['rawFood'])

@@ -46,10 +46,9 @@
           <li class="nav-item"><a class="nav-link" href="{% url 'groceries:logout' %}?next=/rango/">Logout</a></li>
           <li class="nav-item"><a class="nav-link" href="{% url 'recipes:add_recipe' %}">Add Recipe</a></li>
           <li class="nav-item"><a class="nav-link" href="{% url 'groceries:shoppinglist' %}">Your Groceries</a></li>
-          </li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'groceries:recipe_list' %}">Your Recipes</a></li>
           {% else %}
-          <li class="nav-item"><a class="nav-link" href="{% url 'groceries:register' %}">Register Here</a>
-          </li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'groceries:register' %}">Register Here</a></li>
           <li class="nav-item "><a class="nav-link" href="{% url 'groceries:login' %}">Login</a></li>
           {% endif %}
         </ul>
@@ -66,7 +65,7 @@
   </header>
   <!-- Load minified jquery (slim does not contain ajax) before content_block is loaded -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-  <main role="main">
+  <main role="main" class="my-3">
     {% block content_block %}
     {% endblock %}
   </main>
