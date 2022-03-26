@@ -1,4 +1,3 @@
-from django.shortcuts import render
 from django.http import JsonResponse
 from food.models import Measurement, RawFood
 # Create your views here.

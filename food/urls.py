@@ -1,5 +1,3 @@
-from operator import index
-from django.conf.urls import url
 from django.urls import path
 from food import views
 from recipes.views import index as recipe_index

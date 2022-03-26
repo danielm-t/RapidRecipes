@@ -1,8 +1,6 @@
 import importlib
-from django.test import TestCase, Client
-from django.db import models
+from django.test import TestCase
 from recipes.models import Category, Recipe, Ingredient, Instruction
-from food.models import RawFood, Measurement
 from food.tests import CreateMeasurement, CreateRawFood
 from django.urls import reverse
 

@@ -3,13 +3,12 @@
 {% load staticfiles %}
 {% block content_block %}
 
+{% if recipes %}
 <div id="carouselMultiItemExample" class="carousel slide carousel-dark text-center" data-mdb-ride="carousel">
-    <div class="carousel-inner py-4">
+    <div class="carousel-inner">
         <div class="carousel-item active">
-            <div class="container">
+            <div class="container-fluid">
                 <div class="row">
-
-                    {% if recipes %}
                     {% for r in recipes %}
                     <div class="col-lg-3 d-lg-block">
                         <div class="card">
@@ -41,17 +40,16 @@
                         }
                         getRatings();
                     </script>
-
                     {% endfor %}
-                    {% else %}
-                    <li><strong>There are no recipes present.</strong></li>
-					
-					<li><a href="https://www.google.co.uk/search?q=" + views.search.search.value> Search on google <a/></li>
-                    {% endif %}
-
                 </div>
             </div>
         </div>
     </div>
 </div>
+{% else %}
+<ul>
+    <li><strong>There are no recipes present.</strong></li>
+    <li><a href="https://www.google.co.uk/search?q={{ search }}">Search on google<a /></li>
+</ul>
+{% endif %}
 {% endblock %}

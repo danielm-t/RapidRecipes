@@ -1,6 +1,6 @@
 import importlib
 from django.test import TestCase
-from groceries.models import GroceryItem, UserProfile
+from groceries.models import GroceryItem
 from food.tests import CreateRawFood, CreateMeasurement
 from django.contrib.auth.models import User
 from django.urls import reverse
@@ -19,11 +19,6 @@ def CreateUser():
     user = User.objects.get_or_create(username='JohnS', first_name='John', last_name='Smith', email='johnsmith@test.com')
 
     return user
-
-def CreateUserProfile():
-    user_profile = UserProfile.objects.get_or_create(user=CreateUser(),email='test@admin.com',password='admin')
-
-    return user_profile
 
 
 class TestViews(TestCase):
