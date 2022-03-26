@@ -57,13 +57,13 @@ def user_logout(request):
 def shopping_list(request):
     context = {'rawFoods' : RawFood.objects.all()}
     context['groceries'] = GroceryItem.objects.filter(user=request.user)
-    return render(request, 'groceries/shoppinglist.html', context)
+    return render(request, 'groceries/shoppingList.html', context)
 
 @login_required
 def recipes_list(request):
     context = {}
     context['recipes'] = Recipe.objects.filter(users=request.user)
-    return render(request, 'groceries/recipeslist.html', context)
+    return render(request, 'groceries/recipesList.html', context)
 
 def get_added_grocery(request):
     if request.method == "GET":
