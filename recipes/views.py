@@ -20,64 +20,26 @@ def index(request):
     elif request.method == 'POST':
         context_dict = {}
         form = FilterForm(request.POST)
-        if 'lunch' in request.POST:
-            recipe_list = Recipe.objects.filter(category=6).order_by('-rating')
-            context_dict = {'recipes': recipe_list, 'form':form}
-            a = 1
-        if 'dinner' in request.POST:
-            recipe_list = Recipe.objects.filter(category=7).order_by('-rating')
-            context_dict = {'recipes': recipe_list, 'form':form}
-            a = 1
-        if 'breakfast' in request.POST:
-            recipe_list = Recipe.objects.filter(category=5).order_by('-rating')
-            context_dict = {'recipes': recipe_list, 'form':form}
-            a = 1
-        if 'easy' in request.POST:
-            recipe_list = Recipe.objects.filter(category=14).order_by('-rating')
-            context_dict = {'recipes': recipe_list, 'form':form}
-            a = 1
-        if 'medium' in request.POST:
-            recipe_list = Recipe.objects.filter(category=15).order_by('-rating')
-            context_dict = {'recipes': recipe_list, 'form':form}
-            a = 1
-        if 'hard' in request.POST:
-            recipe_list = Recipe.objects.filter(category=16).order_by('-rating')
-            context_dict = {'recipes': recipe_list, 'form':form}
-            a = 1
-       
-        if 'drink' in request.POST:
-            recipe_list = Recipe.objects.filter(category=8).order_by('-rating')
-            context_dict = {'recipes': recipe_list, 'form':form}
-            a = 1
-        if 'vegan' in request.POST:
-            recipe_list = Recipe.objects.filter(category=9).order_by('-rating')
-            context_dict = {'recipes': recipe_list, 'form':form}
-            a = 1
-        if 'vegetarian' in request.POST:
-            recipe_list = Recipe.objects.filter(category=10).order_by('-rating')
-            context_dict = {'recipes': recipe_list, 'form':form}
-            a = 1
-        if 'beef' in request.POST:
-            recipe_list = Recipe.objects.filter(category=11).order_by('-rating')
-            context_dict = {'recipes': recipe_list, 'form':form}
-            a = 1
-        if 'chicken' in request.POST:
-            recipe_list = Recipe.objects.filter(category=12).order_by('-rating')
-            context_dict = {'recipes': recipe_list, 'form':form}
-            a = 1
-        if 'fish' in request.POST:
-            recipe_list = Recipe.objects.filter(category=13).order_by('-rating')
-            context_dict = {'recipes': recipe_list, 'form':form}
-            a = 1
-        
-        
-        
-        elif a == 0:
-            form = FilterForm()
-            recipe_list = Recipe.objects.order_by('-rating')
-            context_dict = {'recipes': recipe_list, 'form':form}
-            return render(request, "recipes/index.html", context_dict)
+
+        categories = []
+        for key, value in form.data.items():
+            if key == 'csrfmiddlewaretoken':
+                continue
+            else:
+                categories.append(key)
+
+        if categories:
+            recipe_list = Recipe.objects
+
+            for category in categories:
+                c = Category.objects.get(category=category)
+                recipe_list = recipe_list.filter(category=c)
             
+            recipe_list = recipe_list.order_by('-rating')
+        else:
+            recipe_list = Recipe.objects.order_by('-rating')
+        
+        context_dict = {'recipes': recipe_list, 'form':form}
     return render(request, "recipes/index.html", context_dict)
 
 def about(request):
