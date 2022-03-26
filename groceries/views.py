@@ -63,8 +63,7 @@ def shopping_list(request):
 def recipes_list(request):
     context = {}
     context['recipes'] = Recipe.objects.filter(users=request.user)
-    return render(request, 'groceries/recipesList.html', context)
-
+    return render(request, 'groceries/recipeslist.html', context)
 
 def get_added_grocery(request):
     if request.method == "GET":

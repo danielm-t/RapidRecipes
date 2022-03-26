@@ -63,7 +63,19 @@
                 </p>
             </div>
         </div>
-        <script>getRatings('{{ recipe.slug }}', '{{ recipe.rating }}', '{{ recipe.difficulty }}')</script>
+        <script>
+        getRatings('{{ recipe.slug }}', '{{ recipe.rating }}', '{{ recipe.difficulty }}');
+        
+        function save() {
+                var id = "{{ recipe.id }}";
+
+                $.ajax({
+                    type: 'GET',
+                    url: "{% url 'groceries:save_recipe' %}",
+                    data: { "recipe_id": id }
+                });
+        };
+        </script>
         <div class="col-md-3 text-center">
             <h4>Recommended recipes</h4>
             {% for recipe in recommended_recipes %}
