@@ -81,7 +81,7 @@ def index(request):
     return render(request, "recipes/index.html", context_dict)
 
 def about(request):
-    response = render(request, 'recipes/about.html', context_dict)
+    response = render(request, 'recipes/about.html')
     return response
 
 def contact(request):

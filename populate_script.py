@@ -15,3 +15,4 @@ if __name__ == '__main__':
     populate_recipes.populate()
     print('Starting groceries population script...')
     populate_groceries.populate()
+    print("Done!")

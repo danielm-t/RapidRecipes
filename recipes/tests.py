@@ -2,7 +2,6 @@ import importlib
 from django.test import TestCase
 from recipes.models import Category, Recipe, Ingredient, Instruction
 from food.tests import CreateMeasurement, CreateRawFood
-from django.urls import reverse
 
 # Create your tests here.
 
