@@ -137,8 +137,8 @@ def add_recipe(request):
         recipeimage = files['recipeimage']
         suffix = recipeimage.name.rsplit(".", 1)[-1]
 
-        recipeimagepath = f"{name}/{name}.{suffix}"
-        default_storage.save(f"recipes/{recipeimagepath}", recipeimage)
+        recipeimagepath = f"recipes/{name}/{name}.{suffix}"
+        default_storage.save(f"{recipeimagepath}", recipeimage)
 
 
         instructionimagepaths = []
@@ -146,9 +146,9 @@ def add_recipe(request):
             if ii != None:
                 suffix = ii.name.rsplit(".", 1)[-1]
 
-                instructionimagepath = f"{name}/instructions/instruction{i}.{suffix}"
-                default_storage.save(f"recipes/{instructionimagepath}", ii)
-                instructionimagepaths.append(f"recipes/{instructionimagepath}")
+                instructionimagepath = f"recipes/{name}/instructions/instruction{i}.{suffix}"
+                default_storage.save(f"{instructionimagepath}", ii)
+                instructionimagepaths.append(instructionimagepath)
             else:
                 instructionimagepaths.append(None)
 
