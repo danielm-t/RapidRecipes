@@ -148,7 +148,7 @@ def add_recipe(request):
 
                 instructionimagepath = f"{name}/instructions/instruction{i}.{suffix}"
                 default_storage.save(f"recipes/{instructionimagepath}", ii)
-                instructionimagepaths.append(instructionimagepath)
+                instructionimagepaths.append(f"recipes/{instructionimagepath}")
             else:
                 instructionimagepaths.append(None)
 
