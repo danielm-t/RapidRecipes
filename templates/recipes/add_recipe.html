@@ -51,7 +51,7 @@
                     <div class="form-row mb-3">
                         <div class="col">
                             <label for="ingredient" class="form-label">Choose Ingredient</label>
-                            <select class="form-control select2" name="ingredient" id="ingredient" onchange="getRawFoodMeasurementTypes(event)" required>
+                            <select class="form-control" name="ingredient" id="ingredient" onchange="getRawFoodMeasurementTypes(event)" required>
                                 <option disabled selected value>Select An Ingredient</option>
                                 {% for rawFood in rawFoods.all %}
                                 <option value="{{ rawFood }}">{{ rawFood }}</option>
@@ -64,7 +64,7 @@
                         </div>
                         <div class="col">
                             <label for="ingredientmeasurement" class="form-label">Measurement</label>
-                            <select class="form-control select2" name="ingredientmeasurement" id="ingredientmeasurement" required>
+                            <select class="form-control" name="ingredientmeasurement" id="ingredientmeasurement" required>
                                 <option disabled selected value>Select A Measurement</option>
                             </select>
                         </div>
